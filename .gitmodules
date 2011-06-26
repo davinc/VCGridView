@@ -1,0 +1,3 @@
+[submodule "VCResponseFetcher"]
+	path = VCResponseFetcher
+	url = git://github.com/davinc/VCResponseFetcher.git
