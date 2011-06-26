@@ -24,7 +24,7 @@ typedef NSUInteger VCThumbnailGridViewStyle;
 @protocol VCThumbnailGridViewDataSource;
 @protocol VCThumbnailGridViewDelegate;
 
-@class URLImageView;
+@class VCImageView;
 
 @interface VCThumbnailGridView : UIScrollView {
     id<VCThumbnailGridViewDelegate> _gridDelegate;

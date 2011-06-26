@@ -10,7 +10,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "URLImageView.h"
+#import "VCImageView.h"
 
 @interface VCThumbnailGridView()
 
@@ -143,7 +143,7 @@
 		}
 
 		// ImageView
-		URLImageView *imageView = [[URLImageView alloc] initWithFrame:CGRectZero];
+		VCImageView *imageView = [[VCImageView alloc] initWithFrame:CGRectZero];
 		[imageView.layer setBorderColor:[[UIColor colorWithWhite:0.7 alpha:1.0] CGColor]];
 		[imageView.layer setBorderWidth:1.0];
 		imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -230,7 +230,7 @@
 	// Get urls or images from the datasource
 	CGFloat currentOffsetX = 0, currentOffsetY = 0;
 	for (int counter = 0; counter < _numberOfThumbnails; counter++) {
-		URLImageView *imageView = [[URLImageView alloc] initWithFrame:CGRectMake(currentOffsetX + 2,
+		VCImageView *imageView = [[VCImageView alloc] initWithFrame:CGRectMake(currentOffsetX + 2,
 																				 currentOffsetY + 2,
 																				 _thumbnailWidth - 4,
 																				 _thumbnailHeight - 4)];
@@ -259,7 +259,7 @@
 
 #pragma mark - Private Methods
 
-- (void)didTapImageThumbnail:(URLImageView*)imageView {
+- (void)didTapImageThumbnail:(VCImageView*)imageView {
 	NSInteger index = [_thumbnails indexOfObject:imageView];
 	
 	if ([self.gridDelegate respondsToSelector:@selector(thumbnailGridView:didSelectThumbnailAtIndex:)]) {
