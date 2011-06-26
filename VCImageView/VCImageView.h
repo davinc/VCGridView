@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VCImageView : UIImageView {
+#import "VCResponseFetcher.h"
+
+@interface VCImageView : UIImageView <VCResponseFetchServiceDelegate> {
 	UIActivityIndicatorView *activityIndicator;
 	BOOL shouldShowActivityIndicator;
 	BOOL shouldAutoRotateToFit;

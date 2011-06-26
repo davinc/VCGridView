@@ -194,7 +194,7 @@
 			imageView.image = image;
 		}
 		if (imageUrl) {
-			[imageView setRemoteImageUrl:imageUrl];
+			[imageView setImageUrl:imageUrl];
 		}
 
 		[imageView release], imageView = nil;
@@ -246,7 +246,7 @@
 			imageView.image = [self.gridDataSource thumbnailGridView:self imageAtIndex:counter];
 		}
 		if ([self.gridDataSource respondsToSelector:@selector(thumbnailGridView:imageUrlAtIndex:)]) {
-			[imageView setRemoteImageUrl:[self.gridDataSource thumbnailGridView:self imageUrlAtIndex:counter]];
+			[imageView setImageUrl:[self.gridDataSource thumbnailGridView:self imageUrlAtIndex:counter]];
 		}
 		// add to the view
 		[_thumbnails addObject:imageView];

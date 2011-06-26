@@ -8,14 +8,20 @@
 
 #import "DemoAppDelegate.h"
 
+#import "RootViewController.h"
+
 @implementation DemoAppDelegate
 
 
-@synthesize window=_window;
+@synthesize window=_window, navigationController=_navigationController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	RootViewController *rootVC = [[[RootViewController alloc] init] autorelease];
+	self.navigationController = [[[UINavigationController alloc] initWithRootViewController:rootVC] autorelease];
+	
 	// Override point for customization after application launch.
+	[self.window addSubview:self.navigationController.view];
 	[self.window makeKeyAndVisible];
     return YES;
 }
@@ -61,6 +67,7 @@
 
 - (void)dealloc
 {
+	[_navigationController release];
 	[_window release];
     [super dealloc];
 }

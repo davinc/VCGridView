@@ -61,7 +61,10 @@
 
 #pragma mark - Public Methods
 
-- (void)setRemoteImageUrl:(NSString*)url {
+- (void)setImageUrl:(NSString*)url {
+	[[VCResponseFetcher sharedInstance] addObserver:self
+												url:url
+									responseOfClass:[VCImageResponseProcessor class]];
 	
 	if (shouldShowActivityIndicator) {
 		if (!activityIndicator) {
@@ -88,6 +91,19 @@
 	}	
 }
 
+
+#pragma mark - VCResponseFetchServiceDelegate Methods
+
+-(void)didSucceedReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
+	if ([response isKindOfClass:[VCImageResponseProcessor class]]) {
+		UIImage *image = [(VCImageResponseProcessor*)response image];
+		self.image = image;
+	}
+}
+
+-(void)didFailReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
+	
+}
 
 
 @end
