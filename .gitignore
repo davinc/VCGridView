@@ -1,0 +1,17 @@
+
+ise
+*.mode1v3
+*.pbxuser
+*.perspective 
+*.perspectivev3
+*.pyc 
+*~.nib/
+build/*
+
+# old school
+.svn
+
+# osx noise
+.DS_Store
+profile
+
