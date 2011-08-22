@@ -20,6 +20,7 @@
 
 @synthesize delegate = _delegate;
 @synthesize dataSource = _dataSource;
+@synthesize isEditing = _isEditing;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -30,6 +31,7 @@
 		
 		_tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
 		_tableView.dataSource = self;
+		_tableView.delegate = self;
 		_tableView.rowHeight = 79; // 75 + 2 + 2
 		_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		[self addSubview:_tableView];
@@ -65,6 +67,11 @@
 	_numberOfThumbnails = MAX(_numberOfThumbnails, 0);
 	
 	[_tableView reloadData];
+}
+
+- (void)setEditing:(BOOL)editing
+{
+	[_tableView setEditing:editing animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -125,5 +132,16 @@
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return YES;
+}
+
+#pragma mark - Table view delegate
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return UITableViewCellEditingStyleNone;	
+}
 
 @end

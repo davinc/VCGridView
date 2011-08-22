@@ -21,20 +21,21 @@
 @class VCImageView;
 @class VCThumbnailViewCell;
 
-@interface VCThumbnailGridView : UIView <UITableViewDataSource> {
+@interface VCThumbnailGridView : UIView <UITableViewDataSource, UITableViewDelegate> {
 @private
     id<VCThumbnailGridViewDelegate> _delegate;
 	id<VCThumbnailGridViewDataSource> _dataSource;
 	
 	UITableView *_tableView;
 	NSInteger _numberOfThumbnails;
+	BOOL _isEditing;
 }
 
 @property (nonatomic, assign) id<VCThumbnailGridViewDelegate> delegate;
 @property (nonatomic, assign) id<VCThumbnailGridViewDataSource> dataSource;
+@property (nonatomic, setter = setEditing) BOOL isEditing;
 
 - (void)reloadData;
-
 @end
 
 

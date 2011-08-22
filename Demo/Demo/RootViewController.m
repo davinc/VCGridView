@@ -60,6 +60,8 @@
     [super viewDidLoad];
 	
 	[_gridView reloadData];
+	
+	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 
@@ -77,20 +79,31 @@
 }
 
 
+#pragma mark - Private Methods
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+	[super setEditing:editing animated:animated];
+	[_gridView setEditing:editing];
+}
+
 
 #pragma mark - VCThumbnailGridViewDataSource
 
-- (NSInteger)numberOfThumbnailsInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView {
+- (NSInteger)numberOfThumbnailsInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView 
+{
 	return 22;
 }
 
-- (UIImage*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageAtIndex:(NSInteger)index {
+- (UIImage*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageAtIndex:(NSInteger)index 
+{
 	return [UIImage imageNamed:@"Icon.png"];
 }
 
 #pragma mark - VCThumbnailGridViewDelegate
 
-- (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index {
+- (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index
+{
 #if DEBUG
 	NSLog(@"Selected %i", index);
 #endif

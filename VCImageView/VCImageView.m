@@ -3,7 +3,7 @@
 //  
 //
 //  Created by Vinay Chavan on 12/12/10.
-//  Copyright 2010 Bytefeast. All rights reserved.
+//  Copyright 2010 . All rights reserved.
 //
 
 #import "VCImageView.h"
@@ -14,6 +14,7 @@
 @synthesize roundedCorner;
 @synthesize shouldShowActivityIndicator;
 @synthesize shouldAutoRotateToFit;
+@synthesize isSelected;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -28,11 +29,19 @@
 		self.backgroundColor = [UIColor clearColor];
 		self.userInteractionEnabled = NO;
 		self.contentMode = UIViewContentModeScaleAspectFit;
+		
+		selectedIndicatorImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+		selectedIndicatorImageView.image = [UIImage imageNamed:@"check.png"];
+		[selectedIndicatorImageView sizeToFit];
+		selectedIndicatorImageView.hidden = YES;
+		[self addSubview:selectedIndicatorImageView];
     }
     return self;
 }
 
 - (void)dealloc {
+	[selectedIndicatorImageView release];
+	[activityIndicator release];
     [super dealloc];
 }
 
@@ -43,6 +52,10 @@
 										 (self.bounds.size.height - activityIndicator.bounds.size.height)/2,
 										 activityIndicator.bounds.size.width,
 										 activityIndicator.bounds.size.height);
+	selectedIndicatorImageView.frame = CGRectMake(self.bounds.size.width - selectedIndicatorImageView.bounds.size.width,
+												  self.bounds.size.height - selectedIndicatorImageView.bounds.size.height,
+												  selectedIndicatorImageView.bounds.size.width,
+												  selectedIndicatorImageView.bounds.size.height);
 }
 
 
@@ -50,9 +63,14 @@
 #pragma mark - Private Methods
 
 - (void)didTapSelf:(id)sender {
-	if (delegate) {
-		if ([delegate respondsToSelector:callback]) {
-			[delegate performSelector:callback withObject:self];
+	if (isEditing) {
+		[self setSelected:!isSelected animated:YES];
+	}else 
+	{
+		if (delegate) {
+			if ([delegate respondsToSelector:callback]) {
+				[delegate performSelector:callback withObject:self];
+			}
 		}
 	}
 }
@@ -91,6 +109,34 @@
 	}	
 }
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+	isSelected = selected;
+#if DEBUG
+	NSLog(@"Index:%i selected:%i", self.tag, selected);
+#endif
+	
+	selectedIndicatorImageView.hidden = !isSelected;
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated 
+{
+	isEditing = editing;
+	
+	if (animated) [UIView beginAnimations:nil context:nil];
+	
+	if (isEditing)
+	{
+		self.alpha = 0.8;
+	}else
+	{
+		self.alpha = 1.0;
+	}
+	
+	if (animated) [UIView commitAnimations];
+	
+	[self setSelected:NO animated:YES];
+}
 
 #pragma mark - VCResponseFetchServiceDelegate Methods
 

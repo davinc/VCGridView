@@ -26,6 +26,9 @@
 		45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B7620713B7258A005ACEA1 /* RootViewController.m */; };
 		45B7622813B7280D005ACEA1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B7622713B7280D005ACEA1 /* Icon.png */; };
 		45EFAD7A140271BC00A0D5E8 /* VCThumbnailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */; };
+		45EFADB11402983300A0D5E8 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAE1402983300A0D5E8 /* check.png */; };
+		45EFADB21402983300A0D5E8 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAF1402983300A0D5E8 /* check@2x.png */; };
+		45EFADB31402983300A0D5E8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADB01402983300A0D5E8 /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +67,9 @@
 		45B7622713B7280D005ACEA1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		45EFAD78140271BB00A0D5E8 /* VCThumbnailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailViewCell.h; sourceTree = "<group>"; };
 		45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailViewCell.m; sourceTree = "<group>"; };
+		45EFADAE1402983300A0D5E8 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		45EFADAF1402983300A0D5E8 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
+		45EFADB01402983300A0D5E8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +190,9 @@
 		45B7622613B7280D005ACEA1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				45EFADAE1402983300A0D5E8 /* check.png */,
+				45EFADAF1402983300A0D5E8 /* check@2x.png */,
+				45EFADB01402983300A0D5E8 /* Icon@2x.png */,
 				45B7622713B7280D005ACEA1 /* Icon.png */,
 			);
 			path = Resources;
@@ -242,6 +251,9 @@
 				4523F22413B7181900C883E5 /* InfoPlist.strings in Resources */,
 				4523F22D13B7181900C883E5 /* MainWindow.xib in Resources */,
 				45B7622813B7280D005ACEA1 /* Icon.png in Resources */,
+				45EFADB11402983300A0D5E8 /* check.png in Resources */,
+				45EFADB21402983300A0D5E8 /* check@2x.png in Resources */,
+				45EFADB31402983300A0D5E8 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
