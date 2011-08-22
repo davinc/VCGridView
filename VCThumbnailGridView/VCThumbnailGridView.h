@@ -15,37 +15,23 @@
 
 #import <UIKit/UIKit.h>
 
-enum VCThumbnailGridViewStyle {
-	VCThumbnailGridViewStyleGrid = 0,
-	VCThumbnailGridViewStyleStripe = 1
-};
-typedef NSUInteger VCThumbnailGridViewStyle;
-
 @protocol VCThumbnailGridViewDataSource;
 @protocol VCThumbnailGridViewDelegate;
 
 @class VCImageView;
+@class VCThumbnailViewCell;
 
-@interface VCThumbnailGridView : UIScrollView {
-    id<VCThumbnailGridViewDelegate> _gridDelegate;
-	id<VCThumbnailGridViewDataSource> _gridDataSource;
-	VCThumbnailGridViewStyle _style;
+@interface VCThumbnailGridView : UIView <UITableViewDataSource> {
+@private
+    id<VCThumbnailGridViewDelegate> _delegate;
+	id<VCThumbnailGridViewDataSource> _dataSource;
 	
+	UITableView *_tableView;
 	NSInteger _numberOfThumbnails;
-	NSInteger _numberOfThumbnailsInRow;
-	CGFloat _thumbnailHeight;
-	CGFloat _thumbnailWidth;
-	CGFloat _thumbnailBorderWidth;
-	
-	NSMutableArray *_thumbnails;
-	UIView *_footerView;
 }
 
-@property (nonatomic, assign) id<VCThumbnailGridViewDelegate> gridDelegate;
-@property (nonatomic, assign) id<VCThumbnailGridViewDataSource> gridDataSource;
-@property (nonatomic, assign) VCThumbnailGridViewStyle style;
-@property (nonatomic, assign) CGFloat rowHeight;
-@property (nonatomic, retain) UIView *footerView;
+@property (nonatomic, assign) id<VCThumbnailGridViewDelegate> delegate;
+@property (nonatomic, assign) id<VCThumbnailGridViewDataSource> dataSource;
 
 - (void)reloadData;
 
@@ -58,10 +44,8 @@ typedef NSUInteger VCThumbnailGridViewStyle;
 - (NSInteger)numberOfThumbnailsInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView;
 
 @optional
-- (NSInteger)numberOfThumbnailsInRowInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView;
 - (UIImage*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageAtIndex:(NSInteger)index;
 - (NSString*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageUrlAtIndex:(NSInteger)index;
-- (NSString*)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView titleForThumbnailAtIndex:(NSInteger)index;
 
 @end
 

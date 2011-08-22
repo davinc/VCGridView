@@ -47,21 +47,21 @@
 	_gridView = [[VCThumbnailGridView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.bounds.size.height)];
 	_gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_gridView.backgroundColor = [UIColor whiteColor];
-	_gridView.gridDelegate = self;
-	_gridView.gridDataSource = self;
-	_gridView.rowHeight = 150;
-	_gridView.scrollsToTop = YES;
+	_gridView.delegate = self;
+	_gridView.dataSource = self;
 	[self.view addSubview:_gridView];
 }
 
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	[_gridView reloadData];
 }
-*/
+
 
 - (void)viewDidUnload
 {
@@ -81,11 +81,9 @@
 #pragma mark - VCThumbnailGridViewDataSource
 
 - (NSInteger)numberOfThumbnailsInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView {
-	return 20;
+	return 22;
 }
-- (NSInteger)numberOfThumbnailsInRowInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView {
-	return 4;
-}
+
 - (UIImage*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageAtIndex:(NSInteger)index {
 	return [UIImage imageNamed:@"Icon.png"];
 }
@@ -93,7 +91,9 @@
 #pragma mark - VCThumbnailGridViewDelegate
 
 - (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index {
-	
+#if DEBUG
+	NSLog(@"Selected %i", index);
+#endif
 }
 
 @end
