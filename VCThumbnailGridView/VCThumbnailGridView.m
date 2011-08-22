@@ -30,6 +30,7 @@
 		_dataSource = nil;
 		
 		_tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+		_tableView.clipsToBounds = NO;
 		_tableView.dataSource = self;
 		_tableView.delegate = self;
 		_tableView.rowHeight = 79; // 75 + 2 + 2
@@ -40,7 +41,7 @@
 }
 
 - (void)layoutSubviews {
-	_tableView.frame = self.bounds;
+	_tableView.frame = CGRectInset(self.bounds, 0, 2);
 }
 
 - (void)dealloc {
@@ -51,7 +52,7 @@
 
 #pragma mark - Private Methods
 
-- (void)didTapImageThumbnail:(VCImageView*)imageView {
+- (void)didTapImageThumbnail:(VCThumbnailButton*)imageView {
 	if ([self.delegate respondsToSelector:@selector(thumbnailGridView:didSelectThumbnailAtIndex:)]) {
 		[self.delegate thumbnailGridView:self didSelectThumbnailAtIndex:imageView.tag];
 	}
@@ -108,22 +109,26 @@
 	NSInteger indexOfImage = indexPath.row * 4;
 	if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:imageAtIndex:)]) {
 		if (indexOfImage < _numberOfThumbnails) {
-			cell.imageView1.image = [self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++];
+			[cell.imageView1 setBackgroundImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++]
+									   forState:UIControlStateNormal];
 			cell.imageView1.tag = indexOfImage;
 			[cell.imageView1 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
 		}
 		if (indexOfImage < _numberOfThumbnails) {
-			cell.imageView2.image = [self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++];
+			[cell.imageView2 setBackgroundImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++]
+									   forState:UIControlStateNormal];
 			cell.imageView2.tag = indexOfImage;
 			[cell.imageView2 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
 		}
 		if (indexOfImage < _numberOfThumbnails) {
-			cell.imageView3.image = [self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++];
+			[cell.imageView3 setBackgroundImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++]
+									   forState:UIControlStateNormal];
 			cell.imageView3.tag = indexOfImage;
 			[cell.imageView3 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
 		}
 		if (indexOfImage < _numberOfThumbnails) {
-			cell.imageView4.image = [self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++];
+			[cell.imageView4 setBackgroundImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++]
+									   forState:UIControlStateNormal];
 			cell.imageView4.tag = indexOfImage;
 			[cell.imageView4 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
 		}

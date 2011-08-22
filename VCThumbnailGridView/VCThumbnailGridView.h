@@ -18,7 +18,7 @@
 @protocol VCThumbnailGridViewDataSource;
 @protocol VCThumbnailGridViewDelegate;
 
-@class VCImageView;
+@class VCThumbnailButton;
 @class VCThumbnailViewCell;
 
 @interface VCThumbnailGridView : UIView <UITableViewDataSource, UITableViewDelegate> {

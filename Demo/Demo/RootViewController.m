@@ -61,6 +61,7 @@
 	
 	[_gridView reloadData];
 	
+	self.navigationItem.title = @"Grid View Demo";
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 

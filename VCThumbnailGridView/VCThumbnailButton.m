@@ -6,12 +6,12 @@
 //  Copyright 2010 . All rights reserved.
 //
 
-#import "VCImageView.h"
+#import "VCThumbnailButton.h"
 #import "UIImageAdditions.h"
 
 #import <QuartzCore/QuartzCore.h>
 
-@implementation VCImageView
+@implementation VCThumbnailButton
 
 @synthesize roundedCorner;
 @synthesize shouldShowActivityIndicator;
@@ -22,9 +22,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code.
-		delegate = nil;
-		callback = NULL;
-		roundedCorner = NO;
 		shouldShowActivityIndicator = NO;
 		shouldAutoRotateToFit = NO;
 		self.autoresizesSubviews = YES;
@@ -37,6 +34,8 @@
 		[selectedIndicatorImageView sizeToFit];
 		selectedIndicatorImageView.hidden = YES;
 		[self addSubview:selectedIndicatorImageView];
+		
+		[self addTarget:self action:@selector(didTapSelf:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -102,10 +101,6 @@
 - (void)addTarget:(id)target withSelector:(SEL)selector {
 	self.userInteractionEnabled = YES;
 	if ([self isUserInteractionEnabled]) {
-		UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapSelf:)];
-		[self addGestureRecognizer:tapGesture];
-		[tapGesture release];
-
 		delegate = target;
 		callback = selector;
 	}	
@@ -145,7 +140,9 @@
 -(void)didSucceedReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
 	if ([response isKindOfClass:[VCImageResponseProcessor class]]) {
 		UIImage *image = [(VCImageResponseProcessor*)response image];
-		self.image = image;
+		[self setBackgroundImage:image
+						forState:UIControlStateNormal];
+
 	}
 }
 

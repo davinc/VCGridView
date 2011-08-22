@@ -17,22 +17,22 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-		imageView1 = [[VCImageView alloc] initWithFrame:CGRectMake(4, 2, 75, 75)];
+		imageView1 = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(4, 2, 75, 75)];
 		imageView1.backgroundColor = [UIColor whiteColor];
 		imageView1.shouldShowActivityIndicator = YES;
 		[self addSubview:imageView1];
 		
-		imageView2 = [[VCImageView alloc] initWithFrame:CGRectMake(83, 2, 75, 75)];
+		imageView2 = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(83, 2, 75, 75)];
 		imageView2.backgroundColor = [UIColor whiteColor];
 		imageView2.shouldShowActivityIndicator = YES;
 		[self addSubview:imageView2];
 		
-		imageView3 = [[VCImageView alloc] initWithFrame:CGRectMake(162, 2, 75, 75)];
+		imageView3 = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(162, 2, 75, 75)];
 		imageView3.backgroundColor = [UIColor whiteColor];
 		imageView3.shouldShowActivityIndicator = YES;
 		[self addSubview:imageView3];
 		
-		imageView4 = [[VCImageView alloc] initWithFrame:CGRectMake(241, 2, 75, 75)];
+		imageView4 = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(241, 2, 75, 75)];
 		imageView4.backgroundColor = [UIColor whiteColor];
 		imageView4.shouldShowActivityIndicator = YES;
 		[self addSubview:imageView4];

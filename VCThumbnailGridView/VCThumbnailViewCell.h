@@ -8,18 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-#import "VCImageView.h"
+#import "VCThumbnailButton.h"
 
 @interface VCThumbnailViewCell : UITableViewCell {
-    VCImageView *imageView1;
-    VCImageView *imageView2;
-    VCImageView *imageView3;
-    VCImageView *imageView4;
+    VCThumbnailButton *imageView1;
+    VCThumbnailButton *imageView2;
+    VCThumbnailButton *imageView3;
+    VCThumbnailButton *imageView4;
 }
 
-@property (nonatomic, retain) VCImageView *imageView1;
-@property (nonatomic, retain) VCImageView *imageView2;
-@property (nonatomic, retain) VCImageView *imageView3;
-@property (nonatomic, retain) VCImageView *imageView4;
+@property (nonatomic, retain) VCThumbnailButton *imageView1;
+@property (nonatomic, retain) VCThumbnailButton *imageView2;
+@property (nonatomic, retain) VCThumbnailButton *imageView3;
+@property (nonatomic, retain) VCThumbnailButton *imageView4;
 
 @end
