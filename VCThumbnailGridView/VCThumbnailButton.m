@@ -7,9 +7,6 @@
 //
 
 #import "VCThumbnailButton.h"
-#import "UIImageAdditions.h"
-
-#import <QuartzCore/QuartzCore.h>
 
 @implementation VCThumbnailButton
 
@@ -79,6 +76,11 @@
 
 
 #pragma mark - Public Methods
+
+- (void)setImage:(UIImage*)image {
+	[self setBackgroundImage:image
+					forState:UIControlStateNormal];
+}
 
 - (void)setImageUrl:(NSString*)url {
 	[[VCResponseFetcher sharedInstance] addObserver:self

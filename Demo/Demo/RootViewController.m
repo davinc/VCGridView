@@ -22,7 +22,7 @@
 
 - (void)dealloc
 {
-	[_gridView release];
+	[_gridView release], _gridView = nil;
     [super dealloc];
 }
 

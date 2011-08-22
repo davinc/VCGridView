@@ -16,7 +16,6 @@
 		4523F22D13B7181900C883E5 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4523F22B13B7181900C883E5 /* MainWindow.xib */; };
 		4523F23613B7182600C883E5 /* VCThumbnailGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F23513B7182600C883E5 /* VCThumbnailGridView.m */; };
 		4523F23813B7190C00C883E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F23713B7190C00C883E5 /* QuartzCore.framework */; };
-		4523F23F13B71A1E00C883E5 /* UIImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F23E13B71A1E00C883E5 /* UIImageAdditions.m */; };
 		454831C113F166C80003D85D /* VCDataResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 454831B713F166C80003D85D /* VCDataResponseProcessor.m */; };
 		454831C213F166C80003D85D /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 454831B913F166C80003D85D /* VCImageResponseProcessor.m */; };
 		454831C313F166C80003D85D /* VCResponseFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 454831BB13F166C80003D85D /* VCResponseFetcher.m */; };
@@ -29,7 +28,6 @@
 		45EFADB21402983300A0D5E8 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAF1402983300A0D5E8 /* check@2x.png */; };
 		45EFADB31402983300A0D5E8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADB01402983300A0D5E8 /* Icon@2x.png */; };
 		45F0C3901402CCAC0078569E /* VCThumbnailButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F0C38F1402CCAC0078569E /* VCThumbnailButton.m */; };
-		45F0C3931402CD010078569E /* VCImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F0C3921402CD010078569E /* VCImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,8 +45,6 @@
 		4523F23413B7182600C883E5 /* VCThumbnailGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailGridView.h; sourceTree = "<group>"; };
 		4523F23513B7182600C883E5 /* VCThumbnailGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailGridView.m; sourceTree = "<group>"; };
 		4523F23713B7190C00C883E5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		4523F23D13B71A1E00C883E5 /* UIImageAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageAdditions.h; sourceTree = "<group>"; };
-		4523F23E13B71A1E00C883E5 /* UIImageAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageAdditions.m; sourceTree = "<group>"; };
 		454831B513F166C80003D85D /* VCDataProcessorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataProcessorDelegate.h; sourceTree = "<group>"; };
 		454831B613F166C80003D85D /* VCDataResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataResponseProcessor.h; sourceTree = "<group>"; };
 		454831B713F166C80003D85D /* VCDataResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCDataResponseProcessor.m; sourceTree = "<group>"; };
@@ -71,8 +67,6 @@
 		45EFADB01402983300A0D5E8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		45F0C38E1402CCAC0078569E /* VCThumbnailButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailButton.h; sourceTree = "<group>"; };
 		45F0C38F1402CCAC0078569E /* VCThumbnailButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailButton.m; sourceTree = "<group>"; };
-		45F0C3911402CD010078569E /* VCImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageView.h; sourceTree = "<group>"; };
-		45F0C3921402CD010078569E /* VCImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				4523F24013B71DA100C883E5 /* VCResponseFetcher */,
-				4523F23913B7196700C883E5 /* VCImageView */,
 				4523F23313B7182600C883E5 /* VCThumbnailGridView */,
 				45B7620613B7258A005ACEA1 /* RootViewController.h */,
 				45B7620713B7258A005ACEA1 /* RootViewController.m */,
@@ -158,18 +151,6 @@
 			);
 			name = VCThumbnailGridView;
 			path = ../../VCThumbnailGridView;
-			sourceTree = "<group>";
-		};
-		4523F23913B7196700C883E5 /* VCImageView */ = {
-			isa = PBXGroup;
-			children = (
-				45F0C3911402CD010078569E /* VCImageView.h */,
-				45F0C3921402CD010078569E /* VCImageView.m */,
-				4523F23D13B71A1E00C883E5 /* UIImageAdditions.h */,
-				4523F23E13B71A1E00C883E5 /* UIImageAdditions.m */,
-			);
-			name = VCImageView;
-			path = ../../VCImageView;
 			sourceTree = "<group>";
 		};
 		4523F24013B71DA100C883E5 /* VCResponseFetcher */ = {
@@ -272,7 +253,6 @@
 				4523F22713B7181900C883E5 /* main.m in Sources */,
 				4523F22A13B7181900C883E5 /* DemoAppDelegate.m in Sources */,
 				4523F23613B7182600C883E5 /* VCThumbnailGridView.m in Sources */,
-				4523F23F13B71A1E00C883E5 /* UIImageAdditions.m in Sources */,
 				45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */,
 				454831C113F166C80003D85D /* VCDataResponseProcessor.m in Sources */,
 				454831C213F166C80003D85D /* VCImageResponseProcessor.m in Sources */,
@@ -281,7 +261,6 @@
 				454831C513F166C80003D85D /* VCResponseFetchServiceCache.m in Sources */,
 				45EFAD7A140271BC00A0D5E8 /* VCThumbnailViewCell.m in Sources */,
 				45F0C3901402CCAC0078569E /* VCThumbnailButton.m in Sources */,
-				45F0C3931402CD010078569E /* VCImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

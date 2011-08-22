@@ -29,6 +29,7 @@
 @property (assign) BOOL shouldAutoRotateToFit;
 @property (assign) BOOL isSelected;
 
+- (void)setImage:(UIImage*)image;
 - (void)setImageUrl:(NSString*)url;
 
 - (void)addTarget:(id)target withSelector:(SEL)selector;
