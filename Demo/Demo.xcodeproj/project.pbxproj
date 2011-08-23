@@ -18,8 +18,8 @@
 		4523F23813B7190C00C883E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F23713B7190C00C883E5 /* QuartzCore.framework */; };
 		45571C1C1403B0180019D8F9 /* VCResponseFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 45571C111403B0180019D8F9 /* VCResponseFetcher.m */; };
 		45571C1D1403B0180019D8F9 /* VCResponseFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 45571C131403B0180019D8F9 /* VCResponseFetchService.m */; };
-		45571C1F1403B0180019D8F9 /* VCDataResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45571C191403B0180019D8F9 /* VCDataResponseProcessor.m */; };
-		45571C201403B0180019D8F9 /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 45571C1B1403B0180019D8F9 /* VCImageResponseProcessor.m */; };
+		458A7D6614042B87003223B4 /* VCDataResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 458A7D6314042B87003223B4 /* VCDataResponseProcessor.m */; };
+		458A7D6714042B87003223B4 /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 458A7D6514042B87003223B4 /* VCImageResponseProcessor.m */; };
 		45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B7620713B7258A005ACEA1 /* RootViewController.m */; };
 		45B7622813B7280D005ACEA1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B7622713B7280D005ACEA1 /* Icon.png */; };
 		45EFAD7A140271BC00A0D5E8 /* VCThumbnailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */; };
@@ -50,10 +50,10 @@
 		45571C121403B0180019D8F9 /* VCResponseFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchService.h; sourceTree = "<group>"; };
 		45571C131403B0180019D8F9 /* VCResponseFetchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchService.m; sourceTree = "<group>"; };
 		45571C141403B0180019D8F9 /* VCResponseFetchServiceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchServiceDelegate.h; sourceTree = "<group>"; };
-		45571C181403B0180019D8F9 /* VCDataResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataResponseProcessor.h; sourceTree = "<group>"; };
-		45571C191403B0180019D8F9 /* VCDataResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCDataResponseProcessor.m; sourceTree = "<group>"; };
-		45571C1A1403B0180019D8F9 /* VCImageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageResponseProcessor.h; sourceTree = "<group>"; };
-		45571C1B1403B0180019D8F9 /* VCImageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageResponseProcessor.m; sourceTree = "<group>"; };
+		458A7D6214042B87003223B4 /* VCDataResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataResponseProcessor.h; sourceTree = "<group>"; };
+		458A7D6314042B87003223B4 /* VCDataResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCDataResponseProcessor.m; sourceTree = "<group>"; };
+		458A7D6414042B87003223B4 /* VCImageResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCImageResponseProcessor.h; sourceTree = "<group>"; };
+		458A7D6514042B87003223B4 /* VCImageResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCImageResponseProcessor.m; sourceTree = "<group>"; };
 		45B7620613B7258A005ACEA1 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		45B7620713B7258A005ACEA1 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		45B7622713B7280D005ACEA1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
@@ -175,10 +175,10 @@
 		45571C151403B0180019D8F9 /* VCResponseProcessors */ = {
 			isa = PBXGroup;
 			children = (
-				45571C181403B0180019D8F9 /* VCDataResponseProcessor.h */,
-				45571C191403B0180019D8F9 /* VCDataResponseProcessor.m */,
-				45571C1A1403B0180019D8F9 /* VCImageResponseProcessor.h */,
-				45571C1B1403B0180019D8F9 /* VCImageResponseProcessor.m */,
+				458A7D6214042B87003223B4 /* VCDataResponseProcessor.h */,
+				458A7D6314042B87003223B4 /* VCDataResponseProcessor.m */,
+				458A7D6414042B87003223B4 /* VCImageResponseProcessor.h */,
+				458A7D6514042B87003223B4 /* VCImageResponseProcessor.m */,
 			);
 			path = VCResponseProcessors;
 			sourceTree = "<group>";
@@ -268,8 +268,8 @@
 				45F0C3901402CCAC0078569E /* VCThumbnailButton.m in Sources */,
 				45571C1C1403B0180019D8F9 /* VCResponseFetcher.m in Sources */,
 				45571C1D1403B0180019D8F9 /* VCResponseFetchService.m in Sources */,
-				45571C1F1403B0180019D8F9 /* VCDataResponseProcessor.m in Sources */,
-				45571C201403B0180019D8F9 /* VCImageResponseProcessor.m in Sources */,
+				458A7D6614042B87003223B4 /* VCDataResponseProcessor.m in Sources */,
+				458A7D6714042B87003223B4 /* VCImageResponseProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

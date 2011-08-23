@@ -68,7 +68,7 @@
 	NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
 	if (cachedResponse) {
 		data = [cachedResponse data];
-		resposne = (NSHTTPURLResponse*)[cachedResponse response];
+		resposne = [cachedResponse response];
 	}
 
 	if (data == nil) 
