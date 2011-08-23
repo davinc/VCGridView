@@ -27,7 +27,8 @@
 @property (assign) BOOL roundedCorner;
 @property (assign) BOOL shouldShowActivityIndicator;
 @property (assign) BOOL shouldAutoRotateToFit;
-@property (assign) BOOL isSelected;
+@property (readonly) BOOL isSelected;
+@property (readonly) BOOL isEditing;
 
 - (void)setImage:(UIImage*)image;
 - (void)setImageUrl:(NSString*)url;

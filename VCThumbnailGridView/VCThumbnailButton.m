@@ -14,6 +14,7 @@
 @synthesize shouldShowActivityIndicator;
 @synthesize shouldAutoRotateToFit;
 @synthesize isSelected;
+@synthesize isEditing;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
