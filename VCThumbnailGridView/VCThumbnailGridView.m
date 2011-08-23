@@ -8,8 +8,6 @@
 
 #import "VCThumbnailGridView.h"
 
-#import <QuartzCore/QuartzCore.h>
-
 #import "VCThumbnailViewCell.h"
 
 @interface VCThumbnailGridView()
@@ -70,9 +68,9 @@
 	[_tableView reloadData];
 }
 
-- (void)setEditing:(BOOL)editing
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
-	[_tableView setEditing:editing animated:YES];
+	[_tableView setEditing:editing animated:animated];
 }
 
 #pragma mark - Table view data source

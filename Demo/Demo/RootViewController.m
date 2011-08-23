@@ -85,7 +85,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
 	[super setEditing:editing animated:animated];
-	[_gridView setEditing:editing];
+	[_gridView setEditing:editing animated:animated];
 }
 
 

@@ -33,9 +33,11 @@
 
 @property (nonatomic, assign) id<VCThumbnailGridViewDelegate> delegate;
 @property (nonatomic, assign) id<VCThumbnailGridViewDataSource> dataSource;
-@property (nonatomic, setter = setEditing) BOOL isEditing;
+@property (nonatomic, readonly) BOOL isEditing;
 
 - (void)reloadData;
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated;
+
 @end
 
 
