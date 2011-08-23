@@ -97,7 +97,7 @@
 	
 	if (shouldShowActivityIndicator) {
 		if (!activityIndicator) {
-			activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+			activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 			activityIndicator.hidesWhenStopped = YES;
 			activityIndicator.userInteractionEnabled = NO;
 		}
@@ -162,6 +162,8 @@
 #pragma mark - VCResponseFetchServiceDelegate Methods
 
 -(void)didSucceedReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
+	[activityIndicator stopAnimating];
+	
 	if ([response isKindOfClass:[VCImageResponseProcessor class]]) {
 		UIImage *image = [(VCImageResponseProcessor*)response image];
 		[imageButton setBackgroundImage:image
@@ -171,7 +173,7 @@
 }
 
 -(void)didFailReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
-	
+	[activityIndicator stopAnimating];
 }
 
 

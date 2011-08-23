@@ -101,6 +101,11 @@
 	return [UIImage imageNamed:@"Icon.png"];
 }
 
+- (NSString*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageUrlAtIndex:(NSInteger)index
+{
+	return [NSString stringWithString:@"http://gravatar.com/avatar/dbdebfdea3fb580bf9402c202f1fbcc9"];
+}
+
 #pragma mark - VCThumbnailGridViewDelegate
 
 - (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index

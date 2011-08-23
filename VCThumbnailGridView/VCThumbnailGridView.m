@@ -104,27 +104,43 @@
     }
 	
     // Configure the cell...
-	NSInteger indexOfImage = indexPath.row * 4;
+	int indexOfImage = indexPath.row * 4;
 	if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:imageAtIndex:)]) {
 		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView1 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++]];
-			cell.imageView1.tag = indexOfImage;
+			[cell.imageView1 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
+			cell.imageView1.tag = indexOfImage++;
 			[cell.imageView1 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
 		}
 		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView2 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++]];
-			cell.imageView2.tag = indexOfImage;
+			[cell.imageView2 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
+			cell.imageView2.tag = indexOfImage++;
 			[cell.imageView2 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
 		}
 		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView3 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++]];
-			cell.imageView3.tag = indexOfImage;
+			[cell.imageView3 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
+			cell.imageView3.tag = indexOfImage++;
 			[cell.imageView3 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
 		}
 		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView4 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage++]];
-			cell.imageView4.tag = indexOfImage;
+			[cell.imageView4 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
+			cell.imageView4.tag = indexOfImage++;
 			[cell.imageView4 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
+		}
+	}
+	
+	indexOfImage = indexPath.row * 4;
+	if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:imageUrlAtIndex:)]) {
+		if (indexOfImage < _numberOfThumbnails) {
+			[cell.imageView1 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
+		}
+		if (indexOfImage < _numberOfThumbnails) {
+			[cell.imageView2 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
+		}
+		if (indexOfImage < _numberOfThumbnails) {
+			[cell.imageView3 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
+		}
+		if (indexOfImage < _numberOfThumbnails) {
+			[cell.imageView4 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
 		}
 	}
 	
