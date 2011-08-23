@@ -29,18 +29,21 @@
 		self.userInteractionEnabled = NO;
 		self.contentMode = UIViewContentModeScaleAspectFit;
 		
+		imageButton = [[UIButton alloc] initWithFrame:CGRectZero];
+		[imageButton addTarget:self action:@selector(didTapSelf:) forControlEvents:UIControlEventTouchUpInside];
+		[self addSubview:imageButton];
+		
 		selectedIndicatorImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+		selectedIndicatorImageView.alpha = 0.0;
 		selectedIndicatorImageView.image = [UIImage imageNamed:@"check.png"];
 		[selectedIndicatorImageView sizeToFit];
-		selectedIndicatorImageView.hidden = YES;
-		[self addSubview:selectedIndicatorImageView];
-		
-		[self addTarget:self action:@selector(didTapSelf:) forControlEvents:UIControlEventTouchUpInside];
+		[self addSubview:selectedIndicatorImageView];		
     }
     return self;
 }
 
 - (void)dealloc {
+	[imageButton release];
 	[selectedIndicatorImageView release];
 	[activityIndicator release];
     [super dealloc];
@@ -49,6 +52,7 @@
 - (void)layoutSubviews {
 	[super layoutSubviews];
 	
+	imageButton.frame = self.bounds;
 	activityIndicator.frame = CGRectMake((self.bounds.size.width - activityIndicator.bounds.size.width)/2, 
 										 (self.bounds.size.height - activityIndicator.bounds.size.height)/2,
 										 activityIndicator.bounds.size.width,
@@ -81,8 +85,8 @@
 #pragma mark - Public Methods
 
 - (void)setImage:(UIImage*)image {
-	[self setBackgroundImage:image
-					forState:UIControlStateNormal];
+	[imageButton setBackgroundImage:image
+						   forState:UIControlStateNormal];
 }
 
 - (void)setImageUrl:(NSString*)url {
@@ -119,26 +123,40 @@
 	NSLog(@"Index:%i selected:%i", self.tag, selected);
 #endif
 	
-	selectedIndicatorImageView.hidden = !isSelected;
+	if (animated) [UIView beginAnimations:nil context:nil];
+	
+	if (isSelected) 
+	{
+		selectedIndicatorImageView.alpha = 1.0;
+		imageButton.alpha = 0.8;
+	}
+	else 
+	{
+		selectedIndicatorImageView.alpha = 0.0;
+		imageButton.alpha = 1.0;
+	}
+	if (animated) [UIView commitAnimations];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated 
 {
-	isEditing = editing;
-	
-	if (animated) [UIView beginAnimations:nil context:nil];
-	
-	if (isEditing)
-	{
-		self.alpha = 0.8;
-	}else
-	{
-		self.alpha = 1.0;
+	if (isEditing != editing) {
+		isEditing = editing;
+		
+		if (animated) [UIView beginAnimations:nil context:nil];
+		
+//		if (isEditing)
+//		{
+//			imageButton.alpha = 0.8;
+//		}else
+//		{
+//			imageButton.alpha = 1.0;
+//		}
+		
+		if (animated) [UIView commitAnimations];
+		
+		[self setSelected:NO animated:YES];
 	}
-	
-	if (animated) [UIView commitAnimations];
-	
-	[self setSelected:NO animated:YES];
 }
 
 #pragma mark - VCResponseFetchServiceDelegate Methods
@@ -146,8 +164,8 @@
 -(void)didSucceedReceiveResponse:(NSObject<VCDataProcessorDelegate> *)response {
 	if ([response isKindOfClass:[VCImageResponseProcessor class]]) {
 		UIImage *image = [(VCImageResponseProcessor*)response image];
-		[self setBackgroundImage:image
-						forState:UIControlStateNormal];
+		[imageButton setBackgroundImage:image
+							   forState:UIControlStateNormal];
 
 	}
 }

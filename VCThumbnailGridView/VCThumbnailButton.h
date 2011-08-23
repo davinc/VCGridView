@@ -10,7 +10,8 @@
 
 #import "VCResponseFetcher.h"
 
-@interface VCThumbnailButton : UIButton <VCResponseFetchServiceDelegate> {
+@interface VCThumbnailButton : UIView <VCResponseFetchServiceDelegate> {
+	UIButton *imageButton;
 	UIActivityIndicatorView *activityIndicator;
 	UIImageView *selectedIndicatorImageView;
 	BOOL shouldShowActivityIndicator;
