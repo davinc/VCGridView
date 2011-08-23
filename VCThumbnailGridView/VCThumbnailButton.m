@@ -8,6 +8,8 @@
 
 #import "VCThumbnailButton.h"
 
+#import "VCImageResponseProcessor.h"
+
 @implementation VCThumbnailButton
 
 @synthesize roundedCorner;
@@ -86,7 +88,8 @@
 - (void)setImageUrl:(NSString*)url {
 	[[VCResponseFetcher sharedInstance] addObserver:self
 												url:url
-									responseOfClass:[VCImageResponseProcessor class]];
+											  cache:NSURLRequestReturnCacheDataElseLoad
+								  responseProcessor:[[[VCImageResponseProcessor alloc] init] autorelease]];
 	
 	if (shouldShowActivityIndicator) {
 		if (!activityIndicator) {
