@@ -26,6 +26,12 @@
 
 #import "RootViewController.h"
 
+@interface RootViewController()
+
+- (void)didTapAction:(id)sender;
+
+@end
+
 
 @implementation RootViewController
 
@@ -34,6 +40,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+		_selectedItems = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -41,6 +48,7 @@
 - (void)dealloc
 {
 	[_gridView release], _gridView = nil;
+	[_selectedItems release], _selectedItems = nil;
     [super dealloc];
 }
 
@@ -60,9 +68,9 @@
 {
 	[super loadView];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	self.view.backgroundColor = [UIColor blackColor];
+	self.view.backgroundColor = [UIColor whiteColor];
 	
-	_gridView = [[VCThumbnailGridView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.bounds.size.height)];
+	_gridView = [[VCThumbnailGridView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
 	_gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_gridView.backgroundColor = [UIColor whiteColor];
 	_gridView.delegate = self;
@@ -89,6 +97,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+	[_gridView release], _gridView = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -104,6 +113,27 @@
 {
 	[super setEditing:editing animated:animated];
 	[_gridView setEditing:editing animated:animated];
+	
+	if (editing) {
+		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
+																							   target:self
+																							   action:@selector(didTapAction:)] autorelease];
+	}else {
+		self.navigationItem.leftBarButtonItem = nil;
+		[_selectedItems removeAllObjects];
+	}
+}
+
+- (void)didTapAction:(id)sender
+{
+#if DEBUG
+	NSLog(@"Selected item count : %i", [_selectedItems count]);
+#endif
+	[[[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%i items selected.", [_selectedItems count]] 
+								 message:nil 
+								delegate:nil
+					   cancelButtonTitle:@"Dismiss"
+					   otherButtonTitles:nil] autorelease] show];
 }
 
 
@@ -131,6 +161,17 @@
 #if DEBUG
 	NSLog(@"Selected %i", index);
 #endif
+	
+	if (_gridView.isEditing) {
+		NSString *key = [NSString stringWithFormat:@"%i",index];
+		NSObject *object = [_selectedItems objectForKey:key];
+		if (object) {
+			[_selectedItems removeObjectForKey:key];
+		}else {
+			[_selectedItems setObject:[NSString string] forKey:key];
+		}
+	}
 }
+
 
 @end

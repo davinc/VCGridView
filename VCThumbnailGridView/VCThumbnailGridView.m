@@ -89,6 +89,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
 	[_tableView setEditing:editing animated:animated];
+	_isEditing = editing;
 }
 
 #pragma mark - Table view data source

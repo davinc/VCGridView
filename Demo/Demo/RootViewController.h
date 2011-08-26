@@ -30,6 +30,8 @@
 
 @interface RootViewController : UIViewController <VCThumbnailGridViewDataSource, VCThumbnailGridViewDelegate> {
 	VCThumbnailGridView *_gridView;
+	
+	NSMutableDictionary *_selectedItems;
 }
 
 @end

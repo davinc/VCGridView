@@ -88,10 +88,9 @@
 - (void)didTapSelf:(id)sender {
 	if (isEditing) {
 		[self setSelected:!isSelected animated:YES];
-	}else  {
-		if (delegate && [delegate respondsToSelector:callback]) {
-			[delegate performSelector:callback withObject:self];
-		}
+	}
+	if (delegate && [delegate respondsToSelector:callback]) {
+		[delegate performSelector:callback withObject:self];
 	}
 }
 
@@ -135,7 +134,7 @@
 {
 	isSelected = selected;
 #if DEBUG
-	NSLog(@"Index:%i selected:%i", self.tag, selected);
+//	NSLog(@"Index:%i selected:%i", self.tag, selected);
 #endif
 	
 	if (animated) [UIView beginAnimations:nil context:nil];
@@ -157,19 +156,6 @@
 {
 	if (isEditing != editing) {
 		isEditing = editing;
-		
-		if (animated) [UIView beginAnimations:nil context:nil];
-		
-//		if (isEditing)
-//		{
-//			imageButton.alpha = 0.8;
-//		}else
-//		{
-//			imageButton.alpha = 1.0;
-//		}
-		
-		if (animated) [UIView commitAnimations];
-		
 		[self setSelected:NO animated:YES];
 	}
 }
