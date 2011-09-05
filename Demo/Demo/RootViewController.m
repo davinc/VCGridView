@@ -144,6 +144,11 @@
 	return 22;
 }
 
+- (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
+{
+	return 2;
+}
+
 - (UIImage*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageAtIndex:(NSInteger)index 
 {
 	return [UIImage imageNamed:@"Icon.png"];

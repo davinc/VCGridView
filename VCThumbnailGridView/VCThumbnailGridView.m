@@ -49,7 +49,7 @@
 		_tableView.clipsToBounds = NO;
 		_tableView.dataSource = self;
 		_tableView.delegate = self;
-		_tableView.rowHeight = 79; // 75 + 2 + 2
+		_tableView.rowHeight = 0;
 		_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		[self addSubview:_tableView];
     }
@@ -83,6 +83,14 @@
 	}
 	_numberOfThumbnails = MAX(_numberOfThumbnails, 0);
 	
+	if ([self.dataSource respondsToSelector:@selector(numberOfThumbnailsInRowForThumbnailGridView:)]) {
+		_numberOfThumbnailsInRow = [self.dataSource numberOfThumbnailsInRowForThumbnailGridView:self];
+	}
+	_numberOfThumbnailsInRow = MAX(_numberOfThumbnailsInRow, 0);
+	
+	CGFloat width = (320 - (4 * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
+	_tableView.rowHeight = width + 4;
+	
 	[_tableView reloadData];
 }
 
@@ -103,8 +111,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-	NSInteger numberOfCells = _numberOfThumbnails / 4;
-	if (_numberOfThumbnails % 4 != 0) {
+	NSInteger numberOfCells = _numberOfThumbnails / _numberOfThumbnailsInRow;
+	if (_numberOfThumbnails % _numberOfThumbnailsInRow != 0) {
 		numberOfCells += 1;
 	}
 	
@@ -117,51 +125,42 @@
     
     VCThumbnailViewCell *cell = (VCThumbnailViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[VCThumbnailViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[VCThumbnailViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier thumbnailCount:_numberOfThumbnailsInRow] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 	
     // Configure the cell...
-	int indexOfImage = indexPath.row * 4;
-	if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:imageAtIndex:)]) {
-		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView1 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
-			cell.imageView1.tag = indexOfImage++;
-			[cell.imageView1 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
-		}
-		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView2 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
-			cell.imageView2.tag = indexOfImage++;
-			[cell.imageView2 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
-		}
-		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView3 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
-			cell.imageView3.tag = indexOfImage++;
-			[cell.imageView3 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
-		}
-		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView4 setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
-			cell.imageView4.tag = indexOfImage++;
-			[cell.imageView4 addTarget:self withSelector:@selector(didTapImageThumbnail:)];
+	int indexOfImage = indexPath.row * _numberOfThumbnailsInRow;
+	
+	VCThumbnailButton *thumbnail = nil;
+	for (int i = 0; i < _numberOfThumbnailsInRow; i++) {
+		thumbnail = [cell.thumbnails objectAtIndex:i];
+		
+		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:imageAtIndex:)]) {
+			if (indexOfImage < _numberOfThumbnails) {
+				[thumbnail setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
+				thumbnail.tag = indexOfImage++;
+				[thumbnail addTarget:self withSelector:@selector(didTapImageThumbnail:)];
+			}
 		}
 	}
 	
-	indexOfImage = indexPath.row * 4;
-	if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:imageUrlAtIndex:)]) {
-		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView1 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
-		}
-		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView2 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
-		}
-		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView3 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
-		}
-		if (indexOfImage < _numberOfThumbnails) {
-			[cell.imageView4 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
-		}
-	}
+//	
+//	if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:imageUrlAtIndex:)]) {
+//		if (indexOfImage < _numberOfThumbnails) {
+//			[cell.imageView1 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
+//		}
+//		if (indexOfImage < _numberOfThumbnails) {
+//			[cell.imageView2 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
+//		}
+//		if (indexOfImage < _numberOfThumbnails) {
+//			[cell.imageView3 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
+//		}
+//		if (indexOfImage < _numberOfThumbnails) {
+//			[cell.imageView4 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
+//		}
+//	}
 	
     return cell;
 }

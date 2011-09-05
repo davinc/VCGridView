@@ -29,15 +29,11 @@
 #import "VCThumbnailButton.h"
 
 @interface VCThumbnailViewCell : UITableViewCell {
-    VCThumbnailButton *imageView1;
-    VCThumbnailButton *imageView2;
-    VCThumbnailButton *imageView3;
-    VCThumbnailButton *imageView4;
+	NSMutableArray *thumbnails;
 }
 
-@property (nonatomic, retain) VCThumbnailButton *imageView1;
-@property (nonatomic, retain) VCThumbnailButton *imageView2;
-@property (nonatomic, retain) VCThumbnailButton *imageView3;
-@property (nonatomic, retain) VCThumbnailButton *imageView4;
+@property (nonatomic, readonly) NSArray *thumbnails;
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thumbnailCount:(NSInteger)count;
 
 @end

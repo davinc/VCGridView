@@ -46,6 +46,7 @@
 	
 	UITableView *_tableView;
 	NSInteger _numberOfThumbnails;
+	NSInteger _numberOfThumbnailsInRow;
 	BOOL _isEditing;
 }
 
@@ -65,6 +66,7 @@
 - (NSInteger)numberOfThumbnailsInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView;
 
 @optional
+- (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
 - (UIImage*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageAtIndex:(NSInteger)index;
 - (NSString*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageUrlAtIndex:(NSInteger)index;
 

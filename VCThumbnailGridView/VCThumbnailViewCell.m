@@ -28,33 +28,26 @@
 
 @implementation VCThumbnailViewCell
 
-@synthesize imageView1, imageView2, imageView3, imageView4;
+@synthesize thumbnails;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thumbnailCount:(NSInteger)count
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
-		imageView1 = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(4, 2, 75, 75)];
-		imageView1.backgroundColor = [UIColor whiteColor];
-		imageView1.shouldShowActivityIndicator = YES;
-		[self addSubview:imageView1];
+		CGFloat currentX = 0.0f;
+		CGFloat width = (320 - (4 * (count+1))) / count;
 		
-		imageView2 = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(83, 2, 75, 75)];
-		imageView2.backgroundColor = [UIColor whiteColor];
-		imageView2.shouldShowActivityIndicator = YES;
-		[self addSubview:imageView2];
+		thumbnails = [[NSMutableArray alloc] initWithCapacity:count];
 		
-		imageView3 = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(162, 2, 75, 75)];
-		imageView3.backgroundColor = [UIColor whiteColor];
-		imageView3.shouldShowActivityIndicator = YES;
-		[self addSubview:imageView3];
-		
-		imageView4 = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(241, 2, 75, 75)];
-		imageView4.backgroundColor = [UIColor whiteColor];
-		imageView4.shouldShowActivityIndicator = YES;
-		[self addSubview:imageView4];
-		
+		VCThumbnailButton *thumbnailButton = nil;
+		for (int counter = 0; counter < count; counter++) {
+			thumbnailButton = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(4 + (counter * (width+4)), 2, width, width)];
+			thumbnailButton.backgroundColor = [UIColor whiteColor];
+			thumbnailButton.shouldShowActivityIndicator = YES;
+			[thumbnails addObject:thumbnailButton];
+			[self addSubview:thumbnailButton];
+			[thumbnailButton release], thumbnailButton = nil;
+		}
     }
     return self;
 }
@@ -64,18 +57,15 @@
     [super setEditing:editing animated:animated];
 
     // Configure the view for the selected state
-	[imageView1 setEditing:editing animated:animated];
-	[imageView2 setEditing:editing animated:animated];
-	[imageView3 setEditing:editing animated:animated];
-	[imageView4 setEditing:editing animated:animated];
+	for (VCThumbnailButton *thumbnail in thumbnails) {
+		[thumbnail setEditing:editing animated:animated];
+	}
 }
 
 - (void)dealloc
 {
-	[imageView1 release];
-	[imageView2 release];
-	[imageView3 release];
-	[imageView4 release];
+	[thumbnails removeAllObjects];
+	[thumbnails release], thumbnails = nil;
     [super dealloc];
 }
 
