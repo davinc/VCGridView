@@ -17,11 +17,12 @@
 		4523F23613B7182600C883E5 /* VCThumbnailGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F23513B7182600C883E5 /* VCThumbnailGridView.m */; };
 		4523F23813B7190C00C883E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F23713B7190C00C883E5 /* QuartzCore.framework */; };
 		45571C1C1403B0180019D8F9 /* VCResponseFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 45571C111403B0180019D8F9 /* VCResponseFetcher.m */; };
-		45571C1D1403B0180019D8F9 /* VCResponseFetchService.m in Sources */ = {isa = PBXBuildFile; fileRef = 45571C131403B0180019D8F9 /* VCResponseFetchService.m */; };
 		458A7D6614042B87003223B4 /* VCDataResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 458A7D6314042B87003223B4 /* VCDataResponseProcessor.m */; };
 		458A7D6714042B87003223B4 /* VCImageResponseProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 458A7D6514042B87003223B4 /* VCImageResponseProcessor.m */; };
 		45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B7620713B7258A005ACEA1 /* RootViewController.m */; };
 		45B7622813B7280D005ACEA1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B7622713B7280D005ACEA1 /* Icon.png */; };
+		45D4C5D2142338680047F35D /* VCResponseFetchAsyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D4C5CF142338680047F35D /* VCResponseFetchAsyncService.m */; };
+		45D4C5D3142338680047F35D /* VCResponseFetchSyncService.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D4C5D1142338680047F35D /* VCResponseFetchSyncService.m */; };
 		45EFAD7A140271BC00A0D5E8 /* VCThumbnailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */; };
 		45EFADB11402983300A0D5E8 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAE1402983300A0D5E8 /* check.png */; };
 		45EFADB21402983300A0D5E8 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAF1402983300A0D5E8 /* check@2x.png */; };
@@ -47,8 +48,6 @@
 		45571C0F1403B0180019D8F9 /* VCDataProcessorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataProcessorDelegate.h; sourceTree = "<group>"; };
 		45571C101403B0180019D8F9 /* VCResponseFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetcher.h; sourceTree = "<group>"; };
 		45571C111403B0180019D8F9 /* VCResponseFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetcher.m; sourceTree = "<group>"; };
-		45571C121403B0180019D8F9 /* VCResponseFetchService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchService.h; sourceTree = "<group>"; };
-		45571C131403B0180019D8F9 /* VCResponseFetchService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchService.m; sourceTree = "<group>"; };
 		45571C141403B0180019D8F9 /* VCResponseFetchServiceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchServiceDelegate.h; sourceTree = "<group>"; };
 		458A7D6214042B87003223B4 /* VCDataResponseProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCDataResponseProcessor.h; sourceTree = "<group>"; };
 		458A7D6314042B87003223B4 /* VCDataResponseProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCDataResponseProcessor.m; sourceTree = "<group>"; };
@@ -57,6 +56,10 @@
 		45B7620613B7258A005ACEA1 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		45B7620713B7258A005ACEA1 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		45B7622713B7280D005ACEA1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		45D4C5CE142338680047F35D /* VCResponseFetchAsyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchAsyncService.h; sourceTree = "<group>"; };
+		45D4C5CF142338680047F35D /* VCResponseFetchAsyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchAsyncService.m; sourceTree = "<group>"; };
+		45D4C5D0142338680047F35D /* VCResponseFetchSyncService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCResponseFetchSyncService.h; sourceTree = "<group>"; };
+		45D4C5D1142338680047F35D /* VCResponseFetchSyncService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCResponseFetchSyncService.m; sourceTree = "<group>"; };
 		45EFAD78140271BB00A0D5E8 /* VCThumbnailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailViewCell.h; sourceTree = "<group>"; };
 		45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailViewCell.m; sourceTree = "<group>"; };
 		45EFADAE1402983300A0D5E8 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
@@ -165,9 +168,11 @@
 				45571C0F1403B0180019D8F9 /* VCDataProcessorDelegate.h */,
 				45571C101403B0180019D8F9 /* VCResponseFetcher.h */,
 				45571C111403B0180019D8F9 /* VCResponseFetcher.m */,
-				45571C121403B0180019D8F9 /* VCResponseFetchService.h */,
-				45571C131403B0180019D8F9 /* VCResponseFetchService.m */,
 				45571C141403B0180019D8F9 /* VCResponseFetchServiceDelegate.h */,
+				45D4C5CE142338680047F35D /* VCResponseFetchAsyncService.h */,
+				45D4C5CF142338680047F35D /* VCResponseFetchAsyncService.m */,
+				45D4C5D0142338680047F35D /* VCResponseFetchSyncService.h */,
+				45D4C5D1142338680047F35D /* VCResponseFetchSyncService.m */,
 			);
 			path = VCResponseFetcher;
 			sourceTree = "<group>";
@@ -267,9 +272,10 @@
 				45EFAD7A140271BC00A0D5E8 /* VCThumbnailViewCell.m in Sources */,
 				45F0C3901402CCAC0078569E /* VCThumbnailButton.m in Sources */,
 				45571C1C1403B0180019D8F9 /* VCResponseFetcher.m in Sources */,
-				45571C1D1403B0180019D8F9 /* VCResponseFetchService.m in Sources */,
 				458A7D6614042B87003223B4 /* VCDataResponseProcessor.m in Sources */,
 				458A7D6714042B87003223B4 /* VCImageResponseProcessor.m in Sources */,
+				45D4C5D2142338680047F35D /* VCResponseFetchAsyncService.m in Sources */,
+				45D4C5D3142338680047F35D /* VCResponseFetchSyncService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

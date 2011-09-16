@@ -1,8 +1,8 @@
 //
-//  VCResponseFetcher.h
-//  Demo
+//  VCResponseFetchAsyncService.h
+//  VCResponseFetcherTest
 //
-//  Created by Vinay Chavan on 15/06/11.
+//  Created by Vinay Chavan on 04/09/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -25,33 +25,29 @@
 //  THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
-
-// Main Service
-#import "VCResponseFetchSyncService.h"
-#import "VCResponseFetchAsyncService.h"
-#import "VCDataProcessorDelegate.h"
 #import "VCResponseFetchServiceDelegate.h"
+#import "VCDataProcessorDelegate.h"
 
-@interface VCResponseFetcher : NSObject {
-@private
-    NSOperationQueue *_networkOperationQueue;
+@interface VCResponseFetchAsyncService : NSOperation {
+	NSObject<VCResponseFetchServiceDelegate> *delegate;
+	NSObject<VCDataProcessorDelegate> *responseProcessor;
+	NSString *url;
+	NSURLRequestCachePolicy cachePolicy;
+	NSString *method;
+	NSDictionary *allHTTPHeaderFields;
+	NSData *body;
+	NSMutableData *data; // received Data
+	
+	BOOL executing;
+	BOOL finished;
 }
 
-+(VCResponseFetcher*)sharedInstance;
-
-- (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
-				url:(NSString*)url
-			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
-
-- (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
-			 method:(NSString*)method
-				url:(NSString*)url
-	allHeaderFields:(NSDictionary*)allHeaderFields
-			   body:(NSData*)body
-			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
-
-- (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer;
+@property (nonatomic, assign) NSObject<VCResponseFetchServiceDelegate> *delegate;
+@property (nonatomic, retain) NSObject<VCDataProcessorDelegate> *responseProcessor;
+@property (nonatomic, retain) NSString *url;
+@property (nonatomic, assign) NSURLRequestCachePolicy cachePolicy;
+@property (nonatomic, retain) NSDictionary *allHTTPHeaderFields;
+@property (nonatomic, retain) NSData *body;
+@property (nonatomic, retain) NSString *method;
 
 @end

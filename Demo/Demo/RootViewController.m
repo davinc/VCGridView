@@ -146,7 +146,7 @@
 
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
 {
-	return 2;
+	return 3;
 }
 
 - (UIImage*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageAtIndex:(NSInteger)index 
