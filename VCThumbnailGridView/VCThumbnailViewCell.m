@@ -34,7 +34,6 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-		CGFloat currentX = 0.0f;
 		CGFloat width = (320 - (4 * (count+1))) / count;
 		
 		thumbnails = [[NSMutableArray alloc] initWithCapacity:count];

@@ -128,40 +128,35 @@
         cell = [[[VCThumbnailViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier thumbnailCount:_numberOfThumbnailsInRow] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-	
-    // Configure the cell...
-	int indexOfImage = indexPath.row * _numberOfThumbnailsInRow;
-	
-	VCThumbnailButton *thumbnail = nil;
-	for (int i = 0; i < _numberOfThumbnailsInRow; i++) {
-		thumbnail = [cell.thumbnails objectAtIndex:i];
 		
-		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:imageAtIndex:)]) {
+		// Configure the cell...
+		
+		// Every row has a different identifier so we do not need to recofigure rows again on appear
+		int indexOfImage = indexPath.row * _numberOfThumbnailsInRow;
+		
+		VCThumbnailButton *thumbnail = nil;
+		BOOL respondsToSelectorImage = [self.dataSource respondsToSelector:@selector(thumbnailGridView:imageAtIndex:)];
+		BOOL respondsToSelectorImageUrl = [self.dataSource respondsToSelector:@selector(thumbnailGridView:imageUrlAtIndex:)];
+		for (int i = 0; i < _numberOfThumbnailsInRow; i++) {
+			thumbnail = [cell.thumbnails objectAtIndex:i];
+			
 			if (indexOfImage < _numberOfThumbnails) {
-				[thumbnail setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
+				thumbnail.hidden = NO;
+				if (respondsToSelectorImage) {
+					[thumbnail setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
+					[thumbnail addTarget:self withSelector:@selector(didTapImageThumbnail:)];
+				}
+				if (respondsToSelectorImageUrl) {
+					[thumbnail setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage]];
+				}
 				thumbnail.tag = indexOfImage++;
-				[thumbnail addTarget:self withSelector:@selector(didTapImageThumbnail:)];
+			}else {
+				thumbnail.hidden = YES;
 			}
 		}
-	}
+    }
 	
-//	
-//	if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:imageUrlAtIndex:)]) {
-//		if (indexOfImage < _numberOfThumbnails) {
-//			[cell.imageView1 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
-//		}
-//		if (indexOfImage < _numberOfThumbnails) {
-//			[cell.imageView2 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
-//		}
-//		if (indexOfImage < _numberOfThumbnails) {
-//			[cell.imageView3 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
-//		}
-//		if (indexOfImage < _numberOfThumbnails) {
-//			[cell.imageView4 setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage++]];
-//		}
-//	}
-	
+
     return cell;
 }
 
