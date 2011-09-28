@@ -26,13 +26,17 @@
 
 #import <UIKit/UIKit.h>
 
-#import "VCThumbnailButton.h"
+#import "VCThumbnailView.h"
 
 @interface VCThumbnailViewCell : UITableViewCell {
-	NSMutableArray *thumbnails;
+	NSMutableArray *_thumbnails;
+	NSInteger _thumbnailCount;
+	CGSize _thumbnailSize;
 }
 
-@property (nonatomic, readonly) NSArray *thumbnails;
+@property (nonatomic, retain) NSMutableArray *thumbnails;
+@property (nonatomic) NSInteger thumbnailCount;
+@property (nonatomic) CGSize thumbnailSize;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thumbnailCount:(NSInteger)count;
 

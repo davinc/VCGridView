@@ -1,9 +1,9 @@
 //
-//  VCResponseFetcher.h
+//  VCThumbnailView.h
 //  Demo
 //
-//  Created by Vinay Chavan on 15/06/11.
-//  
+//  Created by Vinay Chavan on 28/09/11.
+//
 //  Copyright (C) 2011 by Vinay Chavan
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,34 +24,33 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-// Main Service
-#import "VCResponseFetchSyncService.h"
-#import "VCResponseFetchAsyncService.h"
-#import "VCDataProcessorDelegate.h"
-#import "VCResponseFetchServiceDelegate.h"
-
-@interface VCResponseFetcher : NSObject {
-@private
-    NSOperationQueue *_networkOperationQueue;
+@interface VCThumbnailView : UIView {
+	UIButton *imageButton;
+	UIImageView *selectedIndicatorImageView;
+	
+	// Tap
+	id delegate;
+	SEL callback;
+	
+	// editing
+	BOOL isSelected;
+	BOOL isEditing;
 }
 
-+(VCResponseFetcher*)sharedInstance;
+@property (assign) BOOL roundedCorner;
+@property (assign) BOOL shouldShowActivityIndicator;
+@property (assign) BOOL shouldAutoRotateToFit;
+@property (readonly) BOOL isSelected;
+@property (readonly) BOOL isEditing;
 
-- (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
-				url:(NSString*)url
-			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
+- (void)setImage:(UIImage*)image;
 
-- (void)addObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer
-			 method:(NSString*)method
-				url:(NSString*)url
-	allHeaderFields:(NSDictionary*)allHeaderFields
-			   body:(NSData*)body
-			  cache:(NSURLRequestCachePolicy)cache
-  responseProcessor:(NSObject<VCDataProcessorDelegate>*)processor;
+- (void)addTarget:(id)target withSelector:(SEL)selector;
 
-- (void)removeObserver:(NSObject<VCResponseFetchServiceDelegate>*)observer;
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated;
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 
 @end
+

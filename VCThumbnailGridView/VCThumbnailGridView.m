@@ -52,6 +52,8 @@
 		_tableView.rowHeight = 0;
 		_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		[self addSubview:_tableView];
+		
+		_numberOfThumbnailsInRow = 1;
     }
     return self;
 }
@@ -68,7 +70,7 @@
 
 #pragma mark - Private Methods
 
-- (void)didTapImageThumbnail:(VCThumbnailButton*)imageView {
+- (void)didTapImageThumbnail:(VCThumbnailView*)imageView {
 	if ([self.delegate respondsToSelector:@selector(thumbnailGridView:didSelectThumbnailAtIndex:)]) {
 		[self.delegate thumbnailGridView:self didSelectThumbnailAtIndex:imageView.tag];
 	}
@@ -86,7 +88,7 @@
 	if ([self.dataSource respondsToSelector:@selector(numberOfThumbnailsInRowForThumbnailGridView:)]) {
 		_numberOfThumbnailsInRow = [self.dataSource numberOfThumbnailsInRowForThumbnailGridView:self];
 	}
-	_numberOfThumbnailsInRow = MAX(_numberOfThumbnailsInRow, 0);
+	_numberOfThumbnailsInRow = MAX(_numberOfThumbnailsInRow, 1);
 	
 	CGFloat width = (320 - (4 * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
 	_tableView.rowHeight = width + 4;
@@ -111,6 +113,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
+	if (_numberOfThumbnails == 0) return 0;
+	if (_numberOfThumbnailsInRow == 0) return 0;
+	
 	NSInteger numberOfCells = _numberOfThumbnails / _numberOfThumbnailsInRow;
 	if (_numberOfThumbnails % _numberOfThumbnailsInRow != 0) {
 		numberOfCells += 1;
@@ -134,29 +139,39 @@
 		// Every row has a different identifier so we do not need to recofigure rows again on appear
 		int indexOfImage = indexPath.row * _numberOfThumbnailsInRow;
 		
-		VCThumbnailButton *thumbnail = nil;
+		VCThumbnailView *thumbnail = nil;
 		BOOL respondsToSelectorImage = [self.dataSource respondsToSelector:@selector(thumbnailGridView:imageAtIndex:)];
-		BOOL respondsToSelectorImageUrl = [self.dataSource respondsToSelector:@selector(thumbnailGridView:imageUrlAtIndex:)];
+		BOOL respondsToSelectorView = [self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:)];
 		for (int i = 0; i < _numberOfThumbnailsInRow; i++) {
-			thumbnail = [cell.thumbnails objectAtIndex:i];
-			
 			if (indexOfImage < _numberOfThumbnails) {
+				// get or create thumbnail
+				if (respondsToSelectorView) {
+					thumbnail = [self.dataSource thumbnailGridView:self thumbnailViewAtIndex:indexOfImage];
+				}
+				if (thumbnail == nil) {
+					thumbnail = [[[VCThumbnailView alloc] initWithFrame:CGRectZero] autorelease];
+				}
+				
+				// set proerties
+				thumbnail.backgroundColor = [UIColor whiteColor];
+				[cell addSubview:thumbnail];
+				[cell.thumbnails addObject:thumbnail];
+				
 				thumbnail.hidden = NO;
 				if (respondsToSelectorImage) {
 					[thumbnail setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
 					[thumbnail addTarget:self withSelector:@selector(didTapImageThumbnail:)];
 				}
-				if (respondsToSelectorImageUrl) {
-					[thumbnail setImageUrl:[self.dataSource thumbnailGridView:self imageUrlAtIndex:indexOfImage]];
-				}
 				thumbnail.tag = indexOfImage++;
 			}else {
 				thumbnail.hidden = YES;
 			}
+			
+			thumbnail = nil;
 		}
     }
 	
-
+	
     return cell;
 }
 

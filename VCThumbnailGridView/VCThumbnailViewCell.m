@@ -28,43 +28,48 @@
 
 @implementation VCThumbnailViewCell
 
-@synthesize thumbnails;
+@synthesize thumbnails = _thumbnails;
+@synthesize thumbnailCount = _thumbnailCount;
+@synthesize thumbnailSize = _thumbnailSize;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thumbnailCount:(NSInteger)count
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-		CGFloat width = (320 - (4 * (count+1))) / count;
+		self.thumbnailCount = count;
+		CGFloat screenwidth = 320;
+		CGFloat gap = 4;
+		CGFloat width = (screenwidth - (gap * (self.thumbnailCount + 1))) / self.thumbnailCount;
+		self.thumbnailSize = CGSizeMake(width, width);
 		
-		thumbnails = [[NSMutableArray alloc] initWithCapacity:count];
-		
-		VCThumbnailButton *thumbnailButton = nil;
-		for (int counter = 0; counter < count; counter++) {
-			thumbnailButton = [[VCThumbnailButton alloc] initWithFrame:CGRectMake(4 + (counter * (width+4)), 2, width, width)];
-			thumbnailButton.backgroundColor = [UIColor whiteColor];
-			thumbnailButton.shouldShowActivityIndicator = YES;
-			[thumbnails addObject:thumbnailButton];
-			[self addSubview:thumbnailButton];
-			[thumbnailButton release], thumbnailButton = nil;
-		}
+		_thumbnails = [[NSMutableArray alloc] initWithCapacity:self.thumbnailCount];
     }
     return self;
+}
+
+- (void)layoutSubviews
+{
+	VCThumbnailView *thumbnailButton = nil;
+	for (int counter = 0; counter < [self.thumbnails count]; counter++) {
+		thumbnailButton = [_thumbnails objectAtIndex:counter];
+		thumbnailButton.frame = CGRectMake(4 + (counter * (self.thumbnailSize.width + 4)), 2, self.thumbnailSize.width, self.thumbnailSize.height);
+	}
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
-
+	
     // Configure the view for the selected state
-	for (VCThumbnailButton *thumbnail in thumbnails) {
+	for (VCThumbnailView *thumbnail in self.thumbnails) {
 		[thumbnail setEditing:editing animated:animated];
 	}
 }
 
 - (void)dealloc
 {
-	[thumbnails removeAllObjects];
-	[thumbnails release], thumbnails = nil;
+	[_thumbnails removeAllObjects];
+	[_thumbnails release], _thumbnails = nil;
     [super dealloc];
 }
 

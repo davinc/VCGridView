@@ -36,7 +36,7 @@
 @protocol VCThumbnailGridViewDataSource;
 @protocol VCThumbnailGridViewDelegate;
 
-@class VCThumbnailButton;
+@class VCThumbnailView;
 @class VCThumbnailViewCell;
 
 @interface VCThumbnailGridView : UIView <UITableViewDataSource, UITableViewDelegate> {
@@ -67,14 +67,14 @@
 
 @optional
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
-- (UIImage*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageAtIndex:(NSInteger)index;
-- (NSString*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageUrlAtIndex:(NSInteger)index;
+- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index;
+- (UIImage *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView imageAtIndex:(NSInteger)index;
 
 @end
 
 @protocol VCThumbnailGridViewDelegate <NSObject>
 
 @optional
-- (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index;
+- (void)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index;
 
 @end
