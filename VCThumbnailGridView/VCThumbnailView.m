@@ -44,7 +44,7 @@
 		shouldAutoRotateToFit = NO;
 		self.autoresizesSubviews = YES;
 		self.backgroundColor = [UIColor clearColor];
-		self.userInteractionEnabled = NO;
+		self.userInteractionEnabled = YES;
 		self.contentMode = UIViewContentModeScaleAspectFit;
 		self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
 		self.layer.borderWidth = 1.0f;

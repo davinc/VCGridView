@@ -149,19 +149,11 @@
 	return 3;
 }
 
-- (UIImage*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageAtIndex:(NSInteger)index 
+- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index
 {
-	return [UIImage imageNamed:@"Icon.png"];
-}
-
-- (NSString*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageUrlAtIndex:(NSInteger)index
-{
-	static bool something = false;
-	something = !something;
-	if (something) {
-		return [NSString stringWithString:@"http://images.apple.com/support/home/images/featured_itunes.png"];
-	}
-	return nil;
+	VCThumbnailView *thumbnailView = [[VCThumbnailView alloc] initWithFrame:CGRectZero];
+	[thumbnailView setImage:[UIImage imageNamed:@"Icon.png"]];
+	return [thumbnailView autorelease];
 }
 
 #pragma mark - VCThumbnailGridViewDelegate

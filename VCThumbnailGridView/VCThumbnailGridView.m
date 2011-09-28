@@ -140,7 +140,6 @@
 		int indexOfImage = indexPath.row * _numberOfThumbnailsInRow;
 		
 		VCThumbnailView *thumbnail = nil;
-		BOOL respondsToSelectorImage = [self.dataSource respondsToSelector:@selector(thumbnailGridView:imageAtIndex:)];
 		BOOL respondsToSelectorView = [self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:)];
 		for (int i = 0; i < _numberOfThumbnailsInRow; i++) {
 			if (indexOfImage < _numberOfThumbnails) {
@@ -153,24 +152,15 @@
 				}
 				
 				// set proerties
-				thumbnail.backgroundColor = [UIColor whiteColor];
+				thumbnail.tag = indexOfImage;
+				[thumbnail addTarget:self withSelector:@selector(didTapImageThumbnail:)];
 				[cell addSubview:thumbnail];
 				[cell.thumbnails addObject:thumbnail];
-				
-				thumbnail.hidden = NO;
-				if (respondsToSelectorImage) {
-					[thumbnail setImage:[self.dataSource thumbnailGridView:self imageAtIndex:indexOfImage]];
-					[thumbnail addTarget:self withSelector:@selector(didTapImageThumbnail:)];
-				}
 				thumbnail.tag = indexOfImage++;
-			}else {
-				thumbnail.hidden = YES;
 			}
-			
 			thumbnail = nil;
 		}
     }
-	
 	
     return cell;
 }

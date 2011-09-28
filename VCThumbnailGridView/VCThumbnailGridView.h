@@ -33,11 +33,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "VCThumbnailViewCell.h"
+
 @protocol VCThumbnailGridViewDataSource;
 @protocol VCThumbnailGridViewDelegate;
 
 @class VCThumbnailView;
-@class VCThumbnailViewCell;
 
 @interface VCThumbnailGridView : UIView <UITableViewDataSource, UITableViewDelegate> {
 @private
@@ -68,7 +69,7 @@
 @optional
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
 - (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index;
-- (UIImage *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView imageAtIndex:(NSInteger)index;
+//- (UIImage *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView imageAtIndex:(NSInteger)index;
 
 @end
 
