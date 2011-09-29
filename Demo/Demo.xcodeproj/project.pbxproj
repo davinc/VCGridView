@@ -19,6 +19,7 @@
 		45A795F5143391A800DB2A37 /* VCThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A795F4143391A800DB2A37 /* VCThumbnailView.m */; };
 		45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B7620713B7258A005ACEA1 /* RootViewController.m */; };
 		45B7622813B7280D005ACEA1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B7622713B7280D005ACEA1 /* Icon.png */; };
+		45BBC1A11434EEF9006A90B9 /* VCThumbnailGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BBC1A01434EEF9006A90B9 /* VCThumbnailGridViewController.m */; };
 		45EFAD7A140271BC00A0D5E8 /* VCThumbnailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */; };
 		45EFADB11402983300A0D5E8 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAE1402983300A0D5E8 /* check.png */; };
 		45EFADB21402983300A0D5E8 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAF1402983300A0D5E8 /* check@2x.png */; };
@@ -45,6 +46,8 @@
 		45B7620613B7258A005ACEA1 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		45B7620713B7258A005ACEA1 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		45B7622713B7280D005ACEA1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		45BBC19F1434EEF9006A90B9 /* VCThumbnailGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailGridViewController.h; sourceTree = "<group>"; };
+		45BBC1A01434EEF9006A90B9 /* VCThumbnailGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailGridViewController.m; sourceTree = "<group>"; };
 		45EFAD78140271BB00A0D5E8 /* VCThumbnailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailViewCell.h; sourceTree = "<group>"; };
 		45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailViewCell.m; sourceTree = "<group>"; };
 		45EFADAE1402983300A0D5E8 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 		4523F23313B7182600C883E5 /* VCThumbnailGridView */ = {
 			isa = PBXGroup;
 			children = (
+				45BBC19F1434EEF9006A90B9 /* VCThumbnailGridViewController.h */,
+				45BBC1A01434EEF9006A90B9 /* VCThumbnailGridViewController.m */,
 				4523F23413B7182600C883E5 /* VCThumbnailGridView.h */,
 				4523F23513B7182600C883E5 /* VCThumbnailGridView.m */,
 				45EFAD78140271BB00A0D5E8 /* VCThumbnailViewCell.h */,
@@ -218,6 +223,7 @@
 				45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */,
 				45EFAD7A140271BC00A0D5E8 /* VCThumbnailViewCell.m in Sources */,
 				45A795F5143391A800DB2A37 /* VCThumbnailView.m in Sources */,
+				45BBC1A11434EEF9006A90B9 /* VCThumbnailGridViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

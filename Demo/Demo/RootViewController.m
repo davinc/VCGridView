@@ -47,7 +47,6 @@
 
 - (void)dealloc
 {
-	[_gridView release], _gridView = nil;
 	[_selectedItems release], _selectedItems = nil;
     [super dealloc];
 }
@@ -62,42 +61,15 @@
 
 #pragma mark - View lifecycle
 
-
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-	[super loadView];
-	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	self.view.backgroundColor = [UIColor whiteColor];
-	
-	_gridView = [[VCThumbnailGridView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-	_gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	_gridView.backgroundColor = [UIColor whiteColor];
-	_gridView.delegate = self;
-	_gridView.dataSource = self;
-	[self.view addSubview:_gridView];
-}
-
-
-
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-	[_gridView reloadData];
-	
+
 	self.navigationItem.title = @"Grid View Demo";
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
 
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-	[_gridView release], _gridView = nil;
+	[self.gridView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -112,7 +84,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
 	[super setEditing:editing animated:animated];
-	[_gridView setEditing:editing animated:animated];
+	[self.gridView setEditing:editing animated:animated];
 	
 	if (editing) {
 		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
@@ -164,7 +136,7 @@
 	NSLog(@"Selected %i", index);
 #endif
 	
-	if (_gridView.isEditing) {
+	if (self.gridView.isEditing) {
 		NSString *key = [NSString stringWithFormat:@"%i",index];
 		NSObject *object = [_selectedItems objectForKey:key];
 		if (object) {

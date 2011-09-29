@@ -48,7 +48,6 @@
 		self.contentMode = UIViewContentModeScaleAspectFit;
 		self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
 		self.layer.borderWidth = 1.0f;
-		self.layer.shouldRasterize = YES;
 		
 		imageButton = [[UIButton alloc] initWithFrame:CGRectZero];
 		[imageButton addTarget:self action:@selector(didTapSelf:) forControlEvents:UIControlEventTouchUpInside];

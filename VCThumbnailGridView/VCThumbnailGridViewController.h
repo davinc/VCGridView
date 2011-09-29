@@ -1,8 +1,8 @@
 //
-//  RootViewController.h
+//  VCThumbnailGridViewController.h
 //  Demo
 //
-//  Created by Vinay Chavan on 26/06/11.
+//  Created by Vinay Chavan on 29/09/11.
 //  
 //  Copyright (C) 2011 by Vinay Chavan
 //
@@ -26,10 +26,14 @@
 
 #import <UIKit/UIKit.h>
 
-#import "VCThumbnailGridViewController.h"
+#import "VCThumbnailGridView.h"
 
-@interface RootViewController : VCThumbnailGridViewController {	
-	NSMutableDictionary *_selectedItems;
+@interface VCThumbnailGridViewController : UIViewController <VCThumbnailGridViewDelegate, VCThumbnailGridViewDataSource> {
+@private
+	VCThumbnailGridView *_gridView;
+	BOOL _isInputViewVisible;
 }
+
+@property (nonatomic, retain) VCThumbnailGridView *gridView;
 
 @end
