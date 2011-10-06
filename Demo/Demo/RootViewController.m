@@ -118,15 +118,18 @@
 
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
 {
-	return 3;
+	return 4;
 }
 
-- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index
-{
-	VCThumbnailView *thumbnailView = [[VCThumbnailView alloc] initWithFrame:CGRectZero];
-	[thumbnailView setImage:[UIImage imageNamed:@"Icon.png"]];
-	return [thumbnailView autorelease];
-}
+//- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView
+//{
+//	VCThumbnailView *thumbnailView = reusableThumbnailView;
+//	if (!thumbnailView) {
+//		thumbnailView = [[[VCThumbnailView alloc] initWithFrame:CGRectZero]autorelease];
+//	}
+//	[thumbnailView setImage:[UIImage imageNamed:@"Icon.png"]];
+//	return reusableThumbnailView;
+//}
 
 #pragma mark - VCThumbnailGridViewDelegate
 
@@ -137,7 +140,7 @@
 #endif
 	
 	if (self.gridView.isEditing) {
-		NSString *key = [NSString stringWithFormat:@"%i",index];
+		NSString *key = [NSString stringWithFormat:@"%i", index];
 		NSObject *object = [_selectedItems objectForKey:key];
 		if (object) {
 			[_selectedItems removeObjectForKey:key];

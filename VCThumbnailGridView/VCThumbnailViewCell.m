@@ -41,9 +41,9 @@
 		CGFloat gap = 4;
 		CGFloat width = (screenwidth - (gap * (self.thumbnailCount + 1))) / self.thumbnailCount;
 		self.thumbnailSize = CGSizeMake(width, width);
-		
+
 		_thumbnails = [[NSMutableArray alloc] initWithCapacity:self.thumbnailCount];
-    }
+	}
     return self;
 }
 
@@ -73,4 +73,13 @@
     [super dealloc];
 }
 
+
+- (VCThumbnailView *)thumbnailAtIndex:(NSInteger)index
+{
+	if (index >= [_thumbnails count]) {
+		return nil;
+	}
+	
+	return [_thumbnails objectAtIndex:index];
+}
 @end

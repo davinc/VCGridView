@@ -43,7 +43,6 @@
 		shouldShowActivityIndicator = NO;
 		shouldAutoRotateToFit = NO;
 		self.autoresizesSubviews = YES;
-		self.backgroundColor = [UIColor clearColor];
 		self.userInteractionEnabled = YES;
 		self.contentMode = UIViewContentModeScaleAspectFit;
 		self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
@@ -58,13 +57,13 @@
 		selectedIndicatorImageView.image = [UIImage imageNamed:@"check.png"];
 		[selectedIndicatorImageView sizeToFit];
 		[self addSubview:selectedIndicatorImageView];
-    }
+	}
     return self;
 }
 
 - (void)dealloc {
-	[imageButton release];
-	[selectedIndicatorImageView release];
+	[imageButton release], imageButton = nil;
+	[selectedIndicatorImageView release], selectedIndicatorImageView = nil;
     [super dealloc];
 }
 
@@ -111,6 +110,8 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
 	isSelected = selected;
+	
+	//	DebugLog(@"Index:%i selected:%i", self.tag, selected);
 	
 	if (animated) [UIView beginAnimations:nil context:nil];
 	

@@ -55,13 +55,12 @@
 
 #pragma mark - View lifecycle
 
-
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
 {
 	[super loadView];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-	
+
 	_gridView = [[VCThumbnailGridView alloc] initWithFrame:self.view.bounds];
 	_gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_gridView.delegate = self;
@@ -116,30 +115,17 @@
 	return 4;
 }
 
-- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index
+- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView
 {
 	return nil;
 }
-
-- (NSString*)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView imageUrlAtIndex:(NSInteger)index
-{
-	return nil;
-}
-
-
-
 
 #pragma mark - VCThumbnailGridViewDelegate
 
 - (void)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index
 {
-#if DEBUG
-	NSLog(@"Selected %i", index);
-#endif
+	
 }
-
-
-
 
 #pragma mark Keyboard show hide
 

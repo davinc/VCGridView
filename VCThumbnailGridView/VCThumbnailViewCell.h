@@ -40,4 +40,6 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thumbnailCount:(NSInteger)count;
 
+- (VCThumbnailView *)thumbnailAtIndex:(NSInteger)index;
+
 @end

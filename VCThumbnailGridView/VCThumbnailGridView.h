@@ -46,6 +46,7 @@
 	id<VCThumbnailGridViewDataSource> _dataSource;
 	
 	UITableView *_tableView;
+	NSMutableIndexSet *_selectedIndexes;
 	NSInteger _numberOfThumbnails;
 	NSInteger _numberOfThumbnailsInRow;
 	BOOL _isEditing;
@@ -54,6 +55,10 @@
 @property (nonatomic, assign) id<VCThumbnailGridViewDelegate> delegate;
 @property (nonatomic, assign) id<VCThumbnailGridViewDataSource> dataSource;
 @property (nonatomic, readonly) BOOL isEditing;
+@property (nonatomic, readonly) NSIndexSet *selectedIndexes;
+
+@property (nonatomic, retain) UIView *gridHeaderView;
+@property (nonatomic, retain) UIView *gridFooterView;
 
 - (void)reloadData;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
@@ -68,8 +73,7 @@
 
 @optional
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
-- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index;
-//- (UIImage *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView imageAtIndex:(NSInteger)index;
+- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView;
 
 @end
 
