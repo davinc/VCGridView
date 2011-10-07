@@ -40,14 +40,12 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-		_selectedItems = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
 - (void)dealloc
 {
-	[_selectedItems release], _selectedItems = nil;
     [super dealloc];
 }
 
@@ -92,16 +90,15 @@
 																							   action:@selector(didTapAction:)] autorelease];
 	}else {
 		self.navigationItem.leftBarButtonItem = nil;
-		[_selectedItems removeAllObjects];
 	}
 }
 
 - (void)didTapAction:(id)sender
 {
 #if DEBUG
-	NSLog(@"Selected item count : %i", [_selectedItems count]);
+	NSLog(@"Selected item count : %i", [self.gridView.selectedIndexes count]);
 #endif
-	[[[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%i items selected.", [_selectedItems count]] 
+	[[[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%i items selected.", [self.gridView.selectedIndexes count]] 
 								 message:nil 
 								delegate:nil
 					   cancelButtonTitle:@"Dismiss"
@@ -121,15 +118,15 @@
 	return 4;
 }
 
-//- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView
-//{
-//	VCThumbnailView *thumbnailView = reusableThumbnailView;
-//	if (!thumbnailView) {
-//		thumbnailView = [[[VCThumbnailView alloc] initWithFrame:CGRectZero]autorelease];
-//	}
-//	[thumbnailView setImage:[UIImage imageNamed:@"Icon.png"]];
-//	return reusableThumbnailView;
-//}
+- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView
+{
+	VCThumbnailView *thumbnailView = reusableThumbnailView;
+	if (!thumbnailView) {
+		thumbnailView = [[[VCThumbnailView alloc] initWithFrame:CGRectZero]autorelease];
+	}
+	[thumbnailView setImage:[UIImage imageNamed:@"Icon.png"]];
+	return thumbnailView;
+}
 
 #pragma mark - VCThumbnailGridViewDelegate
 
@@ -138,16 +135,6 @@
 #if DEBUG
 	NSLog(@"Selected %i", index);
 #endif
-	
-	if (self.gridView.isEditing) {
-		NSString *key = [NSString stringWithFormat:@"%i", index];
-		NSObject *object = [_selectedItems objectForKey:key];
-		if (object) {
-			[_selectedItems removeObjectForKey:key];
-		}else {
-			[_selectedItems setObject:[NSString string] forKey:key];
-		}
-	}
 }
 
 

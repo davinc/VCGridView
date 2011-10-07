@@ -28,8 +28,7 @@
 
 #import "VCThumbnailGridViewController.h"
 
-@interface RootViewController : VCThumbnailGridViewController {	
-	NSMutableDictionary *_selectedItems;
+@interface RootViewController : VCThumbnailGridViewController {
 }
 
 @end

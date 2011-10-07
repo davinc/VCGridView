@@ -179,9 +179,10 @@
 	BOOL respondsToSelectorView = [self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:reusableThumbnailView:)];
 	for (int i = 0; i < _numberOfThumbnailsInRow; i++) {
 		NSInteger index = firstIndex + i;
+		thumbnail = [cell thumbnailAtIndex:i];
 		if (index < _numberOfThumbnails) {
 			// get or create thumbnail
-			thumbnail = [cell thumbnailAtIndex:i];
+			thumbnail.hidden = NO;
 			if (respondsToSelectorView) {
 				thumbnail = [self.dataSource thumbnailGridView:self thumbnailViewAtIndex:index reusableThumbnailView:thumbnail];
 			}
@@ -197,6 +198,8 @@
 			}
 			
 			[thumbnail setSelected:[_selectedIndexes containsIndex:index] animated:NO];
+		}else {
+			thumbnail.hidden = YES;
 		}
 		thumbnail = nil;
 	}
