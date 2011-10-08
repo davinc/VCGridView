@@ -110,7 +110,7 @@
 
 - (NSInteger)numberOfThumbnailsInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView 
 {
-	return 22;
+	return 220;
 }
 
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
