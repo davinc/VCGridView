@@ -62,6 +62,7 @@
 
 - (void)reloadData;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
+- (VCThumbnailView *)thumbnailAtIndex:(NSInteger)index;
 
 @end
 
@@ -74,7 +75,7 @@
 @optional
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
 - (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView;
-
+- (BOOL)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView canEditThumbnailAtIndex:(NSInteger)index;
 @end
 
 @protocol VCThumbnailGridViewDelegate <NSObject>

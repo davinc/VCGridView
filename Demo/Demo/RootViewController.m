@@ -128,6 +128,11 @@
 	return thumbnailView;
 }
 
+- (BOOL)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView canEditThumbnailAtIndex:(NSInteger)index
+{
+	return YES;
+}
+
 #pragma mark - VCThumbnailGridViewDelegate
 
 - (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index

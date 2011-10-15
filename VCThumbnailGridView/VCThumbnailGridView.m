@@ -30,7 +30,6 @@
 
 @interface VCThumbnailGridView()
 
-
 @end
 
 @implementation VCThumbnailGridView
@@ -81,11 +80,18 @@
 			[self.delegate thumbnailGridView:self didSelectThumbnailAtIndex:imageView.tag];
 		}
 	}else {
-		NSInteger index = imageView.tag;
-		if ([_selectedIndexes containsIndex:index]) {
-			[_selectedIndexes removeIndex:index];
-		}else {
-			[_selectedIndexes addIndex:index];
+		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:canEditThumbnailAtIndex:)]) {
+			NSInteger index = imageView.tag;
+			VCThumbnailView *thumbnailView = [self thumbnailAtIndex:index];
+			if ([self.dataSource thumbnailGridView:self canEditThumbnailAtIndex:index]) {
+				if ([_selectedIndexes containsIndex:index]) {
+					[_selectedIndexes removeIndex:index];
+					[thumbnailView setSelected:NO animated:YES];
+				}else {
+					[_selectedIndexes addIndex:index];
+					[thumbnailView setSelected:YES animated:YES];
+				}
+			}
 		}
 	}
 }
@@ -114,6 +120,16 @@
 	[_tableView setEditing:editing animated:animated];
 	_isEditing = editing;
 	[_selectedIndexes removeAllIndexes];
+}
+
+- (VCThumbnailView *)thumbnailAtIndex:(NSInteger)index
+{
+	// expected row
+	NSInteger expectedRow = index / _numberOfThumbnailsInRow;	
+	NSInteger expectedThumbnailIndex = index % _numberOfThumbnailsInRow;
+	VCThumbnailViewCell *cell = (VCThumbnailViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:expectedRow inSection:0]];
+	VCThumbnailView *view = [cell thumbnailAtIndex:expectedThumbnailIndex];
+	return view;
 }
 
 #pragma mark - Property Methods

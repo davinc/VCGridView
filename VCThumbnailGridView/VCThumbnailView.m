@@ -82,9 +82,9 @@
 #pragma mark - Private Methods
 
 - (void)didTapSelf:(id)sender {
-	if (isEditing) {
-		[self setSelected:!isSelected animated:YES];
-	}
+//	if (isEditing) {
+//		[self setSelected:!isSelected animated:YES];
+//	}
 	if (delegate && [delegate respondsToSelector:callback]) {
 		[delegate performSelector:callback withObject:self];
 	}
