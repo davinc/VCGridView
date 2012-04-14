@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		450A5DEA14408E97003C452F /* README in Resources */ = {isa = PBXBuildFile; fileRef = 450A5DE914408E97003C452F /* README */; };
+		4515DF421449EB19009CBCA4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4515DF411449EB19009CBCA4 /* README.md */; };
 		4523F21A13B7181800C883E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F21913B7181800C883E5 /* UIKit.framework */; };
 		4523F21C13B7181900C883E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F21B13B7181900C883E5 /* Foundation.framework */; };
 		4523F21E13B7181900C883E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F21D13B7181900C883E5 /* CoreGraphics.framework */; };
@@ -28,7 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		450A5DE914408E97003C452F /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README; path = ../README; sourceTree = "<group>"; };
+		4515DF411449EB19009CBCA4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		4523F21513B7181800C883E5 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4523F21913B7181800C883E5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4523F21B13B7181900C883E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -75,7 +75,7 @@
 		4523F20A13B7181800C883E5 = {
 			isa = PBXGroup;
 			children = (
-				450A5DE914408E97003C452F /* README */,
+				4515DF411449EB19009CBCA4 /* README.md */,
 				4523F21F13B7181900C883E5 /* Demo */,
 				4523F21813B7181800C883E5 /* Frameworks */,
 				4523F21613B7181800C883E5 /* Products */,
@@ -210,7 +210,7 @@
 				45EFADB11402983300A0D5E8 /* check.png in Resources */,
 				45EFADB21402983300A0D5E8 /* check@2x.png in Resources */,
 				45EFADB31402983300A0D5E8 /* Icon@2x.png in Resources */,
-				450A5DEA14408E97003C452F /* README in Resources */,
+				4515DF421449EB19009CBCA4 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

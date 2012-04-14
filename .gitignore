@@ -1,14 +1,16 @@
 
-ise
+# Noise
 *.mode1v3
 *.pbxuser
 *.perspective 
+*.xcuserstate
+*.xcsettings
+*.xcscheme
+*.xcworkspacedata
 *.perspectivev3
 *.pyc 
 *~.nib/
 build/*
-*.xcuserstate
-*.xcsettings
 
 # old school
 .svn

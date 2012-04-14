@@ -109,8 +109,9 @@
 	}
 	_numberOfThumbnailsInRow = MAX(_numberOfThumbnailsInRow, 1);
 	
-	CGFloat width = (self.bounds.size.width - (4 * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
-	_tableView.rowHeight = width + 4;
+	CGFloat gap = 4.0f;
+	CGFloat width = (self.bounds.size.width - (gap * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
+	_tableView.rowHeight = width + gap;
 	
 	[_tableView reloadData];
 }

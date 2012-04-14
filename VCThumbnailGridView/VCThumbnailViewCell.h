@@ -37,6 +37,7 @@
 @property (nonatomic, retain) NSMutableArray *thumbnails;
 @property (nonatomic) NSInteger thumbnailCount;
 @property (nonatomic) CGSize thumbnailSize;
+@property (nonatomic) CGFloat thumbnailSpacing;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thumbnailCount:(NSInteger)count;
 

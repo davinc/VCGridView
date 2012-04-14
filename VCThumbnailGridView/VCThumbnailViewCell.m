@@ -31,15 +31,16 @@
 @synthesize thumbnails = _thumbnails;
 @synthesize thumbnailCount = _thumbnailCount;
 @synthesize thumbnailSize = _thumbnailSize;
+@synthesize thumbnailSpacing = _thumbnailSpacing;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thumbnailCount:(NSInteger)count
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
 		self.thumbnailCount = count;
-		CGFloat screenwidth = 320;
-		CGFloat gap = 4;
-		CGFloat width = (screenwidth - (gap * (self.thumbnailCount + 1))) / self.thumbnailCount;
+		CGFloat screenwidth = self.bounds.size.width;
+		_thumbnailSpacing = 4.0f;
+		CGFloat width = (screenwidth - (_thumbnailSpacing * (self.thumbnailCount + 1))) / self.thumbnailCount;
 		self.thumbnailSize = CGSizeMake(width, width);
 
 		_thumbnails = [[NSMutableArray alloc] initWithCapacity:self.thumbnailCount];
@@ -52,7 +53,10 @@
 	VCThumbnailView *thumbnailButton = nil;
 	for (int counter = 0; counter < [self.thumbnails count]; counter++) {
 		thumbnailButton = [_thumbnails objectAtIndex:counter];
-		thumbnailButton.frame = CGRectMake(4 + (counter * (self.thumbnailSize.width + 4)), 2, self.thumbnailSize.width, self.thumbnailSize.height);
+		thumbnailButton.frame = CGRectMake(_thumbnailSpacing + (counter * (self.thumbnailSize.width + _thumbnailSpacing)),
+										   _thumbnailSpacing/2,
+										   self.thumbnailSize.width,
+										   self.thumbnailSize.height);
 	}
 }
 
