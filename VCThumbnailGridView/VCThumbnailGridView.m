@@ -62,7 +62,7 @@
 }
 
 - (void)layoutSubviews {
-	_tableView.frame = CGRectInset(self.bounds, 0, 2);
+	_tableView.frame = CGRectInset(self.bounds, 0, _thumbnailSpacing/2);
 }
 
 - (void)dealloc {
@@ -109,9 +109,13 @@
 	}
 	_numberOfThumbnailsInRow = MAX(_numberOfThumbnailsInRow, 1);
 	
-	CGFloat gap = 4.0f;
-	CGFloat width = (self.bounds.size.width - (gap * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
-	_tableView.rowHeight = width + gap;
+	_thumbnailSpacing = 0.0f;
+	if ([self.dataSource respondsToSelector:@selector(spacingOfThumbnailsInThumbnailGridView:)]) {
+		_thumbnailSpacing = [self.dataSource spacingOfThumbnailsInThumbnailGridView:self];
+	}
+	
+	CGFloat width = (self.bounds.size.width - (_thumbnailSpacing * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
+	_tableView.rowHeight = width + _thumbnailSpacing;
 	
 	[_tableView reloadData];
 }
@@ -185,7 +189,10 @@
     
     VCThumbnailViewCell *cell = (VCThumbnailViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[VCThumbnailViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier thumbnailCount:_numberOfThumbnailsInRow] autorelease];
+        cell = [[[VCThumbnailViewCell alloc] initWithStyle:UITableViewCellStyleDefault 
+										   reuseIdentifier:CellIdentifier
+											thumbnailCount:_numberOfThumbnailsInRow
+										  thumbnailSpacing:_thumbnailSpacing] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}

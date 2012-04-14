@@ -49,6 +49,7 @@
 	NSMutableIndexSet *_selectedIndexes;
 	NSInteger _numberOfThumbnails;
 	NSInteger _numberOfThumbnailsInRow;
+	CGFloat _thumbnailSpacing;
 	BOOL _isEditing;
 }
 
@@ -74,6 +75,7 @@
 
 @optional
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
+- (CGFloat)spacingOfThumbnailsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
 - (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView;
 - (BOOL)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView canEditThumbnailAtIndex:(NSInteger)index;
 @end
