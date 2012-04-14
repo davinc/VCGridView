@@ -51,6 +51,7 @@
 - (void)layoutSubviews
 {
 	VCThumbnailView *thumbnailButton = nil;
+	_thumbnailSize.height = self.bounds.size.height - _thumbnailSpacing;
 	for (int counter = 0; counter < [self.thumbnails count]; counter++) {
 		thumbnailButton = [_thumbnails objectAtIndex:counter];
 		thumbnailButton.frame = CGRectMake(_thumbnailSpacing + (counter * (self.thumbnailSize.width + _thumbnailSpacing)),

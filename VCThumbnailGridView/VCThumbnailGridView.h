@@ -83,6 +83,7 @@
 
 @optional
 - (CGFloat)spacingOfThumbnailsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
+- (CGFloat)heightForRowsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
 - (void)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index;
 
 @end

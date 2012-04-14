@@ -114,8 +114,12 @@
 		_thumbnailSpacing = [self.delegate spacingOfThumbnailsInThumbnailGridView:self];
 	}
 	
-	CGFloat width = (self.bounds.size.width - (_thumbnailSpacing * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
-	_tableView.rowHeight = width + _thumbnailSpacing;
+	if ([self.delegate respondsToSelector:@selector(heightForRowsInThumbnailGridView:)]) {
+		_tableView.rowHeight = [self.delegate heightForRowsInThumbnailGridView:self];
+	}else {
+		CGFloat width = (self.bounds.size.width - (_thumbnailSpacing * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
+		_tableView.rowHeight = width + _thumbnailSpacing;
+	}
 	
 	[_tableView reloadData];
 }

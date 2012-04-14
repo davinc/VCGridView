@@ -140,6 +140,11 @@
 	return 4.0f;
 }
 
+- (CGFloat)heightForRowsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
+{
+	return 80.f;
+}
+
 - (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index
 {
 #if DEBUG
