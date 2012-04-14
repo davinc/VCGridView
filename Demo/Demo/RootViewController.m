@@ -118,11 +118,6 @@
 	return 4;
 }
 
-- (CGFloat)spacingOfThumbnailsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
-{
-	return 4.0f;
-}
-
 - (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView
 {
 	VCThumbnailView *thumbnailView = reusableThumbnailView;
@@ -139,6 +134,11 @@
 }
 
 #pragma mark - VCThumbnailGridViewDelegate
+
+- (CGFloat)spacingOfThumbnailsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
+{
+	return 4.0f;
+}
 
 - (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index
 {

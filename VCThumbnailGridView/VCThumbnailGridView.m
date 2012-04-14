@@ -110,8 +110,8 @@
 	_numberOfThumbnailsInRow = MAX(_numberOfThumbnailsInRow, 1);
 	
 	_thumbnailSpacing = 0.0f;
-	if ([self.dataSource respondsToSelector:@selector(spacingOfThumbnailsInThumbnailGridView:)]) {
-		_thumbnailSpacing = [self.dataSource spacingOfThumbnailsInThumbnailGridView:self];
+	if ([self.delegate respondsToSelector:@selector(spacingOfThumbnailsInThumbnailGridView:)]) {
+		_thumbnailSpacing = [self.delegate spacingOfThumbnailsInThumbnailGridView:self];
 	}
 	
 	CGFloat width = (self.bounds.size.width - (_thumbnailSpacing * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
