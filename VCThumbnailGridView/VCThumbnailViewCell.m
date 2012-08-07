@@ -33,19 +33,19 @@
 @synthesize thumbnailSize = _thumbnailSize;
 @synthesize thumbnailSpacing = _thumbnailSpacing;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thumbnailCount:(NSInteger)count thumbnailSpacing:(CGFloat)spacing
+- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier width:(CGFloat)width thumbnailCount:(NSInteger)count thumbnailSpacing:(CGFloat)spacing
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
+	self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+	if (self) {
 		self.thumbnailCount = count;
-		CGFloat screenwidth = self.bounds.size.width;
+		CGFloat screenwidth = width;
 		_thumbnailSpacing = spacing;
 		CGFloat width = (screenwidth - (_thumbnailSpacing * (self.thumbnailCount + 1))) / self.thumbnailCount;
 		self.thumbnailSize = CGSizeMake(width, width);
-
+		
 		_thumbnails = [[NSMutableArray alloc] initWithCapacity:self.thumbnailCount];
 	}
-    return self;
+	return self;
 }
 
 - (void)layoutSubviews

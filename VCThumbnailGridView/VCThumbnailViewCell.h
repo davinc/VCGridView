@@ -39,8 +39,7 @@
 @property (nonatomic) CGSize thumbnailSize;
 @property (nonatomic) CGFloat thumbnailSpacing;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier thumbnailCount:(NSInteger)count thumbnailSpacing:(CGFloat)spacing;
-
+- (id)initWithReuseIdentifier:(NSString *)reuseIdentifier width:(CGFloat)width thumbnailCount:(NSInteger)count thumbnailSpacing:(CGFloat)spacing;
 - (VCThumbnailView *)thumbnailAtIndex:(NSInteger)index;
 
 @end

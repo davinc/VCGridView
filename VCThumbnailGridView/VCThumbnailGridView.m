@@ -46,7 +46,7 @@
 		_delegate = nil;
 		_dataSource = nil;
 		
-		_tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+		_tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
 		_tableView.clipsToBounds = NO;
 		_tableView.dataSource = self;
 		_tableView.delegate = self;
@@ -57,6 +57,8 @@
 		_numberOfThumbnailsInRow = 1;
 		
 		_selectedIndexes = [[NSMutableIndexSet alloc] init];
+		
+		self.clipsToBounds = YES;
     }
     return self;
 }
@@ -193,10 +195,10 @@
     
     VCThumbnailViewCell *cell = (VCThumbnailViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[VCThumbnailViewCell alloc] initWithStyle:UITableViewCellStyleDefault 
-										   reuseIdentifier:CellIdentifier
-											thumbnailCount:_numberOfThumbnailsInRow
-										  thumbnailSpacing:_thumbnailSpacing] autorelease];
+        cell = [[[VCThumbnailViewCell alloc] initWithReuseIdentifier:CellIdentifier
+															   width:tableView.bounds.size.width
+													  thumbnailCount:_numberOfThumbnailsInRow
+													thumbnailSpacing:_thumbnailSpacing] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	}
