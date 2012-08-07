@@ -118,13 +118,13 @@
 	return 4;
 }
 
-- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView
+- (VCThumbnailButton *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailButton *)reusableThumbnailView
 {
-	VCThumbnailView *thumbnailView = reusableThumbnailView;
+	VCThumbnailButton *thumbnailView = reusableThumbnailView;
 	if (!thumbnailView) {
-		thumbnailView = [[[VCThumbnailView alloc] initWithFrame:CGRectZero]autorelease];
+		thumbnailView = [[[VCThumbnailButton alloc] initWithFrame:CGRectZero]autorelease];
 	}
-	[thumbnailView setImage:[UIImage imageNamed:@"Icon.png"]];
+	[thumbnailView setBackgroundImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
 	return thumbnailView;
 }
 

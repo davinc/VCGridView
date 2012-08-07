@@ -115,7 +115,7 @@
 	return 4;
 }
 
-- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView
+- (VCThumbnailButton *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailButton *)reusableThumbnailView
 {
 	return nil;
 }

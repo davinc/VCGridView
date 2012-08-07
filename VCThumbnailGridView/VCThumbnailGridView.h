@@ -38,8 +38,6 @@
 @protocol VCThumbnailGridViewDataSource;
 @protocol VCThumbnailGridViewDelegate;
 
-@class VCThumbnailView;
-
 @interface VCThumbnailGridView : UIView <UITableViewDataSource, UITableViewDelegate> {
 @private
     id<VCThumbnailGridViewDelegate> _delegate;
@@ -63,7 +61,7 @@
 
 - (void)reloadData;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
-- (VCThumbnailView *)thumbnailAtIndex:(NSInteger)index;
+- (VCThumbnailButton *)thumbnailAtIndex:(NSInteger)index;
 
 @end
 
@@ -75,7 +73,7 @@
 
 @optional
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
-- (VCThumbnailView *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailView *)reusableThumbnailView;
+- (VCThumbnailButton *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailButton *)reusableThumbnailView;
 - (BOOL)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView canEditThumbnailAtIndex:(NSInteger)index;
 @end
 

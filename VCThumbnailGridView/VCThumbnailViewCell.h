@@ -26,7 +26,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "VCThumbnailView.h"
+#import "VCThumbnailButton.h"
 
 @interface VCThumbnailViewCell : UITableViewCell {
 	NSMutableArray *_thumbnails;
@@ -40,6 +40,6 @@
 @property (nonatomic) CGFloat thumbnailSpacing;
 
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier width:(CGFloat)width thumbnailCount:(NSInteger)count thumbnailSpacing:(CGFloat)spacing;
-- (VCThumbnailView *)thumbnailAtIndex:(NSInteger)index;
+- (VCThumbnailButton *)thumbnailAtIndex:(NSInteger)index;
 
 @end

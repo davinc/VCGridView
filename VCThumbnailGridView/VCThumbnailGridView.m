@@ -76,7 +76,7 @@
 
 #pragma mark - Private Methods
 
-- (void)didTapImageThumbnail:(VCThumbnailView*)imageView {
+- (void)didTapImageThumbnail:(VCThumbnailButton *)imageView {
 	if (!self.isEditing) {
 		if ([self.delegate respondsToSelector:@selector(thumbnailGridView:didSelectThumbnailAtIndex:)]) {
 			[self.delegate thumbnailGridView:self didSelectThumbnailAtIndex:imageView.tag];
@@ -84,7 +84,7 @@
 	}else {
 		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:canEditThumbnailAtIndex:)]) {
 			NSInteger index = imageView.tag;
-			VCThumbnailView *thumbnailView = [self thumbnailAtIndex:index];
+			VCThumbnailButton *thumbnailView = [self thumbnailAtIndex:index];
 			if ([self.dataSource thumbnailGridView:self canEditThumbnailAtIndex:index]) {
 				if ([_selectedIndexes containsIndex:index]) {
 					[_selectedIndexes removeIndex:index];
@@ -133,13 +133,13 @@
 	[_selectedIndexes removeAllIndexes];
 }
 
-- (VCThumbnailView *)thumbnailAtIndex:(NSInteger)index
+- (VCThumbnailButton *)thumbnailAtIndex:(NSInteger)index
 {
 	// expected row
 	NSInteger expectedRow = index / _numberOfThumbnailsInRow;	
 	NSInteger expectedThumbnailIndex = index % _numberOfThumbnailsInRow;
 	VCThumbnailViewCell *cell = (VCThumbnailViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:expectedRow inSection:0]];
-	VCThumbnailView *view = [cell thumbnailAtIndex:expectedThumbnailIndex];
+	VCThumbnailButton *view = [cell thumbnailAtIndex:expectedThumbnailIndex];
 	return view;
 }
 
@@ -193,7 +193,7 @@
 {
 	static NSString *CellIdentifier = @"Cell";
     
-    VCThumbnailViewCell *cell = (VCThumbnailViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    VCThumbnailViewCell *cell = (VCThumbnailViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[VCThumbnailViewCell alloc] initWithReuseIdentifier:CellIdentifier
 															   width:tableView.bounds.size.width
@@ -205,7 +205,7 @@
 	
 	int firstIndex = indexPath.row * _numberOfThumbnailsInRow;
 	
-	VCThumbnailView *thumbnail = nil;
+	VCThumbnailButton *thumbnail = nil;
 	BOOL respondsToSelectorView = [self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:reusableThumbnailView:)];
 	for (int i = 0; i < _numberOfThumbnailsInRow; i++) {
 		NSInteger index = firstIndex + i;
@@ -217,10 +217,10 @@
 				thumbnail = [self.dataSource thumbnailGridView:self thumbnailViewAtIndex:index reusableThumbnailView:thumbnail];
 			}
 			if (!thumbnail) {
-				thumbnail = [[[VCThumbnailView alloc] initWithFrame:CGRectZero] autorelease];
+				thumbnail = [[[VCThumbnailButton alloc] initWithFrame:CGRectZero] autorelease];
 			}
 			thumbnail.tag = index;
-			[thumbnail addTarget:self withSelector:@selector(didTapImageThumbnail:)];
+			[thumbnail addTarget:self action:@selector(didTapImageThumbnail:) forControlEvents:UIControlEventTouchUpInside];
 			
 			if (![cell.thumbnails containsObject:thumbnail]) {
 				[cell addSubview:thumbnail];

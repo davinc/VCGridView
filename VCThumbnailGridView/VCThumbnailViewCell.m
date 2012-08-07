@@ -50,7 +50,7 @@
 
 - (void)layoutSubviews
 {
-	VCThumbnailView *thumbnailButton = nil;
+	VCThumbnailButton *thumbnailButton = nil;
 	_thumbnailSize.height = self.bounds.size.height - _thumbnailSpacing;
 	for (int counter = 0; counter < [self.thumbnails count]; counter++) {
 		thumbnailButton = [_thumbnails objectAtIndex:counter];
@@ -66,7 +66,7 @@
     [super setEditing:editing animated:animated];
 	
     // Configure the view for the selected state
-	for (VCThumbnailView *thumbnail in self.thumbnails) {
+	for (VCThumbnailButton *thumbnail in self.thumbnails) {
 		[thumbnail setEditing:editing animated:animated];
 	}
 }
@@ -79,7 +79,7 @@
 }
 
 
-- (VCThumbnailView *)thumbnailAtIndex:(NSInteger)index
+- (VCThumbnailButton *)thumbnailAtIndex:(NSInteger)index
 {
 	if (index >= [_thumbnails count]) {
 		return nil;
