@@ -201,6 +201,10 @@
 													thumbnailSpacing:_thumbnailSpacing] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryNone;
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		
+		if ([self.delegate respondsToSelector:@selector(backgroundViewForRowInThumbnailGridView:)]) {
+			cell.backgroundView = [self.delegate backgroundViewForRowInThumbnailGridView:self];
+		}
 	}
 	
 	int firstIndex = indexPath.row * _numberOfThumbnailsInRow;
