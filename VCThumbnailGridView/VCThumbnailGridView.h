@@ -33,22 +33,33 @@
 
 #import <UIKit/UIKit.h>
 
-#import "VCThumbnailViewCell.h"
+#import "VCThumbnailButton.h"
 
 @protocol VCThumbnailGridViewDataSource;
 @protocol VCThumbnailGridViewDelegate;
 
-@interface VCThumbnailGridView : UIView <UITableViewDataSource, UITableViewDelegate> {
+@interface VCThumbnailGridView : UIView <UIScrollViewDelegate> {
 @private
     id<VCThumbnailGridViewDelegate> _delegate;
 	id<VCThumbnailGridViewDataSource> _dataSource;
 	
-	UITableView *_tableView;
-	NSMutableIndexSet *_selectedIndexes;
-	NSInteger _numberOfThumbnails;
-	NSInteger _numberOfThumbnailsInRow;
+	UIScrollView *_scrollView;
+
+	NSMutableArray *_thumbnailButtons;
+	NSUInteger _numberOfThumbnails;
+	NSUInteger _numberOfThumbnailsInRow;
+	NSUInteger _numberOfRows;
+	
+	NSRange currentVisibleRange;
+	
 	CGFloat _thumbnailSpacing;
+	CGFloat _thumbnailWidth;
+	CGFloat _rowHeight;
+	
+	NSMutableArray *_reusableThumbnailButtons;
+	
 	BOOL _isEditing;
+	NSMutableIndexSet *_selectedIndexes;
 }
 
 @property (nonatomic, assign) id<VCThumbnailGridViewDelegate> delegate;
@@ -56,13 +67,9 @@
 @property (nonatomic, readonly) BOOL isEditing;
 @property (nonatomic, readonly) NSIndexSet *selectedIndexes;
 
-@property (nonatomic, retain) UIView *gridHeaderView;
-@property (nonatomic, retain) UIView *gridFooterView;
-
 - (void)reloadData;
+- (VCThumbnailButton *)dequeueReusableThumbnail;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
-- (VCThumbnailButton *)thumbnailAtIndex:(NSInteger)index;
-
 @end
 
 
@@ -73,7 +80,7 @@
 
 @optional
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
-- (VCThumbnailButton *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailButton *)reusableThumbnailView;
+- (VCThumbnailButton *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index;
 - (BOOL)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView canEditThumbnailAtIndex:(NSInteger)index;
 @end
 

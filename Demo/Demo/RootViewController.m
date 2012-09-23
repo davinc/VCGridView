@@ -118,9 +118,9 @@
 	return 4;
 }
 
-- (VCThumbnailButton *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index reusableThumbnailView:(VCThumbnailButton *)reusableThumbnailView
+- (VCThumbnailButton *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index
 {
-	VCThumbnailButton *thumbnailView = reusableThumbnailView;
+	VCThumbnailButton *thumbnailView = [thumbnailGridView dequeueReusableThumbnail];
 	if (!thumbnailView) {
 		thumbnailView = [[[VCThumbnailButton alloc] initWithFrame:CGRectZero]autorelease];
 	}

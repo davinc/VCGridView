@@ -20,7 +20,6 @@
 		45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B7620713B7258A005ACEA1 /* RootViewController.m */; };
 		45B7622813B7280D005ACEA1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B7622713B7280D005ACEA1 /* Icon.png */; };
 		45BBC1A11434EEF9006A90B9 /* VCThumbnailGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BBC1A01434EEF9006A90B9 /* VCThumbnailGridViewController.m */; };
-		45EFAD7A140271BC00A0D5E8 /* VCThumbnailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */; };
 		45EFADB11402983300A0D5E8 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAE1402983300A0D5E8 /* check.png */; };
 		45EFADB21402983300A0D5E8 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAF1402983300A0D5E8 /* check@2x.png */; };
 		45EFADB31402983300A0D5E8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADB01402983300A0D5E8 /* Icon@2x.png */; };
@@ -48,8 +47,6 @@
 		45B7622713B7280D005ACEA1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		45BBC19F1434EEF9006A90B9 /* VCThumbnailGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailGridViewController.h; sourceTree = "<group>"; };
 		45BBC1A01434EEF9006A90B9 /* VCThumbnailGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailGridViewController.m; sourceTree = "<group>"; };
-		45EFAD78140271BB00A0D5E8 /* VCThumbnailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailViewCell.h; sourceTree = "<group>"; };
-		45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailViewCell.m; sourceTree = "<group>"; };
 		45EFADAE1402983300A0D5E8 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
 		45EFADAF1402983300A0D5E8 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
 		45EFADB01402983300A0D5E8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
@@ -134,8 +131,6 @@
 				45BBC1A01434EEF9006A90B9 /* VCThumbnailGridViewController.m */,
 				4523F23413B7182600C883E5 /* VCThumbnailGridView.h */,
 				4523F23513B7182600C883E5 /* VCThumbnailGridView.m */,
-				45EFAD78140271BB00A0D5E8 /* VCThumbnailViewCell.h */,
-				45EFAD79140271BB00A0D5E8 /* VCThumbnailViewCell.m */,
 				45F1408F15D0EB4300577DB1 /* VCThumbnailButton.h */,
 				45F1409015D0EB4300577DB1 /* VCThumbnailButton.m */,
 			);
@@ -226,7 +221,6 @@
 				4523F22A13B7181900C883E5 /* DemoAppDelegate.m in Sources */,
 				4523F23613B7182600C883E5 /* VCThumbnailGridView.m in Sources */,
 				45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */,
-				45EFAD7A140271BC00A0D5E8 /* VCThumbnailViewCell.m in Sources */,
 				45BBC1A11434EEF9006A90B9 /* VCThumbnailGridViewController.m in Sources */,
 				45F1409115D0EB4300577DB1 /* VCThumbnailButton.m in Sources */,
 			);
@@ -290,7 +284,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vinay Chavan (N7LGFY7U92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vinay Chavan (N7LGFY7U92)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -298,6 +293,8 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "25154470-8528-4122-A406-B8EF2C88D5BA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25154470-8528-4122-A406-B8EF2C88D5BA";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -306,14 +303,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vinay Chavan (N7LGFY7U92)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vinay Chavan (N7LGFY7U92)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "25154470-8528-4122-A406-B8EF2C88D5BA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25154470-8528-4122-A406-B8EF2C88D5BA";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

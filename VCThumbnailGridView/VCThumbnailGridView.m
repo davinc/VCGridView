@@ -26,9 +26,10 @@
 
 #import "VCThumbnailGridView.h"
 
-#import "VCThumbnailViewCell.h"
-
 @interface VCThumbnailGridView()
+
+@property (nonatomic, retain) NSMutableArray *thumbnailButtons;
+@property (nonatomic, retain) NSMutableArray *reusableThumbnailButtons;
 
 @end
 
@@ -36,6 +37,10 @@
 
 @synthesize delegate = _delegate;
 @synthesize dataSource = _dataSource;
+
+@synthesize thumbnailButtons = _thumbnailButtons;
+@synthesize reusableThumbnailButtons = _reusableThumbnailButtons;
+
 @synthesize isEditing = _isEditing;
 @synthesize selectedIndexes = _selectedIndexes;
 
@@ -45,30 +50,29 @@
         // Initialization code
 		_delegate = nil;
 		_dataSource = nil;
-		
-		_tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
-		_tableView.clipsToBounds = NO;
-		_tableView.dataSource = self;
-		_tableView.delegate = self;
-		_tableView.rowHeight = 0;
-		_tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		[self addSubview:_tableView];
-		
-		_numberOfThumbnailsInRow = 1;
+
+		_scrollView = [[UIScrollView alloc] initWithFrame:frame];
+		_scrollView.delegate = self;
+		[self addSubview:_scrollView];
+
+		self.clipsToBounds = YES;
 		
 		_selectedIndexes = [[NSMutableIndexSet alloc] init];
-		
-		self.clipsToBounds = YES;
     }
     return self;
 }
 
 - (void)layoutSubviews {
-	_tableView.frame = CGRectInset(self.bounds, 0, _thumbnailSpacing/2);
+	_scrollView.frame = self.bounds;
+
+	// set current visible views
+	[self layoutThumbnails];
 }
 
 - (void)dealloc {
-	[_tableView release], _tableView = nil;
+	[_scrollView release], _scrollView = nil;
+	[_thumbnailButtons release], _thumbnailButtons = nil;
+	[_reusableThumbnailButtons release], _reusableThumbnailButtons = nil;
 	[_selectedIndexes release], _selectedIndexes = nil;
     [super dealloc];
 }
@@ -98,9 +102,130 @@
 	}
 }
 
+
+#pragma mark - Reuse Queue Logic
+
+- (void)queueReusableThumbnailButton:(VCThumbnailButton *)aThumbnailButton
+{
+	NSUInteger reusableQueueLimit = _numberOfThumbnailsInRow * 2;
+	
+	if ([self.reusableThumbnailButtons count] >= reusableQueueLimit) {
+		return;
+	}
+	
+	[self.reusableThumbnailButtons addObject:aThumbnailButton];
+}
+
+- (VCThumbnailButton *)dequeueReusableThumbnail
+{
+	if ([self.reusableThumbnailButtons count] == 0) return nil;
+	
+	VCThumbnailButton *button = nil;
+	
+	button = [[self.reusableThumbnailButtons lastObject] retain]; // retain to avoid crash
+	[self.reusableThumbnailButtons removeLastObject];
+
+	return [button autorelease];
+}
+
+- (void)removeThumbnailButtonAtIndex:(NSUInteger)index
+{	
+    if ([self.thumbnailButtons objectAtIndex:index] != [NSNull null]) {
+		VCThumbnailButton *thumbnailButton = [self.thumbnailButtons objectAtIndex:index];
+        [self queueReusableThumbnailButton:thumbnailButton];
+        [thumbnailButton removeFromSuperview];
+        [self.thumbnailButtons replaceObjectAtIndex:index withObject:[NSNull null]];
+    }
+}
+
+#pragma mark - Layout
+
+- (NSRange)visibleThumbnailsRange
+{
+	CGPoint offset = _scrollView.contentOffset;
+
+	CGFloat topVisibleRow = floor(offset.y / _rowHeight);
+	NSInteger location = topVisibleRow * _numberOfThumbnailsInRow;
+	if (location < 0) {
+		location = 0;
+	}
+
+	CGFloat topMargin = offset.y - (topVisibleRow * _rowHeight);
+	CGFloat visibleHeight = _scrollView.bounds.size.height + topMargin;
+	CGFloat visibleRows = visibleHeight / _rowHeight;
+	NSUInteger length = ceilf(visibleRows) * _numberOfThumbnailsInRow;
+	if (location + length >= _numberOfThumbnails) {
+		length = _numberOfThumbnails - location;
+	}
+	
+	return NSMakeRange(location, length);
+}
+
+- (void)layoutThumbnails
+{
+	NSRange visibleThumbnailsRange = [self visibleThumbnailsRange];
+	
+	if (NSEqualRanges(currentVisibleRange, visibleThumbnailsRange)) {
+		return;
+	}
+
+//	NSLog(@"%i : %i", visibleThumbnailsRange.location, visibleThumbnailsRange.length);
+	currentVisibleRange = visibleThumbnailsRange;
+	
+	// layout visible items
+	for (NSUInteger i = 0; i < visibleThumbnailsRange.length; i++) {
+		[self layoutThumbnailAtIndex:i + visibleThumbnailsRange.location];
+	}
+	
+	// remove above and below items
+	for (NSUInteger i = 0; i < visibleThumbnailsRange.location; i++) {
+		[self removeThumbnailButtonAtIndex:i];
+	}
+	
+	for (NSUInteger i = visibleThumbnailsRange.location + visibleThumbnailsRange.length; i < _numberOfThumbnails; i++) {
+		[self removeThumbnailButtonAtIndex:i];
+	}
+}
+
+- (void)layoutThumbnailAtIndex:(NSUInteger)index
+{
+	// get thumbnail at index
+	VCThumbnailButton *thumbnailButton = [self.thumbnailButtons objectAtIndex:index];
+	if ((id)thumbnailButton == [NSNull null]) {
+		// if it is null then get it from delegate
+		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:reusableThumbnailView:)]) {
+			thumbnailButton = [self.dataSource thumbnailGridView:self thumbnailViewAtIndex:index];
+			thumbnailButton.tag = index;
+			[thumbnailButton addTarget:self action:@selector(didTapImageThumbnail:) forControlEvents:UIControlEventTouchUpInside];
+			[thumbnailButton setSelected:[_selectedIndexes containsIndex:index] animated:NO];
+		}
+	}
+	
+	// add at places
+	[self.thumbnailButtons replaceObjectAtIndex:index withObject:thumbnailButton];
+	[_scrollView addSubview:thumbnailButton];
+	
+	// set frame
+	CGFloat row = index / _numberOfThumbnailsInRow;
+	CGRect frame = CGRectMake(_thumbnailSpacing + ((index % _numberOfThumbnailsInRow) * (_thumbnailWidth + _thumbnailSpacing)),
+							  (row * _rowHeight) + _thumbnailSpacing,
+							  _thumbnailWidth,
+							  _rowHeight - _thumbnailSpacing);
+//	NSLog(@"%i", index);
+	thumbnailButton.frame = frame;
+}
+
 #pragma mark - Public Methods
 
 - (void)reloadData {
+	// remove all old views
+	for (UIView *view in self.thumbnailButtons) {
+		if ([view isKindOfClass:[VCThumbnailButton class]]) {
+			[view removeFromSuperview];
+		}
+	}
+	
+	// get number of thumbnails
 	if ([self.dataSource respondsToSelector:@selector(numberOfThumbnailsInThumbnailGridView:)]) {
 		_numberOfThumbnails = [self.dataSource numberOfThumbnailsInThumbnailGridView:self];
 	}
@@ -109,148 +234,77 @@
 	if ([self.dataSource respondsToSelector:@selector(numberOfThumbnailsInRowForThumbnailGridView:)]) {
 		_numberOfThumbnailsInRow = [self.dataSource numberOfThumbnailsInRowForThumbnailGridView:self];
 	}
-	_numberOfThumbnailsInRow = MAX(_numberOfThumbnailsInRow, 1);
+	_numberOfThumbnailsInRow = MAX(_numberOfThumbnailsInRow, 2);
 	
 	_thumbnailSpacing = 0.0f;
 	if ([self.delegate respondsToSelector:@selector(spacingOfThumbnailsInThumbnailGridView:)]) {
 		_thumbnailSpacing = [self.delegate spacingOfThumbnailsInThumbnailGridView:self];
 	}
 	
+	// calc thumbnail height
 	if ([self.delegate respondsToSelector:@selector(heightForRowsInThumbnailGridView:)]) {
-		_tableView.rowHeight = [self.delegate heightForRowsInThumbnailGridView:self];
+		_rowHeight = [self.delegate heightForRowsInThumbnailGridView:self];
 	}else {
 		CGFloat width = (self.bounds.size.width - (_thumbnailSpacing * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
-		_tableView.rowHeight = width + _thumbnailSpacing;
+		_rowHeight = width + _thumbnailSpacing;
 	}
 	
-	[_tableView reloadData];
-}
-
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
-	[_tableView setEditing:editing animated:animated];
-	_isEditing = editing;
-	[_selectedIndexes removeAllIndexes];
+	// calc thumbnail width
+	_thumbnailWidth = (_scrollView.bounds.size.width - (_thumbnailSpacing * (_numberOfThumbnailsInRow + 1))) / _numberOfThumbnailsInRow;
+	
+	// initialize thumbnails arry with null objects
+	self.thumbnailButtons = [NSMutableArray array]; // removes older items from array and its refreshed
+	for (NSUInteger i = 0; i < _numberOfThumbnails; i++) {
+		[self.thumbnailButtons addObject:[NSNull null]];
+	}
+	
+	// set content size for scroll view
+	_numberOfRows = _numberOfThumbnails / _numberOfThumbnailsInRow;
+	if (_numberOfThumbnails % _numberOfThumbnailsInRow != 0) {
+		_numberOfRows += 1;
+	}
+	_scrollView.contentSize = CGSizeMake(self.bounds.size.width, _numberOfRows * _rowHeight + _thumbnailSpacing);
+	
+	// set thumbnail pool size for reusability, should be double of _numberOfThumbnailsInRow
+	self.reusableThumbnailButtons = [NSMutableArray array];
+	
+	// call for layout
+	[self setNeedsLayout];
 }
 
 - (VCThumbnailButton *)thumbnailAtIndex:(NSInteger)index
 {
-	// expected row
-	NSInteger expectedRow = index / _numberOfThumbnailsInRow;	
-	NSInteger expectedThumbnailIndex = index % _numberOfThumbnailsInRow;
-	VCThumbnailViewCell *cell = (VCThumbnailViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:expectedRow inSection:0]];
-	VCThumbnailButton *view = [cell thumbnailAtIndex:expectedThumbnailIndex];
-	return view;
+	return [self.thumbnailButtons objectAtIndex:index];
 }
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+	[_selectedIndexes removeAllIndexes];
+
+	// set editing property
+	NSRange visibleThumbnailsRange = [self visibleThumbnailsRange];
+	for (NSUInteger i = 0; i < visibleThumbnailsRange.length; i++) {
+		VCThumbnailButton *thumbnail = [self thumbnailAtIndex:i + visibleThumbnailsRange.location];
+		if (thumbnail != (id)[NSNull null]) {
+			[thumbnail setEditing:editing animated:animated];
+		}
+	}
+
+	_isEditing = editing;
+}
+
 
 #pragma mark - Property Methods
 
-- (UIView *)gridHeaderView
+
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	return _tableView.tableHeaderView;
+	// check logic here
+	[self layoutThumbnails];
 }
 
-- (void)setGridHeaderView:(UIView *)gridHeaderView
-{
-	_tableView.tableHeaderView = gridHeaderView;
-}
-
-- (UIView *)gridFooterView
-{
-	return _tableView.tableFooterView;
-}
-
-- (void)setGridFooterView:(UIView *)gridFooterView
-{
-	_tableView.tableFooterView = gridFooterView;
-}
-
-
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-	if (_numberOfThumbnails == 0) return 0;
-	if (_numberOfThumbnailsInRow == 0) return 0;
-	
-	NSInteger numberOfCells = _numberOfThumbnails / _numberOfThumbnailsInRow;
-	if (_numberOfThumbnails % _numberOfThumbnailsInRow != 0) {
-		numberOfCells += 1;
-	}
-	
-    return numberOfCells;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	static NSString *CellIdentifier = @"Cell";
-    
-    VCThumbnailViewCell *cell = (VCThumbnailViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[VCThumbnailViewCell alloc] initWithReuseIdentifier:CellIdentifier
-															   width:tableView.bounds.size.width
-													  thumbnailCount:_numberOfThumbnailsInRow
-													thumbnailSpacing:_thumbnailSpacing] autorelease];
-		cell.accessoryType = UITableViewCellAccessoryNone;
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
-		
-		if ([self.delegate respondsToSelector:@selector(backgroundViewForRowInThumbnailGridView:)]) {
-			cell.backgroundView = [self.delegate backgroundViewForRowInThumbnailGridView:self];
-		}
-	}
-	
-	int firstIndex = indexPath.row * _numberOfThumbnailsInRow;
-	
-	VCThumbnailButton *thumbnail = nil;
-	BOOL respondsToSelectorView = [self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:reusableThumbnailView:)];
-	for (int i = 0; i < _numberOfThumbnailsInRow; i++) {
-		NSInteger index = firstIndex + i;
-		thumbnail = [cell thumbnailAtIndex:i];
-		if (index < _numberOfThumbnails) {
-			// get or create thumbnail
-			thumbnail.hidden = NO;
-			if (respondsToSelectorView) {
-				thumbnail = [self.dataSource thumbnailGridView:self thumbnailViewAtIndex:index reusableThumbnailView:thumbnail];
-			}
-			if (!thumbnail) {
-				thumbnail = [[[VCThumbnailButton alloc] initWithFrame:CGRectZero] autorelease];
-			}
-			thumbnail.tag = index;
-			[thumbnail addTarget:self action:@selector(didTapImageThumbnail:) forControlEvents:UIControlEventTouchUpInside];
-			
-			if (![cell.thumbnails containsObject:thumbnail]) {
-				[cell addSubview:thumbnail];
-				[cell.thumbnails addObject:thumbnail];
-			}
-			
-			[thumbnail setSelected:[_selectedIndexes containsIndex:index] animated:NO];
-		}else {
-			thumbnail.hidden = YES;
-		}
-		thumbnail = nil;
-	}
-	
-    return cell;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return YES;
-}
-
-#pragma mark - Table view delegate
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	return UITableViewCellEditingStyleNone;	
-}
 
 @end
