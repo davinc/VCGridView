@@ -110,7 +110,7 @@
 
 - (NSInteger)numberOfThumbnailsInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView 
 {
-	return 220;
+	return 100;
 }
 
 - (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
@@ -134,16 +134,6 @@
 }
 
 #pragma mark - VCThumbnailGridViewDelegate
-
-- (CGFloat)spacingOfThumbnailsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
-{
-	return 4.0f;
-}
-
-- (CGFloat)heightForRowsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
-{
-	return 80.f;
-}
 
 - (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index
 {

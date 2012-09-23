@@ -87,7 +87,7 @@
 		}
 	}else {
 		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:canEditThumbnailAtIndex:)]) {
-			NSInteger index = imageView.tag;
+			NSUInteger index = imageView.tag;
 			VCThumbnailButton *thumbnailView = [self thumbnailAtIndex:index];
 			if ([self.dataSource thumbnailGridView:self canEditThumbnailAtIndex:index]) {
 				if ([_selectedIndexes containsIndex:index]) {
@@ -102,6 +102,15 @@
 	}
 }
 
+- (void)updateContentSize
+{
+	// set content size for scroll view
+	_numberOfRows = _numberOfThumbnails / _numberOfThumbnailsInRow;
+	if (_numberOfThumbnails % _numberOfThumbnailsInRow != 0) {
+		_numberOfRows += 1;
+	}
+	_scrollView.contentSize = CGSizeMake(self.bounds.size.width, _numberOfRows * _rowHeight);	
+}
 
 #pragma mark - Reuse Queue Logic
 
@@ -128,12 +137,14 @@
 	return [button autorelease];
 }
 
-- (void)removeThumbnailButtonAtIndex:(NSUInteger)index
+- (void)prepareReuseThumbnailButtonAtIndex:(NSUInteger)index
 {
 	VCThumbnailButton *thumbnailButton = [self thumbnailAtIndex:index];
     if (thumbnailButton != (id)[NSNull null]) {
-        [self queueReusableThumbnailButton:thumbnailButton];
+		[thumbnailButton setFrame:CGRectZero];
         [thumbnailButton removeFromSuperview];
+		[thumbnailButton removeTarget:self action:@selector(didTapImageThumbnail:) forControlEvents:UIControlEventTouchUpInside];
+        [self queueReusableThumbnailButton:thumbnailButton];
         [self.thumbnailButtons replaceObjectAtIndex:index withObject:[NSNull null]];
     }
 }
@@ -161,6 +172,24 @@
 	return NSMakeRange(location, length);
 }
 
+- (void)layoutThumbnailAtIndex:(NSUInteger)index
+{
+	// get thumbnail at index
+	VCThumbnailButton *thumbnailButton = [self thumbnailAtIndex:index];
+	
+	// add at places
+	[self.thumbnailButtons replaceObjectAtIndex:index withObject:thumbnailButton];
+	[_scrollView insertSubview:thumbnailButton atIndex:0];
+	
+	// set frame
+	CGFloat row = index / _numberOfThumbnailsInRow;
+	CGRect frame = CGRectMake((index % _numberOfThumbnailsInRow) * _thumbnailWidth,
+							  row * _rowHeight,
+							  _thumbnailWidth,
+							  _rowHeight);
+	thumbnailButton.frame = frame;
+}
+
 - (void)layoutThumbnails
 {
 	NSRange visibleThumbnailsRange = [self visibleThumbnailsRange];
@@ -168,8 +197,7 @@
 	if (NSEqualRanges(currentVisibleRange, visibleThumbnailsRange)) {
 		return;
 	}
-
-	NSLog(@"%i : %i", visibleThumbnailsRange.location, visibleThumbnailsRange.length);
+	
 	currentVisibleRange = visibleThumbnailsRange;
 	
 	// layout visible items
@@ -177,43 +205,16 @@
 		[self layoutThumbnailAtIndex:i + visibleThumbnailsRange.location];
 	}
 	
-	// remove above and below items
+	// prepare for reuse above and below items
 	for (NSUInteger i = 0; i < visibleThumbnailsRange.location; i++) {
-		[self removeThumbnailButtonAtIndex:i];
+		[self prepareReuseThumbnailButtonAtIndex:i];
 	}
 	
 	for (NSUInteger i = visibleThumbnailsRange.location + visibleThumbnailsRange.length; i < _numberOfThumbnails; i++) {
-		[self removeThumbnailButtonAtIndex:i];
+		[self prepareReuseThumbnailButtonAtIndex:i];
 	}
 }
 
-- (void)layoutThumbnailAtIndex:(NSUInteger)index
-{
-	// get thumbnail at index
-	VCThumbnailButton *thumbnailButton = [self.thumbnailButtons objectAtIndex:index];
-	if ((id)thumbnailButton == [NSNull null]) {
-		// if it is null then get it from delegate
-		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:)]) {
-			thumbnailButton = [self.dataSource thumbnailGridView:self thumbnailViewAtIndex:index];
-			thumbnailButton.tag = index;
-			[thumbnailButton addTarget:self action:@selector(didTapImageThumbnail:) forControlEvents:UIControlEventTouchUpInside];
-			[thumbnailButton setSelected:[_selectedIndexes containsIndex:index] animated:NO];
-		}
-	}
-	
-	// add at places
-	[self.thumbnailButtons replaceObjectAtIndex:index withObject:thumbnailButton];
-	[_scrollView addSubview:thumbnailButton];
-	
-	// set frame
-	CGFloat row = index / _numberOfThumbnailsInRow;
-	CGRect frame = CGRectMake(_thumbnailSpacing + ((index % _numberOfThumbnailsInRow) * (_thumbnailWidth + _thumbnailSpacing)),
-							  (row * _rowHeight) + _thumbnailSpacing,
-							  _thumbnailWidth,
-							  _rowHeight - _thumbnailSpacing);
-//	NSLog(@"%i", index);
-	thumbnailButton.frame = frame;
-}
 
 #pragma mark - Public Methods
 
@@ -236,34 +237,24 @@
 	}
 	_numberOfThumbnailsInRow = MAX(_numberOfThumbnailsInRow, 2);
 	
-	_thumbnailSpacing = 0.0f;
-	if ([self.delegate respondsToSelector:@selector(spacingOfThumbnailsInThumbnailGridView:)]) {
-		_thumbnailSpacing = [self.delegate spacingOfThumbnailsInThumbnailGridView:self];
-	}
-	
+	// calc thumbnail width
+	_thumbnailWidth = self.bounds.size.width / _numberOfThumbnailsInRow;
+
 	// calc thumbnail height
 	if ([self.delegate respondsToSelector:@selector(heightForRowsInThumbnailGridView:)]) {
 		_rowHeight = [self.delegate heightForRowsInThumbnailGridView:self];
 	}else {
-		CGFloat width = (self.bounds.size.width - (_thumbnailSpacing * (_numberOfThumbnailsInRow+1))) / _numberOfThumbnailsInRow;
-		_rowHeight = width + _thumbnailSpacing;
+		_rowHeight = _thumbnailWidth;
 	}
-	
-	// calc thumbnail width
-	_thumbnailWidth = (_scrollView.bounds.size.width - (_thumbnailSpacing * (_numberOfThumbnailsInRow + 1))) / _numberOfThumbnailsInRow;
-	
+		
 	// initialize thumbnails arry with null objects
 	self.thumbnailButtons = [NSMutableArray array]; // removes older items from array and its refreshed
 	for (NSUInteger i = 0; i < _numberOfThumbnails; i++) {
 		[self.thumbnailButtons addObject:[NSNull null]];
 	}
 	
-	// set content size for scroll view
-	_numberOfRows = _numberOfThumbnails / _numberOfThumbnailsInRow;
-	if (_numberOfThumbnails % _numberOfThumbnailsInRow != 0) {
-		_numberOfRows += 1;
-	}
-	_scrollView.contentSize = CGSizeMake(self.bounds.size.width, _numberOfRows * _rowHeight + _thumbnailSpacing);
+	// update content size
+	[self updateContentSize];
 	
 	// set thumbnail pool size for reusability, should be double of _numberOfThumbnailsInRow
 	self.reusableThumbnailButtons = [NSMutableArray array];
@@ -272,9 +263,21 @@
 	[self setNeedsLayout];
 }
 
-- (VCThumbnailButton *)thumbnailAtIndex:(NSInteger)index
+- (VCThumbnailButton *)thumbnailAtIndex:(NSUInteger)index
 {
-	return [self.thumbnailButtons objectAtIndex:index];
+	VCThumbnailButton *thumbnailButton = [self.thumbnailButtons objectAtIndex:index];
+	if ((id)thumbnailButton == [NSNull null]) {
+		// if it is null then get it from delegate
+		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:)]) {
+			thumbnailButton = [self.dataSource thumbnailGridView:self thumbnailViewAtIndex:index];
+		}
+		[thumbnailButton addTarget:self action:@selector(didTapImageThumbnail:) forControlEvents:UIControlEventTouchUpInside];
+	}
+
+	thumbnailButton.tag = index;
+	[thumbnailButton setSelected:[_selectedIndexes containsIndex:index] animated:NO];
+
+	return thumbnailButton;
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -293,9 +296,49 @@
 	_isEditing = editing;
 }
 
+- (void)insertThumbnailAtIndex:(NSUInteger)index animated:(BOOL)animated
+{
+	[self.thumbnailButtons insertObject:[NSNull null] atIndex:index];
+	_numberOfThumbnails++;
+	[self updateContentSize];
 
-#pragma mark - Property Methods
+	NSRange visibleRange = [self visibleThumbnailsRange];
+	if (index < visibleRange.location + visibleRange.length)
+	{
+		currentVisibleRange = NSMakeRange(0, 0);//force layout
+		
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationBeginsFromCurrentState:YES];
+		[UIView setAnimationDuration:0.3];
+		[UIView setAnimationsEnabled:animated];
 
+		[self layoutThumbnails];
+		
+		[UIView commitAnimations];
+	}
+}
+
+- (void)removeThumbnailAtIndex:(NSUInteger)index animated:(BOOL)animated
+{
+	[self.thumbnailButtons removeObjectAtIndex:index];
+	_numberOfThumbnails--;
+	[self updateContentSize];
+	
+	NSRange visibleRange = [self visibleThumbnailsRange];
+	if (index < visibleRange.location + visibleRange.length)
+	{
+		currentVisibleRange = NSMakeRange(0, 0); //force layout
+		
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationBeginsFromCurrentState:YES];
+		[UIView setAnimationDuration:0.3];
+		[UIView setAnimationsEnabled:animated];
+		
+		[self layoutThumbnails];
+		
+		[UIView commitAnimations];
+	}
+}
 
 
 #pragma mark - UIScrollViewDelegate

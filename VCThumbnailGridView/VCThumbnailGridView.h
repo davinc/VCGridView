@@ -52,7 +52,6 @@
 	
 	NSRange currentVisibleRange;
 	
-	CGFloat _thumbnailSpacing;
 	CGFloat _thumbnailWidth;
 	CGFloat _rowHeight;
 	
@@ -68,8 +67,11 @@
 @property (nonatomic, readonly) NSIndexSet *selectedIndexes;
 
 - (void)reloadData;
+- (VCThumbnailButton *)thumbnailAtIndex:(NSUInteger)index;
 - (VCThumbnailButton *)dequeueReusableThumbnail;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
+- (void)insertThumbnailAtIndex:(NSUInteger)index animated:(BOOL)animated;
+- (void)removeThumbnailAtIndex:(NSUInteger)index animated:(BOOL)animated;
 @end
 
 
@@ -87,9 +89,7 @@
 @protocol VCThumbnailGridViewDelegate <NSObject>
 
 @optional
-- (CGFloat)spacingOfThumbnailsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
 - (CGFloat)heightForRowsInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
-- (UIView *)backgroundViewForRowInThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView;
 
 - (void)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index;
 
