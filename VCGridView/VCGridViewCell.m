@@ -1,5 +1,5 @@
 //
-//  VCThumbnailButton.m
+//  VCGridViewCell.m
 //  Demo
 //
 //  Created by Vinay Chavan on 07/08/12.
@@ -24,11 +24,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "VCThumbnailButton.h"
+#import "VCGridViewCell.h"
 
 #import <QuartzCore/QuartzCore.h>
 
-@implementation VCThumbnailButton
+@implementation VCGridViewCell
 
 @synthesize isSelected;
 @synthesize isEditing;

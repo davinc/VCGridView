@@ -26,9 +26,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "VCThumbnailGridViewController.h"
+#import "VCGridViewController.h"
 
-@interface RootViewController : VCThumbnailGridViewController {
+@interface RootViewController : VCGridViewController {
 }
 
 @end

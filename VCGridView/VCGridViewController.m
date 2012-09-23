@@ -1,5 +1,5 @@
 //
-//  VCThumbnailGridViewController.m
+//  VCGridViewController.m
 //  Demo
 //
 //  Created by Vinay Chavan on 29/09/11.
@@ -24,9 +24,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "VCThumbnailGridViewController.h"
+#import "VCGridViewController.h"
 
-@implementation VCThumbnailGridViewController
+@implementation VCGridViewController
 
 @synthesize gridView = _gridView;
 
@@ -61,7 +61,7 @@
 	[super loadView];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-	_gridView = [[VCThumbnailGridView alloc] initWithFrame:self.view.bounds];
+	_gridView = [[VCGridView alloc] initWithFrame:self.view.bounds];
 	_gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_gridView.delegate = self;
 	_gridView.dataSource = self;
@@ -103,31 +103,31 @@
 }
 
 
-#pragma mark - VCThumbnailGridViewDataSource
+#pragma mark - VCGridViewDataSource
 
-- (NSInteger)numberOfThumbnailsInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView 
+- (NSInteger)numberOfCellsInGridView:(VCGridView*)gridView 
 {
 	return 0;
 }
 
-- (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
+- (NSInteger)numberOfCellsInRowForGridView:(VCGridView *)gridView
 {
 	return 4;
 }
 
-- (VCThumbnailButton *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index
+- (VCGridViewCell *)gridView:(VCGridView *)gridView cellAtIndex:(NSInteger)index
 {
 	return nil;
 }
 
-- (BOOL)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView canEditThumbnailAtIndex:(NSInteger)index
+- (BOOL)gridView:(VCGridView *)gridView canEditCellAtIndex:(NSInteger)index
 {
 	return YES;
 }
 
-#pragma mark - VCThumbnailGridViewDelegate
+#pragma mark - VCGridViewDelegate
 
-- (void)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index
+- (void)gridView:(VCGridView *)gridView didSelectCellAtIndex:(NSInteger)index
 {
 	
 }

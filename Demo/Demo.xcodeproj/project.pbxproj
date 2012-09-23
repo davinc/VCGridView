@@ -15,15 +15,15 @@
 		4523F22713B7181900C883E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F22613B7181900C883E5 /* main.m */; };
 		4523F22A13B7181900C883E5 /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F22913B7181900C883E5 /* DemoAppDelegate.m */; };
 		4523F22D13B7181900C883E5 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4523F22B13B7181900C883E5 /* MainWindow.xib */; };
-		4523F23613B7182600C883E5 /* VCThumbnailGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F23513B7182600C883E5 /* VCThumbnailGridView.m */; };
 		4523F23813B7190C00C883E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F23713B7190C00C883E5 /* QuartzCore.framework */; };
+		457DB74F160F8DF80009B5F4 /* VCGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 457DB74A160F8DF80009B5F4 /* VCGridView.m */; };
+		457DB750160F8DF80009B5F4 /* VCGridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 457DB74C160F8DF80009B5F4 /* VCGridViewCell.m */; };
+		457DB751160F8DF80009B5F4 /* VCGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 457DB74E160F8DF80009B5F4 /* VCGridViewController.m */; };
 		45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B7620713B7258A005ACEA1 /* RootViewController.m */; };
 		45B7622813B7280D005ACEA1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 45B7622713B7280D005ACEA1 /* Icon.png */; };
-		45BBC1A11434EEF9006A90B9 /* VCThumbnailGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45BBC1A01434EEF9006A90B9 /* VCThumbnailGridViewController.m */; };
 		45EFADB11402983300A0D5E8 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAE1402983300A0D5E8 /* check.png */; };
 		45EFADB21402983300A0D5E8 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADAF1402983300A0D5E8 /* check@2x.png */; };
 		45EFADB31402983300A0D5E8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45EFADB01402983300A0D5E8 /* Icon@2x.png */; };
-		45F1409115D0EB4300577DB1 /* VCThumbnailButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45F1409015D0EB4300577DB1 /* VCThumbnailButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,19 +39,19 @@
 		4523F22813B7181900C883E5 /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
 		4523F22913B7181900C883E5 /* DemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppDelegate.m; sourceTree = "<group>"; };
 		4523F22C13B7181900C883E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		4523F23413B7182600C883E5 /* VCThumbnailGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailGridView.h; sourceTree = "<group>"; };
-		4523F23513B7182600C883E5 /* VCThumbnailGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailGridView.m; sourceTree = "<group>"; };
 		4523F23713B7190C00C883E5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		457DB749160F8DF80009B5F4 /* VCGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCGridView.h; sourceTree = "<group>"; };
+		457DB74A160F8DF80009B5F4 /* VCGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCGridView.m; sourceTree = "<group>"; };
+		457DB74B160F8DF80009B5F4 /* VCGridViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCGridViewCell.h; sourceTree = "<group>"; };
+		457DB74C160F8DF80009B5F4 /* VCGridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCGridViewCell.m; sourceTree = "<group>"; };
+		457DB74D160F8DF80009B5F4 /* VCGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCGridViewController.h; sourceTree = "<group>"; };
+		457DB74E160F8DF80009B5F4 /* VCGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCGridViewController.m; sourceTree = "<group>"; };
 		45B7620613B7258A005ACEA1 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		45B7620713B7258A005ACEA1 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		45B7622713B7280D005ACEA1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		45BBC19F1434EEF9006A90B9 /* VCThumbnailGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailGridViewController.h; sourceTree = "<group>"; };
-		45BBC1A01434EEF9006A90B9 /* VCThumbnailGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailGridViewController.m; sourceTree = "<group>"; };
 		45EFADAE1402983300A0D5E8 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
 		45EFADAF1402983300A0D5E8 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
 		45EFADB01402983300A0D5E8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		45F1408F15D0EB4300577DB1 /* VCThumbnailButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCThumbnailButton.h; sourceTree = "<group>"; };
-		45F1409015D0EB4300577DB1 /* VCThumbnailButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCThumbnailButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +101,7 @@
 		4523F21F13B7181900C883E5 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				4523F23313B7182600C883E5 /* VCThumbnailGridView */,
+				457DB748160F8DF80009B5F4 /* VCGridView */,
 				45B7620613B7258A005ACEA1 /* RootViewController.h */,
 				45B7620713B7258A005ACEA1 /* RootViewController.m */,
 				4523F22813B7181900C883E5 /* DemoAppDelegate.h */,
@@ -124,18 +124,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4523F23313B7182600C883E5 /* VCThumbnailGridView */ = {
+		457DB748160F8DF80009B5F4 /* VCGridView */ = {
 			isa = PBXGroup;
 			children = (
-				45BBC19F1434EEF9006A90B9 /* VCThumbnailGridViewController.h */,
-				45BBC1A01434EEF9006A90B9 /* VCThumbnailGridViewController.m */,
-				4523F23413B7182600C883E5 /* VCThumbnailGridView.h */,
-				4523F23513B7182600C883E5 /* VCThumbnailGridView.m */,
-				45F1408F15D0EB4300577DB1 /* VCThumbnailButton.h */,
-				45F1409015D0EB4300577DB1 /* VCThumbnailButton.m */,
+				457DB749160F8DF80009B5F4 /* VCGridView.h */,
+				457DB74A160F8DF80009B5F4 /* VCGridView.m */,
+				457DB74B160F8DF80009B5F4 /* VCGridViewCell.h */,
+				457DB74C160F8DF80009B5F4 /* VCGridViewCell.m */,
+				457DB74D160F8DF80009B5F4 /* VCGridViewController.h */,
+				457DB74E160F8DF80009B5F4 /* VCGridViewController.m */,
 			);
-			name = VCThumbnailGridView;
-			path = ../../VCThumbnailGridView;
+			name = VCGridView;
+			path = ../../VCGridView;
 			sourceTree = "<group>";
 		};
 		45B7622613B7280D005ACEA1 /* Resources */ = {
@@ -219,10 +219,10 @@
 			files = (
 				4523F22713B7181900C883E5 /* main.m in Sources */,
 				4523F22A13B7181900C883E5 /* DemoAppDelegate.m in Sources */,
-				4523F23613B7182600C883E5 /* VCThumbnailGridView.m in Sources */,
 				45B7620813B7258A005ACEA1 /* RootViewController.m in Sources */,
-				45BBC1A11434EEF9006A90B9 /* VCThumbnailGridViewController.m in Sources */,
-				45F1409115D0EB4300577DB1 /* VCThumbnailButton.m in Sources */,
+				457DB74F160F8DF80009B5F4 /* VCGridView.m in Sources */,
+				457DB750160F8DF80009B5F4 /* VCGridViewCell.m in Sources */,
+				457DB751160F8DF80009B5F4 /* VCGridViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +290,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "25154470-8528-4122-A406-B8EF2C88D5BA";
@@ -308,7 +308,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "25154470-8528-4122-A406-B8EF2C88D5BA";

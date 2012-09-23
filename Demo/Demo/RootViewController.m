@@ -106,36 +106,36 @@
 }
 
 
-#pragma mark - VCThumbnailGridViewDataSource
+#pragma mark - VCGridViewDataSource
 
-- (NSInteger)numberOfThumbnailsInThumbnailGridView:(VCThumbnailGridView*)thumbnailGridView 
+- (NSInteger)numberOfCellsInGridView:(VCGridView*)gridView
 {
 	return 100;
 }
 
-- (NSInteger)numberOfThumbnailsInRowForThumbnailGridView:(VCThumbnailGridView *)thumbnailGridView
+- (NSInteger)numberOfCellsInRowForGridView:(VCGridView *)gridView
 {
 	return 4;
 }
 
-- (VCThumbnailButton *)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView thumbnailViewAtIndex:(NSInteger)index
+- (VCGridViewCell *)gridView:(VCGridView *)gridView cellAtIndex:(NSInteger)index
 {
-	VCThumbnailButton *thumbnailView = [thumbnailGridView dequeueReusableThumbnail];
-	if (!thumbnailView) {
-		thumbnailView = [[[VCThumbnailButton alloc] initWithFrame:CGRectZero]autorelease];
+	VCGridViewCell *cell = [gridView dequeueReusableCell];
+	if (!cell) {
+		cell = [[[VCGridViewCell alloc] initWithFrame:CGRectZero]autorelease];
 	}
-	[thumbnailView setBackgroundImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
-	return thumbnailView;
+	[cell setBackgroundImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
+	return cell;
 }
 
-- (BOOL)thumbnailGridView:(VCThumbnailGridView *)thumbnailGridView canEditThumbnailAtIndex:(NSInteger)index
+- (BOOL)gridView:(VCGridView *)gridView canEditCellAtIndex:(NSInteger)index
 {
 	return YES;
 }
 
-#pragma mark - VCThumbnailGridViewDelegate
+#pragma mark - VCGridViewDelegate
 
-- (void)thumbnailGridView:(VCThumbnailGridView*)thumbnailGridView didSelectThumbnailAtIndex:(NSInteger)index
+- (void)gridView:(VCGridView*)gridView didSelectCellAtIndex:(NSInteger)index
 {
 #if DEBUG
 	NSLog(@"Selected %i", index);
