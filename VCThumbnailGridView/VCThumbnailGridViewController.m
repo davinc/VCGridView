@@ -61,7 +61,7 @@
 	[super loadView];
 	self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-	_gridView = [[VCThumbnailGridView alloc] initWithFrame:CGRectInset(self.view.bounds, 0, 0)];
+	_gridView = [[VCThumbnailGridView alloc] initWithFrame:self.view.bounds];
 	_gridView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	_gridView.delegate = self;
 	_gridView.dataSource = self;

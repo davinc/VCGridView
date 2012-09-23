@@ -129,9 +129,9 @@
 }
 
 - (void)removeThumbnailButtonAtIndex:(NSUInteger)index
-{	
-    if ([self.thumbnailButtons objectAtIndex:index] != [NSNull null]) {
-		VCThumbnailButton *thumbnailButton = [self.thumbnailButtons objectAtIndex:index];
+{
+	VCThumbnailButton *thumbnailButton = [self thumbnailAtIndex:index];
+    if (thumbnailButton != (id)[NSNull null]) {
         [self queueReusableThumbnailButton:thumbnailButton];
         [thumbnailButton removeFromSuperview];
         [self.thumbnailButtons replaceObjectAtIndex:index withObject:[NSNull null]];
@@ -169,7 +169,7 @@
 		return;
 	}
 
-//	NSLog(@"%i : %i", visibleThumbnailsRange.location, visibleThumbnailsRange.length);
+	NSLog(@"%i : %i", visibleThumbnailsRange.location, visibleThumbnailsRange.length);
 	currentVisibleRange = visibleThumbnailsRange;
 	
 	// layout visible items
@@ -193,7 +193,7 @@
 	VCThumbnailButton *thumbnailButton = [self.thumbnailButtons objectAtIndex:index];
 	if ((id)thumbnailButton == [NSNull null]) {
 		// if it is null then get it from delegate
-		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:reusableThumbnailView:)]) {
+		if ([self.dataSource respondsToSelector:@selector(thumbnailGridView:thumbnailViewAtIndex:)]) {
 			thumbnailButton = [self.dataSource thumbnailGridView:self thumbnailViewAtIndex:index];
 			thumbnailButton.tag = index;
 			[thumbnailButton addTarget:self action:@selector(didTapImageThumbnail:) forControlEvents:UIControlEventTouchUpInside];
