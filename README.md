@@ -14,3 +14,5 @@ iOS Photos app like grid view of thumbnail views.
 ##ToDo
 * Add thumbnail size customization
 * Add sections support
+* Insert and Remove thumbnails support
+* Adding layout animation support
