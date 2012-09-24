@@ -109,7 +109,7 @@
 	if (_numberOfCells % _numberOfCellsInRow != 0) {
 		_numberOfRows += 1;
 	}
-	_scrollView.contentSize = CGSizeMake(self.bounds.size.width, _numberOfRows * _rowHeight);	
+	_scrollView.contentSize = CGSizeMake(self.bounds.size.width, _numberOfRows * _cellHeight);	
 }
 
 #pragma mark - Reuse Queue Logic
@@ -139,10 +139,10 @@
 
 - (void)prepareReuseCellButtonAtIndex:(NSUInteger)index
 {
-	VCGridViewCell *cellButton = [self cellAtIndex:index];
+	VCGridViewCell *cellButton = [self.cells objectAtIndex:index];
     if (cellButton != (id)[NSNull null]) {
-		[cellButton setFrame:CGRectZero];
         [cellButton removeFromSuperview];
+		[cellButton setFrame:CGRectZero];
 		[cellButton removeTarget:self action:@selector(didTapImageCell:) forControlEvents:UIControlEventTouchUpInside];
         [self queueReusableCellButton:cellButton];
         [self.cells replaceObjectAtIndex:index withObject:[NSNull null]];
@@ -155,15 +155,15 @@
 {
 	CGPoint offset = _scrollView.contentOffset;
 
-	CGFloat topVisibleRow = floor(offset.y / _rowHeight);
+	CGFloat topVisibleRow = floor(offset.y / _cellHeight);
 	NSInteger location = topVisibleRow * _numberOfCellsInRow;
 	if (location < 0) {
 		location = 0;
 	}
 
-	CGFloat topMargin = offset.y - (topVisibleRow * _rowHeight);
+	CGFloat topMargin = offset.y - (topVisibleRow * _cellHeight);
 	CGFloat visibleHeight = _scrollView.bounds.size.height + topMargin;
-	CGFloat visibleRows = visibleHeight / _rowHeight;
+	CGFloat visibleRows = visibleHeight / _cellHeight;
 	NSUInteger length = ceilf(visibleRows) * _numberOfCellsInRow;
 	if (location + length >= _numberOfCells) {
 		length = _numberOfCells - location;
@@ -184,9 +184,9 @@
 	// set frame
 	CGFloat row = index / _numberOfCellsInRow;
 	CGRect frame = CGRectMake((index % _numberOfCellsInRow) * _cellWidth,
-							  row * _rowHeight,
+							  row * _cellHeight,
 							  _cellWidth,
-							  _rowHeight);
+							  _cellHeight);
 	cellButton.frame = frame;
 }
 
@@ -235,16 +235,16 @@
 	if ([self.dataSource respondsToSelector:@selector(numberOfCellsInRowForGridView:)]) {
 		_numberOfCellsInRow = [self.dataSource numberOfCellsInRowForGridView:self];
 	}
-	_numberOfCellsInRow = MAX(_numberOfCellsInRow, 2);
+	_numberOfCellsInRow = MAX(_numberOfCellsInRow, 1);
 	
 	// calc cell width
 	_cellWidth = self.bounds.size.width / _numberOfCellsInRow;
 
 	// calc cell height
-	if ([self.delegate respondsToSelector:@selector(heightForRowsInGridView:)]) {
-		_rowHeight = [self.delegate heightForRowsInGridView:self];
+	if ([self.delegate respondsToSelector:@selector(heightForCellsInGridView:)]) {
+		_cellHeight = [self.delegate heightForCellsInGridView:self];
 	}else {
-		_rowHeight = _cellWidth;
+		_cellHeight = _cellWidth;
 	}
 		
 	// initialize Cells arry with null objects

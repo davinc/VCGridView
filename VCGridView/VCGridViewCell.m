@@ -40,8 +40,8 @@
 		self.autoresizesSubviews = YES;
 		self.userInteractionEnabled = YES;
 		self.contentMode = UIViewContentModeScaleAspectFit;
-		self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-		self.layer.borderWidth = 1.0f;
+//		self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//		self.layer.borderWidth = 1.0f;
 
 		selectedIndicatorImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
 		selectedIndicatorImageView.alpha = 0.0;

@@ -53,7 +53,7 @@
 	NSRange currentVisibleRange;
 	
 	CGFloat _cellWidth;
-	CGFloat _rowHeight;
+	CGFloat _cellHeight;
 	
 	NSMutableArray *_reusableCells;
 	
@@ -66,12 +66,17 @@
 @property (nonatomic, readonly) BOOL isEditing;
 @property (nonatomic, readonly) NSIndexSet *selectedIndexes;
 
+
 - (void)reloadData;
 - (VCGridViewCell *)cellAtIndex:(NSUInteger)index;
 - (VCGridViewCell *)dequeueReusableCell;
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
+
+
 - (void)insertCellAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)removeCellAtIndex:(NSUInteger)index animated:(BOOL)animated;
+
 @end
 
 
@@ -89,7 +94,7 @@
 @protocol VCGridViewDelegate <NSObject>
 
 @optional
-- (CGFloat)heightForRowsInGridView:(VCGridView *)gridView;
+- (CGFloat)heightForCellsInGridView:(VCGridView *)gridView;
 
 - (void)gridView:(VCGridView *)gridView didSelectCellAtIndex:(NSInteger)index;
 

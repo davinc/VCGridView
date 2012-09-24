@@ -125,6 +125,7 @@
 		cell = [[[VCGridViewCell alloc] initWithFrame:CGRectZero]autorelease];
 	}
 	[cell setBackgroundImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
+//	[cell setTitle:@"title" forState:UIControlStateNormal];
 	return cell;
 }
 
