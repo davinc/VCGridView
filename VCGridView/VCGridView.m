@@ -52,6 +52,7 @@
 		_dataSource = nil;
 
 		_scrollView = [[UIScrollView alloc] initWithFrame:frame];
+		_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		_scrollView.delegate = self;
 		[self addSubview:_scrollView];
 
@@ -63,8 +64,6 @@
 }
 
 - (void)layoutSubviews {
-	_scrollView.frame = self.bounds;
-
 	// set current visible views
 	[self layoutCells];
 }
@@ -137,16 +136,18 @@
 	return [button autorelease];
 }
 
-- (void)prepareReuseCellButtonAtIndex:(NSUInteger)index
+- (BOOL)prepareReuseCellButtonAtIndex:(NSUInteger)index
 {
 	VCGridViewCell *cellButton = [self.cells objectAtIndex:index];
-    if (cellButton != (id)[NSNull null]) {
+    if ((id)cellButton != [NSNull null]) {
         [cellButton removeFromSuperview];
-		[cellButton setFrame:CGRectZero];
 		[cellButton removeTarget:self action:@selector(didTapImageCell:) forControlEvents:UIControlEventTouchUpInside];
         [self queueReusableCellButton:cellButton];
         [self.cells replaceObjectAtIndex:index withObject:[NSNull null]];
+		return YES;
     }
+	NSLog(@"called");
+	return NO;
 }
 
 #pragma mark - Layout
@@ -206,12 +207,14 @@
 	}
 	
 	// prepare for reuse above and below items
-	for (NSUInteger i = 0; i < visibleCellsRange.location; i++) {
-		[self prepareReuseCellButtonAtIndex:i];
+	for (NSInteger i = visibleCellsRange.location-1; i >= 0; i--) {
+		// break when first null object found
+		if (![self prepareReuseCellButtonAtIndex:i]) break;
 	}
 	
-	for (NSUInteger i = visibleCellsRange.location + visibleCellsRange.length; i < _numberOfCells; i++) {
-		[self prepareReuseCellButtonAtIndex:i];
+	for (NSUInteger i = NSMaxRange(visibleCellsRange); i < _numberOfCells; i++) {
+		// break when first null object found
+		if (![self prepareReuseCellButtonAtIndex:i]) break;
 	}
 }
 
@@ -303,7 +306,7 @@
 	[self updateContentSize];
 
 	NSRange visibleRange = [self visibleCellsRange];
-	if (index < visibleRange.location + visibleRange.length)
+	if (index < NSMaxRange(visibleRange))
 	{
 		currentVisibleRange = NSMakeRange(0, 0);//force layout
 		
@@ -325,7 +328,7 @@
 	[self updateContentSize];
 	
 	NSRange visibleRange = [self visibleCellsRange];
-	if (index < visibleRange.location + visibleRange.length)
+	if (index < NSMaxRange(visibleRange))
 	{
 		currentVisibleRange = NSMakeRange(0, 0); //force layout
 		
