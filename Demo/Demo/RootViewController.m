@@ -64,6 +64,8 @@
 {
     [super viewDidLoad];
 
+	self.view.backgroundColor = [UIColor whiteColor];
+	
 	self.navigationItem.title = @"Grid View Demo";
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
@@ -110,7 +112,7 @@
 
 - (NSInteger)numberOfCellsInGridView:(VCGridView*)gridView
 {
-	return 100;
+	return 98;
 }
 
 - (NSInteger)numberOfCellsInRowForGridView:(VCGridView *)gridView
@@ -125,7 +127,6 @@
 		cell = [[[VCGridViewCell alloc] initWithFrame:CGRectZero]autorelease];
 	}
 	[cell setBackgroundImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
-//	[cell setTitle:@"title" forState:UIControlStateNormal];
 	return cell;
 }
 

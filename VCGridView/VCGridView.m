@@ -146,7 +146,6 @@
         [self.cells replaceObjectAtIndex:index withObject:[NSNull null]];
 		return YES;
     }
-	NSLog(@"called");
 	return NO;
 }
 
@@ -183,7 +182,7 @@
 	[_scrollView insertSubview:cellButton atIndex:0];
 	
 	// set frame
-	CGFloat row = index / _numberOfCellsInRow;
+	CGFloat row = floor(index / _numberOfCellsInRow);
 	CGRect frame = CGRectMake((index % _numberOfCellsInRow) * _cellWidth,
 							  row * _cellHeight,
 							  _cellWidth,
@@ -241,7 +240,7 @@
 	_numberOfCellsInRow = MAX(_numberOfCellsInRow, 1);
 	
 	// calc cell width
-	_cellWidth = self.bounds.size.width / _numberOfCellsInRow;
+	_cellWidth = (self.bounds.size.width / _numberOfCellsInRow);
 
 	// calc cell height
 	if ([self.delegate respondsToSelector:@selector(heightForCellsInGridView:)]) {
