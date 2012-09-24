@@ -26,10 +26,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DemoAppDelegate : NSObject <UIApplicationDelegate> {
+@interface DemoAppDelegate : UIResponder <UIApplicationDelegate> {
 
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
+@property (strong, nonatomic) UIWindow *window;
 
 @end

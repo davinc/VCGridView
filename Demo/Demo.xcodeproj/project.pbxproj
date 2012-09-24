@@ -11,10 +11,8 @@
 		4523F21A13B7181800C883E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F21913B7181800C883E5 /* UIKit.framework */; };
 		4523F21C13B7181900C883E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F21B13B7181900C883E5 /* Foundation.framework */; };
 		4523F21E13B7181900C883E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F21D13B7181900C883E5 /* CoreGraphics.framework */; };
-		4523F22413B7181900C883E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4523F22213B7181900C883E5 /* InfoPlist.strings */; };
 		4523F22713B7181900C883E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F22613B7181900C883E5 /* main.m */; };
 		4523F22A13B7181900C883E5 /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F22913B7181900C883E5 /* DemoAppDelegate.m */; };
-		4523F22D13B7181900C883E5 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4523F22B13B7181900C883E5 /* MainWindow.xib */; };
 		4523F23813B7190C00C883E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F23713B7190C00C883E5 /* QuartzCore.framework */; };
 		457DB74F160F8DF80009B5F4 /* VCGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 457DB74A160F8DF80009B5F4 /* VCGridView.m */; };
 		457DB750160F8DF80009B5F4 /* VCGridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 457DB74C160F8DF80009B5F4 /* VCGridViewCell.m */; };
@@ -33,12 +31,10 @@
 		4523F21B13B7181900C883E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4523F21D13B7181900C883E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4523F22113B7181900C883E5 /* Demo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Demo-Info.plist"; sourceTree = "<group>"; };
-		4523F22313B7181900C883E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4523F22513B7181900C883E5 /* Demo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Prefix.pch"; sourceTree = "<group>"; };
 		4523F22613B7181900C883E5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4523F22813B7181900C883E5 /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
 		4523F22913B7181900C883E5 /* DemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppDelegate.m; sourceTree = "<group>"; };
-		4523F22C13B7181900C883E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		4523F23713B7190C00C883E5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		457DB749160F8DF80009B5F4 /* VCGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCGridView.h; sourceTree = "<group>"; };
 		457DB74A160F8DF80009B5F4 /* VCGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCGridView.m; sourceTree = "<group>"; };
@@ -106,7 +102,6 @@
 				45B7620713B7258A005ACEA1 /* RootViewController.m */,
 				4523F22813B7181900C883E5 /* DemoAppDelegate.h */,
 				4523F22913B7181900C883E5 /* DemoAppDelegate.m */,
-				4523F22B13B7181900C883E5 /* MainWindow.xib */,
 				4523F22013B7181900C883E5 /* Supporting Files */,
 				45B7622613B7280D005ACEA1 /* Resources */,
 			);
@@ -117,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				4523F22113B7181900C883E5 /* Demo-Info.plist */,
-				4523F22213B7181900C883E5 /* InfoPlist.strings */,
 				4523F22513B7181900C883E5 /* Demo-Prefix.pch */,
 				4523F22613B7181900C883E5 /* main.m */,
 			);
@@ -200,8 +194,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4523F22413B7181900C883E5 /* InfoPlist.strings in Resources */,
-				4523F22D13B7181900C883E5 /* MainWindow.xib in Resources */,
 				45B7622813B7280D005ACEA1 /* Icon.png in Resources */,
 				45EFADB11402983300A0D5E8 /* check.png in Resources */,
 				45EFADB21402983300A0D5E8 /* check@2x.png in Resources */,
@@ -227,25 +219,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		4523F22213B7181900C883E5 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4523F22313B7181900C883E5 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		4523F22B13B7181900C883E5 /* MainWindow.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4523F22C13B7181900C883E5 /* en */,
-			);
-			name = MainWindow.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4523F22E13B7181900C883E5 /* Debug */ = {
@@ -292,9 +265,11 @@
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "25154470-8528-4122-A406-B8EF2C88D5BA";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25154470-8528-4122-A406-B8EF2C88D5BA";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -310,9 +285,11 @@
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "25154470-8528-4122-A406-B8EF2C88D5BA";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25154470-8528-4122-A406-B8EF2C88D5BA";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
