@@ -86,6 +86,7 @@
 
 
 - (void)reloadData;
+- (NSUInteger)numberOfCells;
 - (VCGridViewCell *)cellAtIndex:(NSUInteger)index;
 - (VCGridViewCell *)dequeueReusableCell;
 

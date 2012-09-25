@@ -26,18 +26,33 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VCGridViewCell : UIButton
+@interface VCGridViewCell : UIView
 {
-	UIImageView *selectedIndicatorImageView;
-	// editing
-	BOOL isSelected;
-	BOOL isEditing;
+	UIView *_contentView;
+	UIView *_backgroundView;
+	UIView *_selectedBackgroundView;
+	UIView *_editingSelectionOverlayView;
+
+	struct {
+        unsigned int highlighted:1;
+        unsigned int selected:1;
+        unsigned int editing:1;
+    } _cellFlags;
 }
 
-@property (readonly) BOOL isSelected;
-@property (readonly) BOOL isEditing;
+@property (nonatomic, readonly, retain) UIView *contentView;
+@property (nonatomic, retain) UIView *backgroundView;
+@property (nonatomic, retain) UIView *selectedBackgroundView;
+@property (nonatomic, retain) UIView *editingSelectionOverlayView;
 
+
+@property (nonatomic, getter=isHighlighted) BOOL highlighted;
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated;
+
+@property (nonatomic, getter=isSelected) BOOL selected;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
+
+@property (nonatomic, getter=isEditing) BOOL editing;
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 
 @end

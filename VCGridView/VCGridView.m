@@ -47,6 +47,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+		self.delaysContentTouches = NO;
 		self.delegate = nil;
 		self.dataSource = nil;
 		_selectedIndexes = [[NSMutableIndexSet alloc] init];
@@ -69,14 +70,31 @@
 
 #pragma mark - Private Methods
 
-- (void)didTapImageCell:(VCGridViewCell *)imageView {
+- (void)didTouchDownCell:(VCGridViewCell *)cell
+{
+	[cell setHighlighted:YES animated:YES];
+}
+
+- (void)didTouchUpCell:(VCGridViewCell *)cell
+{
+	[cell setHighlighted:NO animated:YES];
+	[self didTapImageCell:cell];
+}
+
+- (void)didTouchCancelCell:(VCGridViewCell *)cell
+{
+	[cell setHighlighted:NO animated:YES];
+}
+
+- (void)didTapImageCell:(id)sender {
+	NSUInteger index = ((VCGridViewCell*)sender).tag;
+
 	if (!self.isEditing) {
 		if ([self.delegate respondsToSelector:@selector(gridView:didSelectCellAtIndex:)]) {
-			[self.delegate gridView:self didSelectCellAtIndex:imageView.tag];
+			[self.delegate gridView:self didSelectCellAtIndex:index];
 		}
 	}else {
 		if ([self.dataSource respondsToSelector:@selector(gridView:canEditCellAtIndex:)]) {
-			NSUInteger index = imageView.tag;
 			VCGridViewCell *cell = [self cellAtIndex:index];
 			if ([self.dataSource gridView:self canEditCellAtIndex:index]) {
 				if ([self.selectedIndexes containsIndex:index]) {
@@ -131,7 +149,6 @@
 	VCGridViewCell *cellButton = [self.cells objectAtIndex:index];
     if ((id)cellButton != [NSNull null]) {
         [cellButton removeFromSuperview];
-		[cellButton removeTarget:self action:@selector(didTapImageCell:) forControlEvents:UIControlEventTouchUpInside];
         [self queueReusableCellButton:cellButton];
         [self.cells replaceObjectAtIndex:index withObject:[NSNull null]];
 		return YES;
@@ -255,6 +272,11 @@
 	[self setNeedsLayout];
 }
 
+- (NSUInteger)numberOfCells
+{
+	return _numberOfCells;
+}
+
 - (VCGridViewCell *)cellAtIndex:(NSUInteger)index
 {
 	VCGridViewCell *cellButton = [self.cells objectAtIndex:index];
@@ -263,7 +285,6 @@
 		if ([self.dataSource respondsToSelector:@selector(gridView:cellAtIndex:)]) {
 			cellButton = [self.dataSource gridView:self cellAtIndex:index];
 		}
-		[cellButton addTarget:self action:@selector(didTapImageCell:) forControlEvents:UIControlEventTouchUpInside];
 	}
 
 	cellButton.tag = index;
@@ -330,6 +351,34 @@
 		
 		[UIView commitAnimations];
 	}
+}
+
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+	if ([touch.view isKindOfClass:[VCGridViewCell class]]) {
+		[self didTouchDownCell:(VCGridViewCell*)touch.view];
+	}
+
+    [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+	if ([touch.view isKindOfClass:[VCGridViewCell class]]) {
+		[self didTouchUpCell:(VCGridViewCell*)touch.view];
+	}
+
+    [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+	if ([touch.view isKindOfClass:[VCGridViewCell class]]) {
+		[self didTouchCancelCell:(VCGridViewCell*)touch.view];
+	}
+
+    [super touchesCancelled:touches withEvent:event];
 }
 
 @end

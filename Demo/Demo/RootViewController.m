@@ -125,8 +125,21 @@
 	VCGridViewCell *cell = [gridView dequeueReusableCell];
 	if (!cell) {
 		cell = [[[VCGridViewCell alloc] initWithFrame:CGRectZero]autorelease];
+
+		UIImageView *imageView = [[UIImageView alloc] initWithFrame:cell.bounds];
+		imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		imageView.contentMode = UIViewContentModeCenter;
+		imageView.image = [UIImage imageNamed:@"cell"];
+		[cell.contentView addSubview:imageView];
+		[imageView release], imageView = nil;
+
+		UIImageView *imageView1 = [[UIImageView alloc] initWithFrame:cell.bounds];
+		imageView1.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		imageView1.contentMode = UIViewContentModeBottomRight;
+		imageView1.image = [UIImage imageNamed:@"check"];
+		cell.editingSelectionOverlayView = imageView1;
+		[imageView1 release], imageView1 = nil;
 	}
-	[cell setBackgroundImage:[UIImage imageNamed:@"Icon.png"] forState:UIControlStateNormal];
 	return cell;
 }
 

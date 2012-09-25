@@ -26,44 +26,55 @@
 
 #import "VCGridViewCell.h"
 
-#import <QuartzCore/QuartzCore.h>
-
 @implementation VCGridViewCell
 
-@synthesize isSelected;
-@synthesize isEditing;
+@synthesize contentView = _contentView;
+@synthesize backgroundView = _backgroundView;
+@synthesize selectedBackgroundView = _selectedBackgroundView;
+@synthesize editingSelectionOverlayView = _editingSelectionOverlayView;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code.
 		self.autoresizesSubviews = YES;
-		self.userInteractionEnabled = YES;
-		self.contentMode = UIViewContentModeScaleAspectFit;
-//		self.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-//		self.layer.borderWidth = 1.0f;
 
-		selectedIndicatorImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-		selectedIndicatorImageView.alpha = 0.0;
-		selectedIndicatorImageView.image = [UIImage imageNamed:@"check.png"];
-		[selectedIndicatorImageView sizeToFit];
-		[self addSubview:selectedIndicatorImageView];
-	}
+		_selectedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
+		_selectedBackgroundView.backgroundColor = [UIColor blueColor];
+		_selectedBackgroundView.userInteractionEnabled = NO;
+		_selectedBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		[self addSubview:_selectedBackgroundView];
+
+		_backgroundView = [[UIView alloc] initWithFrame:self.bounds];
+		_backgroundView.backgroundColor = [UIColor whiteColor];
+		_backgroundView.userInteractionEnabled = NO;
+		_backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		[self addSubview:_backgroundView];
+
+		_contentView = [[UIView alloc] initWithFrame:self.bounds];
+		_contentView.userInteractionEnabled = NO;
+		_contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		[self addSubview:_contentView];
+
+		_editingSelectionOverlayView = [[UIView alloc] initWithFrame:self.bounds];
+		_editingSelectionOverlayView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
+		_editingSelectionOverlayView.userInteractionEnabled = NO;
+		_editingSelectionOverlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		[self addSubview:_editingSelectionOverlayView];
+}
     return self;
 }
 
 - (void)dealloc {
-	[selectedIndicatorImageView release], selectedIndicatorImageView = nil;
+	[_contentView release], _contentView = nil;
+	[_backgroundView release], _backgroundView = nil;
+	[_selectedBackgroundView release], _selectedBackgroundView = nil;
+	[_editingSelectionOverlayView release], _editingSelectionOverlayView = nil;
     [super dealloc];
 }
 
 - (void)layoutSubviews {
-	[super layoutSubviews];
 	
-	selectedIndicatorImageView.frame = CGRectMake(self.bounds.size.width - selectedIndicatorImageView.bounds.size.width,
-												  self.bounds.size.height - selectedIndicatorImageView.bounds.size.height,
-												  selectedIndicatorImageView.bounds.size.width,
-												  selectedIndicatorImageView.bounds.size.height);
 }
 
 
@@ -73,29 +84,72 @@
 
 #pragma mark - Public Methods
 
+- (void)setEditingSelectionOverlayView:(UIView *)editingSelectionOverlayView
+{
+	if (_editingSelectionOverlayView != editingSelectionOverlayView) {
+		[_editingSelectionOverlayView removeFromSuperview];
+		[_editingSelectionOverlayView release], _editingSelectionOverlayView = nil;
+
+		_editingSelectionOverlayView = [editingSelectionOverlayView retain];
+		if (self.editing && self.selected) {
+			_editingSelectionOverlayView.alpha = 1.0;
+		}else {
+			_editingSelectionOverlayView.alpha = 0.0f;
+		}
+		[self insertSubview:_editingSelectionOverlayView aboveSubview:_contentView];
+	}
+}
+
+- (BOOL)isHighlighted
+{
+	return _cellFlags.highlighted;
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+	if (_cellFlags.highlighted != highlighted) {
+		_cellFlags.highlighted = highlighted;
+
+		if (_cellFlags.highlighted) {
+			_backgroundView.alpha = 0.0f;
+		}else {
+			_backgroundView.alpha = 1.0f;
+		}
+	}
+}
+
+- (BOOL)isSelected
+{
+	return _cellFlags.selected;
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-	isSelected = selected;
-	
-	//	DebugLog(@"Index:%i selected:%i", self.tag, selected);
+	_cellFlags.selected = selected;
 	
 	if (animated) [UIView beginAnimations:nil context:nil];
 	
-	if (isSelected)
+	if (_cellFlags.selected)
 	{
-		selectedIndicatorImageView.alpha = 1.0;
+		self.editingSelectionOverlayView.alpha = 1.0;
 	}
 	else
 	{
-		selectedIndicatorImageView.alpha = 0.0;
+		self.editingSelectionOverlayView.alpha = 0.0;
 	}
 	if (animated) [UIView commitAnimations];
 }
 
+
+- (BOOL)isEditing
+{
+	return _cellFlags.editing;
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
-	if (isEditing != editing) {
-		isEditing = editing;
+	if (_cellFlags.editing != editing) {
+		_cellFlags.editing = editing;
 		[self setSelected:NO animated:YES];
 	}
 }
