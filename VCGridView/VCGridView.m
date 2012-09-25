@@ -35,7 +35,6 @@
 
 @implementation VCGridView
 
-@synthesize delegate = _delegate;
 @synthesize dataSource = _dataSource;
 
 @synthesize cells = _cells;
@@ -48,16 +47,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-		_delegate = nil;
-		_dataSource = nil;
-
-		_scrollView = [[UIScrollView alloc] initWithFrame:frame];
-		_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		_scrollView.delegate = self;
-		[self addSubview:_scrollView];
-
-		self.clipsToBounds = YES;
-		
+		self.delegate = nil;
+		self.dataSource = nil;
 		_selectedIndexes = [[NSMutableIndexSet alloc] init];
     }
     return self;
@@ -69,7 +60,6 @@
 }
 
 - (void)dealloc {
-	[_scrollView release], _scrollView = nil;
 	[_cells release], _cells = nil;
 	[_reusableCells release], _reusableCells = nil;
 	[_selectedIndexes release], _selectedIndexes = nil;
@@ -89,7 +79,7 @@
 			NSUInteger index = imageView.tag;
 			VCGridViewCell *cell = [self cellAtIndex:index];
 			if ([self.dataSource gridView:self canEditCellAtIndex:index]) {
-				if ([_selectedIndexes containsIndex:index]) {
+				if ([self.selectedIndexes containsIndex:index]) {
 					[_selectedIndexes removeIndex:index];
 					[cell setSelected:NO animated:YES];
 				}else {
@@ -108,7 +98,7 @@
 	if (_numberOfCells % _numberOfCellsInRow != 0) {
 		_numberOfRows += 1;
 	}
-	_scrollView.contentSize = CGSizeMake(self.bounds.size.width, _numberOfRows * _cellHeight);	
+	self.contentSize = CGSizeMake(self.bounds.size.width, _numberOfRows * _cellHeight);	
 }
 
 #pragma mark - Reuse Queue Logic
@@ -153,7 +143,7 @@
 
 - (NSRange)visibleCellsRange
 {
-	CGPoint offset = _scrollView.contentOffset;
+	CGPoint offset = self.contentOffset;
 
 	CGFloat topVisibleRow = floor(offset.y / _cellHeight);
 	NSInteger location = topVisibleRow * _numberOfCellsInRow;
@@ -162,7 +152,7 @@
 	}
 
 	CGFloat topMargin = offset.y - (topVisibleRow * _cellHeight);
-	CGFloat visibleHeight = _scrollView.bounds.size.height + topMargin;
+	CGFloat visibleHeight = self.bounds.size.height + topMargin;
 	CGFloat visibleRows = visibleHeight / _cellHeight;
 	NSUInteger length = ceilf(visibleRows) * _numberOfCellsInRow;
 	if (location + length >= _numberOfCells) {
@@ -179,7 +169,7 @@
 	
 	// add at places
 	[self.cells replaceObjectAtIndex:index withObject:cellButton];
-	[_scrollView insertSubview:cellButton atIndex:0];
+	[self insertSubview:cellButton atIndex:0];
 	
 	// set frame
 	CGFloat row = floor(index / _numberOfCellsInRow);
@@ -277,7 +267,7 @@
 	}
 
 	cellButton.tag = index;
-	[cellButton setSelected:[_selectedIndexes containsIndex:index] animated:NO];
+	[cellButton setSelected:[self.selectedIndexes containsIndex:index] animated:NO];
 
 	return cellButton;
 }
@@ -341,15 +331,5 @@
 		[UIView commitAnimations];
 	}
 }
-
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-	// check logic here
-	[self layoutCells];
-}
-
 
 @end

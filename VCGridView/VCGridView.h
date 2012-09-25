@@ -24,27 +24,45 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-/*
- * create UIGridViewItem { image or imageUrl }
- * if items go out of the screen, remove subviews representing those items
- * add scroll delegate methods to check which Cells are turning visible or going out of the screen
- * 
- */
-
 #import <UIKit/UIKit.h>
 
 #import "VCGridViewCell.h"
 
-@protocol VCGridViewDataSource;
-@protocol VCGridViewDelegate;
+@class VCGridView;
 
-@interface VCGridView : UIView <UIScrollViewDelegate> {
+
+/*!
+ */
+@protocol VCGridViewDelegate <UIScrollViewDelegate>
+
+@optional
+- (CGFloat)heightForCellsInGridView:(VCGridView *)gridView;
+
+- (void)gridView:(VCGridView *)gridView didSelectCellAtIndex:(NSInteger)index;
+
+@end
+
+
+/*!
+ */
+@protocol VCGridViewDataSource <NSObject>
+
+@required
+- (NSInteger)numberOfCellsInGridView:(VCGridView*)gridView;
+
+@optional
+- (NSInteger)numberOfCellsInRowForGridView:(VCGridView *)gridView;
+- (VCGridViewCell *)gridView:(VCGridView *)gridView cellAtIndex:(NSInteger)index;
+- (BOOL)gridView:(VCGridView *)gridView canEditCellAtIndex:(NSInteger)index;
+@end
+
+
+/*!
+ */
+@interface VCGridView : UIScrollView {
 @private
-    id<VCGridViewDelegate> _delegate;
 	id<VCGridViewDataSource> _dataSource;
 	
-	UIScrollView *_scrollView;
-
 	NSMutableArray *_cells;
 	NSUInteger _numberOfCells;
 	NSUInteger _numberOfCellsInRow;
@@ -76,26 +94,5 @@
 
 - (void)insertCellAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)removeCellAtIndex:(NSUInteger)index animated:(BOOL)animated;
-
-@end
-
-
-@protocol VCGridViewDataSource <NSObject>
-
-@required
-- (NSInteger)numberOfCellsInGridView:(VCGridView*)gridView;
-
-@optional
-- (NSInteger)numberOfCellsInRowForGridView:(VCGridView *)gridView;
-- (VCGridViewCell *)gridView:(VCGridView *)gridView cellAtIndex:(NSInteger)index;
-- (BOOL)gridView:(VCGridView *)gridView canEditCellAtIndex:(NSInteger)index;
-@end
-
-@protocol VCGridViewDelegate <NSObject>
-
-@optional
-- (CGFloat)heightForCellsInGridView:(VCGridView *)gridView;
-
-- (void)gridView:(VCGridView *)gridView didSelectCellAtIndex:(NSInteger)index;
 
 @end
