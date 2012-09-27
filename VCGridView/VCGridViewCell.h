@@ -28,6 +28,8 @@
 
 @interface VCGridViewCell : UIView
 {
+@private
+	UIView *_containerView;
 	UIView *_contentView;
 	UIView *_backgroundView;
 	UIView *_selectedBackgroundView;

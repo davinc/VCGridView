@@ -39,33 +39,35 @@
         // Initialization code.
 		self.autoresizesSubviews = YES;
 
+		_containerView = [[UIView alloc] initWithFrame:self.bounds];
+		_containerView.userInteractionEnabled = NO;
+		_containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		[self addSubview:_containerView];
+
 		_selectedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
-		_selectedBackgroundView.backgroundColor = [UIColor blueColor];
-		_selectedBackgroundView.userInteractionEnabled = NO;
+		_selectedBackgroundView.backgroundColor = [UIColor redColor];
 		_selectedBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		[self addSubview:_selectedBackgroundView];
+		[_containerView addSubview:_selectedBackgroundView];
 
 		_backgroundView = [[UIView alloc] initWithFrame:self.bounds];
 		_backgroundView.backgroundColor = [UIColor whiteColor];
-		_backgroundView.userInteractionEnabled = NO;
 		_backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		[self addSubview:_backgroundView];
+		[_containerView addSubview:_backgroundView];
 
 		_contentView = [[UIView alloc] initWithFrame:self.bounds];
-		_contentView.userInteractionEnabled = NO;
 		_contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		[self addSubview:_contentView];
+		[_containerView addSubview:_contentView];
 
 		_editingSelectionOverlayView = [[UIView alloc] initWithFrame:self.bounds];
 		_editingSelectionOverlayView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
-		_editingSelectionOverlayView.userInteractionEnabled = NO;
 		_editingSelectionOverlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		[self addSubview:_editingSelectionOverlayView];
+		[_containerView addSubview:_editingSelectionOverlayView];
 }
     return self;
 }
 
 - (void)dealloc {
+	[_containerView release], _containerView = nil;
 	[_contentView release], _contentView = nil;
 	[_backgroundView release], _backgroundView = nil;
 	[_selectedBackgroundView release], _selectedBackgroundView = nil;
@@ -96,7 +98,7 @@
 		}else {
 			_editingSelectionOverlayView.alpha = 0.0f;
 		}
-		[self insertSubview:_editingSelectionOverlayView aboveSubview:_contentView];
+		[_containerView insertSubview:_editingSelectionOverlayView aboveSubview:_contentView];
 	}
 }
 
@@ -110,11 +112,16 @@
 	if (_cellFlags.highlighted != highlighted) {
 		_cellFlags.highlighted = highlighted;
 
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationsEnabled:animated];
+
 		if (_cellFlags.highlighted) {
 			_backgroundView.alpha = 0.0f;
 		}else {
 			_backgroundView.alpha = 1.0f;
 		}
+
+		[UIView commitAnimations];
 	}
 }
 
@@ -127,17 +134,16 @@
 {
 	_cellFlags.selected = selected;
 	
-	if (animated) [UIView beginAnimations:nil context:nil];
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationsEnabled:animated];
 	
-	if (_cellFlags.selected)
-	{
+	if (_cellFlags.selected) {
 		self.editingSelectionOverlayView.alpha = 1.0;
-	}
-	else
-	{
+	}else {
 		self.editingSelectionOverlayView.alpha = 0.0;
 	}
-	if (animated) [UIView commitAnimations];
+
+	[UIView commitAnimations];
 }
 
 

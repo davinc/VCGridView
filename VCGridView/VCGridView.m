@@ -179,22 +179,32 @@
 	return NSMakeRange(location, length);
 }
 
+- (CGRect)frameForCellAtIndex:(NSUInteger)index
+{
+	CGFloat row = floor(index / _numberOfCellsInRow);
+	CGFloat x = (index % _numberOfCellsInRow) * _cellWidth;
+	CGFloat y = row * _cellHeight;
+	CGRect frame = CGRectMake(x,
+							  y,
+							  _cellWidth,
+							  _cellHeight);
+	return frame;
+}
+
 - (void)layoutCellAtIndex:(NSUInteger)index
 {
 	// get cell at index
 	VCGridViewCell *cellButton = [self cellAtIndex:index];
 	
-	// add at places
-	[self.cells replaceObjectAtIndex:index withObject:cellButton];
-	[self insertSubview:cellButton atIndex:0];
-	
-	// set frame
-	CGFloat row = floor(index / _numberOfCellsInRow);
-	CGRect frame = CGRectMake((index % _numberOfCellsInRow) * _cellWidth,
-							  row * _cellHeight,
-							  _cellWidth,
-							  _cellHeight);
-	cellButton.frame = frame;
+	// add at places if not already added
+	VCGridViewCell *cell = [self.cells objectAtIndex:index];
+	if (cell != cellButton) {
+		[self.cells replaceObjectAtIndex:index withObject:cellButton];
+		[self insertSubview:cellButton atIndex:0];
+
+		// set frame
+		cellButton.frame = [self frameForCellAtIndex:index];
+	}
 }
 
 - (void)layoutCells
