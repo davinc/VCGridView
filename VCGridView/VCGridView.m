@@ -43,6 +43,7 @@
 @synthesize isEditing = _isEditing;
 @synthesize selectedIndexes = _selectedIndexes;
 
+@synthesize gridCellsContainerView = _gridCellsContainerView;
 @synthesize gridHeaderView = _gridHeaderView;
 @synthesize gridFooterView = _gridFooterView;
 
@@ -55,6 +56,11 @@
 		self.delegate = nil;
 		self.dataSource = nil;
 		_selectedIndexes = [[NSMutableIndexSet alloc] init];
+		_numberOfCellsInRow = 1;
+		
+		_gridCellsContainerView = [[UIView alloc] initWithFrame:self.bounds];
+		_gridCellsContainerView.backgroundColor = [UIColor clearColor];
+		[self addSubview:_gridCellsContainerView];
     }
     return self;
 }
@@ -69,6 +75,7 @@
 	[_reusableCells release], _reusableCells = nil;
 	[_selectedIndexes release], _selectedIndexes = nil;
 	[_gridHeaderView release], _gridHeaderView = nil;
+	[_gridCellsContainerView release], _gridCellsContainerView = nil;
 	[_gridFooterView release], _gridFooterView = nil;
     [super dealloc];
 }
@@ -148,9 +155,22 @@
 		_numberOfRows += 1;
 	}
 	CGFloat cellContainerHeight = _numberOfRows * _cellHeight;
-	
 	self.contentSize = CGSizeMake(self.bounds.size.width,
 								  _gridHeaderView.bounds.size.height + cellContainerHeight + _gridFooterView.bounds.size.height);
+	
+	_gridHeaderView.frame = CGRectMake(0,
+									   0,
+									   self.bounds.size.width,
+									   _gridHeaderView.bounds.size.height);
+
+	_gridCellsContainerView.frame = CGRectMake(0,
+											   _gridHeaderView.bounds.size.height,
+											   self.bounds.size.width,
+											   cellContainerHeight);
+	_gridFooterView.frame = CGRectMake(0,
+									   self.contentSize.height - _gridFooterView.bounds.size.height,
+									   self.bounds.size.width,
+									   _gridFooterView.bounds.size.height);
 }
 
 #pragma mark - Reuse Queue Logic
@@ -224,7 +244,7 @@
 {
 	CGFloat row = floor(index / _numberOfCellsInRow);
 	CGFloat x = (index % _numberOfCellsInRow) * _cellWidth;
-	CGFloat y = row * _cellHeight + _gridHeaderView.bounds.size.height;
+	CGFloat y = row * _cellHeight;
 	CGRect frame = CGRectMake(x,
 							  y,
 							  _cellWidth,
@@ -246,7 +266,7 @@
 		[self configureCell:cellButton forIndex:index];
 		
 		[self.cells replaceObjectAtIndex:index withObject:cellButton];
-		[self insertSubview:cellButton atIndex:0];
+		[_gridCellsContainerView insertSubview:cellButton atIndex:0];
 		
 		shouldLayout = YES;
 	}else {
@@ -423,11 +443,7 @@
 	[self updateContentSize];
 
 	// add header
-	_gridHeaderView.frame = CGRectMake(0,
-									   0,
-									   self.bounds.size.width,
-									   _gridHeaderView.bounds.size.height);
-	[self addSubview:_gridHeaderView];
+	[self insertSubview:_gridHeaderView belowSubview:_gridCellsContainerView];
 }
 
 - (void)setGridFooterView:(UIView *)gridFooterView
@@ -440,11 +456,7 @@
 	[self updateContentSize];
 	
 	// add header
-	_gridFooterView.frame = CGRectMake(0,
-									   self.contentSize.height - _gridFooterView.bounds.size.height,
-									   self.bounds.size.width,
-									   _gridFooterView.bounds.size.height);
-	[self addSubview:_gridFooterView];
+	[self insertSubview:_gridFooterView belowSubview:_gridCellsContainerView];
 }
 
 @end

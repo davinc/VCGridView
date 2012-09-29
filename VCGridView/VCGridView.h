@@ -63,6 +63,10 @@
 @private
 	id<VCGridViewDataSource> _dataSource;
 	
+	UIView *_gridHeaderView;
+	UIView *_gridCellsContainerView;
+	UIView *_gridFooterView;
+
 	NSMutableArray *_cells;
 	NSUInteger _numberOfCells;
 	NSUInteger _numberOfCellsInRow;
@@ -77,16 +81,13 @@
 	
 	BOOL _isEditing;
 	NSMutableIndexSet *_selectedIndexes;
-	
-	UIView *_gridHeaderView;
-	UIView *_gridFooterView;
 }
 
 @property (nonatomic, assign) id<VCGridViewDelegate> delegate;
 @property (nonatomic, assign) id<VCGridViewDataSource> dataSource;
 @property (nonatomic, readonly) BOOL isEditing;
 @property (nonatomic, readonly) NSIndexSet *selectedIndexes;
-
+@property (nonatomic, readonly) UIView *gridCellsContainerView;
 @property (nonatomic, retain) UIView *gridHeaderView;
 @property (nonatomic, retain) UIView *gridFooterView;
 
@@ -98,6 +99,5 @@
 
 - (void)insertCellAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)removeCellAtIndex:(NSUInteger)index animated:(BOOL)animated;
-
 
 @end
