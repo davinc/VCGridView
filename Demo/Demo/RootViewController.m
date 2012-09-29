@@ -112,7 +112,7 @@
 
 - (NSInteger)numberOfCellsInGridView:(VCGridView*)gridView
 {
-	return 98;
+	return 100;
 }
 
 - (NSInteger)numberOfCellsInRowForGridView:(VCGridView *)gridView
@@ -154,7 +154,7 @@
 {
 #if DEBUG
 	NSLog(@"Selected %i", index);
-#endif
+#endif	
 }
 
 

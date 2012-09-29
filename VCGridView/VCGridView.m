@@ -56,7 +56,7 @@
 }
 
 - (void)layoutSubviews {
-	// set current visible views
+	[super layoutSubviews];
 	[self layoutCells];
 }
 
@@ -146,7 +146,7 @@
 
 - (BOOL)prepareReuseCellButtonAtIndex:(NSUInteger)index
 {
-	VCGridViewCell *cellButton = [self.cells objectAtIndex:index];
+	VCGridViewCell *cellButton = [self cellAtIndex:index];
     if ((id)cellButton != [NSNull null]) {
         [cellButton removeFromSuperview];
         [self queueReusableCellButton:cellButton];
@@ -154,6 +154,12 @@
 		return YES;
     }
 	return NO;
+}
+
+- (void)configureCell:(VCGridViewCell *)cell forIndex:(NSUInteger)index
+{
+	cell.tag = index;
+	[cell setSelected:[self.selectedIndexes containsIndex:index]];
 }
 
 #pragma mark - Layout
@@ -194,15 +200,29 @@
 - (void)layoutCellAtIndex:(NSUInteger)index
 {
 	// get cell at index
+	BOOL shouldLayout = NO;
 	VCGridViewCell *cellButton = [self cellAtIndex:index];
-	
-	// add at places if not already added
-	VCGridViewCell *cell = [self.cells objectAtIndex:index];
-	if (cell != cellButton) {
+	if ((id)cellButton == [NSNull null]) {
+		// if it is null then get it from delegate
+		if ([self.dataSource respondsToSelector:@selector(gridView:cellAtIndex:)]) {
+			cellButton = [self.dataSource gridView:self cellAtIndex:index];
+		}
+		
+		[self configureCell:cellButton forIndex:index];
+		
 		[self.cells replaceObjectAtIndex:index withObject:cellButton];
 		[self insertSubview:cellButton atIndex:0];
+		
+		shouldLayout = YES;
+	}else {
+		if (cellButton.tag != index) {
+			[self configureCell:cellButton forIndex:index];
 
-		// set frame
+			shouldLayout = YES;
+		}
+	}
+	
+	if (shouldLayout) {
 		cellButton.frame = [self frameForCellAtIndex:index];
 	}
 }
@@ -290,16 +310,6 @@
 - (VCGridViewCell *)cellAtIndex:(NSUInteger)index
 {
 	VCGridViewCell *cellButton = [self.cells objectAtIndex:index];
-	if ((id)cellButton == [NSNull null]) {
-		// if it is null then get it from delegate
-		if ([self.dataSource respondsToSelector:@selector(gridView:cellAtIndex:)]) {
-			cellButton = [self.dataSource gridView:self cellAtIndex:index];
-		}
-	}
-
-	cellButton.tag = index;
-	[cellButton setSelected:[self.selectedIndexes containsIndex:index] animated:NO];
-
 	return cellButton;
 }
 
@@ -343,15 +353,20 @@
 
 - (void)removeCellAtIndex:(NSUInteger)index animated:(BOOL)animated
 {
-	[self.cells removeObjectAtIndex:index];
+	VCGridViewCell *cellToRemove = [[self cellAtIndex:index] retain];
+	if ([cellToRemove isKindOfClass:[VCGridViewCell class]]) {
+		[cellToRemove removeFromSuperview];
+		[self.cells removeObjectAtIndex:index];
+	}
+	[cellToRemove release], cellToRemove = nil;
 	_numberOfCells--;
 	[self updateContentSize];
-	
+
 	NSRange visibleRange = [self visibleCellsRange];
 	if (index < NSMaxRange(visibleRange))
 	{
 		currentVisibleRange = NSMakeRange(0, 0); //force layout
-		
+
 		[UIView beginAnimations:nil context:nil];
 		[UIView setAnimationBeginsFromCurrentState:YES];
 		[UIView setAnimationDuration:0.3];
@@ -363,6 +378,8 @@
 	}
 }
 
+
+#pragma mark - Touch Events
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	UITouch *touch = [touches anyObject];

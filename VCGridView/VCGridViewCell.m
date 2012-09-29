@@ -107,22 +107,27 @@
 	return _cellFlags.highlighted;
 }
 
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+- (void)setHighlighted:(BOOL)highlighted
 {
 	if (_cellFlags.highlighted != highlighted) {
 		_cellFlags.highlighted = highlighted;
-
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationsEnabled:animated];
-
+		
 		if (_cellFlags.highlighted) {
 			_backgroundView.alpha = 0.0f;
 		}else {
 			_backgroundView.alpha = 1.0f;
 		}
-
-		[UIView commitAnimations];
 	}
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationsEnabled:animated];
+	
+	[self setHighlighted:highlighted];
+	
+	[UIView commitAnimations];
 }
 
 - (BOOL)isSelected
@@ -130,18 +135,22 @@
 	return _cellFlags.selected;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+- (void)setSelected:(BOOL)selected
 {
 	_cellFlags.selected = selected;
-	
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationsEnabled:animated];
-	
 	if (_cellFlags.selected) {
 		self.editingSelectionOverlayView.alpha = 1.0;
 	}else {
 		self.editingSelectionOverlayView.alpha = 0.0;
 	}
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationsEnabled:animated];
+	
+	[self setSelected:selected];
 
 	[UIView commitAnimations];
 }

@@ -87,13 +87,12 @@
 
 - (void)reloadData;
 - (NSUInteger)numberOfCells;
-- (VCGridViewCell *)cellAtIndex:(NSUInteger)index;
 - (VCGridViewCell *)dequeueReusableCell;
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 
-
 - (void)insertCellAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)removeCellAtIndex:(NSUInteger)index animated:(BOOL)animated;
+
 
 @end
