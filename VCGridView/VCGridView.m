@@ -384,53 +384,56 @@
 	_isEditing = editing;
 }
 
-- (void)insertCellAtIndex:(NSUInteger)index animated:(BOOL)animated
+- (void)insertCellAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated
 {
-	[self.cells insertObject:[NSNull null] atIndex:index];
-	_numberOfCells++;
+	[indexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		[self.cells insertObject:[NSNull null] atIndex:index];
+		_numberOfCells++;
+	}];
+	
 	[self updateContentSize];
 
-	NSRange visibleRange = [self visibleCellsRange];
-	if (index < NSMaxRange(visibleRange))
-	{
-		currentVisibleRange = NSMakeRange(0, 0);//force layout
-		
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationBeginsFromCurrentState:YES];
-		[UIView setAnimationDuration:0.3];
-		[UIView setAnimationsEnabled:animated];
-
-		[self layoutCells];
-		
-		[UIView commitAnimations];
-	}
+	currentVisibleRange = NSMakeRange(0, 0);//force layout
+	
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationBeginsFromCurrentState:YES];
+	[UIView setAnimationDuration:0.3];
+	[UIView setAnimationsEnabled:animated];
+	
+	[self layoutCells];
+	
+	[UIView commitAnimations];
 }
 
-- (void)removeCellAtIndex:(NSUInteger)index animated:(BOOL)animated
+- (void)removeCellAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated
 {
-	VCGridViewCell *cellToRemove = [[self cellAtIndex:index] retain];
-	if ([cellToRemove isKindOfClass:[VCGridViewCell class]]) {
+	NSMutableArray *cellsToRemove = [NSMutableArray array];
+	[indexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		VCGridViewCell *cellToRemove = [self cellAtIndex:index];
+		if ([cellToRemove isKindOfClass:[VCGridViewCell class]]) {
+			[cellsToRemove addObject:cellToRemove];
+		}
+	}];
+	
+	for (UIView *cellToRemove in cellsToRemove) {
+		[_selectedIndexes removeIndex:cellToRemove.tag];
 		[cellToRemove removeFromSuperview];
-		[self.cells removeObjectAtIndex:index];
+		[self.cells removeObject:cellToRemove];
+		_numberOfCells--;
 	}
-	[cellToRemove release], cellToRemove = nil;
-	_numberOfCells--;
+	
 	[self updateContentSize];
 
-	NSRange visibleRange = [self visibleCellsRange];
-	if (index < NSMaxRange(visibleRange))
-	{
-		currentVisibleRange = NSMakeRange(0, 0); //force layout
-
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationBeginsFromCurrentState:YES];
-		[UIView setAnimationDuration:0.3];
-		[UIView setAnimationsEnabled:animated];
-		
-		[self layoutCells];
-		
-		[UIView commitAnimations];
-	}
+	currentVisibleRange = NSMakeRange(0, 0); //force layout
+	
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationBeginsFromCurrentState:YES];
+	[UIView setAnimationDuration:0.3];
+	[UIView setAnimationsEnabled:animated];
+	
+	[self layoutCells];
+	
+	[UIView commitAnimations];
 }
 
 - (void)setGridHeaderView:(UIView *)gridHeaderView
