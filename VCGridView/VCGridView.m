@@ -405,7 +405,7 @@
 	[UIView commitAnimations];
 }
 
-- (void)removeCellAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated
+- (void)deleteCellAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated
 {
 	NSMutableArray *cellsToRemove = [NSMutableArray array];
 	[indexSet enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {

@@ -98,6 +98,6 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated;
 
 - (void)insertCellAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated;
-- (void)removeCellAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated;
+- (void)deleteCellAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated;
 
 @end
