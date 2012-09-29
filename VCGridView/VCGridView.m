@@ -43,11 +43,15 @@
 @synthesize isEditing = _isEditing;
 @synthesize selectedIndexes = _selectedIndexes;
 
+@synthesize gridHeaderView = _gridHeaderView;
+@synthesize gridFooterView = _gridFooterView;
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
 		self.delaysContentTouches = NO;
+		self.canCancelContentTouches = YES;
 		self.delegate = nil;
 		self.dataSource = nil;
 		_selectedIndexes = [[NSMutableIndexSet alloc] init];
@@ -64,7 +68,38 @@
 	[_cells release], _cells = nil;
 	[_reusableCells release], _reusableCells = nil;
 	[_selectedIndexes release], _selectedIndexes = nil;
+	[_gridHeaderView release], _gridHeaderView = nil;
+	[_gridFooterView release], _gridFooterView = nil;
     [super dealloc];
+}
+
+#pragma mark - Touch Events
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+	if ([touch.view isKindOfClass:[VCGridViewCell class]]) {
+		[self didTouchDownCell:(VCGridViewCell*)touch.view];
+	}
+	
+    [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+	if ([touch.view isKindOfClass:[VCGridViewCell class]]) {
+		[self didTouchUpCell:(VCGridViewCell*)touch.view];
+	}
+	
+    [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+	if ([touch.view isKindOfClass:[VCGridViewCell class]]) {
+		[self didTouchCancelCell:(VCGridViewCell*)touch.view];
+	}
+	
+    [super touchesCancelled:touches withEvent:event];
 }
 
 
@@ -78,17 +113,8 @@
 - (void)didTouchUpCell:(VCGridViewCell *)cell
 {
 	[cell setHighlighted:NO animated:YES];
-	[self didTapImageCell:cell];
-}
-
-- (void)didTouchCancelCell:(VCGridViewCell *)cell
-{
-	[cell setHighlighted:NO animated:YES];
-}
-
-- (void)didTapImageCell:(id)sender {
-	NSUInteger index = ((VCGridViewCell*)sender).tag;
-
+	NSUInteger index = cell.tag;
+	
 	if (!self.isEditing) {
 		if ([self.delegate respondsToSelector:@selector(gridView:didSelectCellAtIndex:)]) {
 			[self.delegate gridView:self didSelectCellAtIndex:index];
@@ -109,6 +135,11 @@
 	}
 }
 
+- (void)didTouchCancelCell:(VCGridViewCell *)cell
+{
+	[cell setHighlighted:NO animated:YES];
+}
+
 - (void)updateContentSize
 {
 	// set content size for scroll view
@@ -116,7 +147,10 @@
 	if (_numberOfCells % _numberOfCellsInRow != 0) {
 		_numberOfRows += 1;
 	}
-	self.contentSize = CGSizeMake(self.bounds.size.width, _numberOfRows * _cellHeight);	
+	CGFloat cellContainerHeight = _numberOfRows * _cellHeight;
+	
+	self.contentSize = CGSizeMake(self.bounds.size.width,
+								  _gridHeaderView.bounds.size.height + cellContainerHeight + _gridFooterView.bounds.size.height);
 }
 
 #pragma mark - Reuse Queue Logic
@@ -378,34 +412,36 @@
 	}
 }
 
-
-#pragma mark - Touch Events
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	UITouch *touch = [touches anyObject];
-	if ([touch.view isKindOfClass:[VCGridViewCell class]]) {
-		[self didTouchDownCell:(VCGridViewCell*)touch.view];
+- (void)setGridHeaderView:(UIView *)gridHeaderView
+{
+	if (_gridHeaderView != gridHeaderView) {
+		[_gridHeaderView release], _gridHeaderView = nil;
+		_gridHeaderView = [gridHeaderView retain];
 	}
+	
+	[self updateContentSize];
 
-    [super touchesBegan:touches withEvent:event];
+	// add header
+	_gridHeaderView.frame = CGRectMake(0,
+									   0,
+									   self.bounds.size.width,
+									   _gridHeaderView.bounds.size.height);
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	UITouch *touch = [touches anyObject];
-	if ([touch.view isKindOfClass:[VCGridViewCell class]]) {
-		[self didTouchUpCell:(VCGridViewCell*)touch.view];
+- (void)setGridFooterView:(UIView *)gridFooterView
+{
+	if (_gridFooterView != gridFooterView) {
+		[_gridFooterView release], _gridFooterView = nil;
+		_gridFooterView = [gridFooterView retain];
 	}
-
-    [super touchesEnded:touches withEvent:event];
-}
-
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-	UITouch *touch = [touches anyObject];
-	if ([touch.view isKindOfClass:[VCGridViewCell class]]) {
-		[self didTouchCancelCell:(VCGridViewCell*)touch.view];
-	}
-
-    [super touchesCancelled:touches withEvent:event];
+	
+	[self updateContentSize];
+	
+	// add header
+	_gridHeaderView.frame = CGRectMake(0,
+									   self.contentSize.height - _gridFooterView.bounds.size.height,
+									   self.bounds.size.width,
+									   _gridFooterView.bounds.size.height);
 }
 
 @end

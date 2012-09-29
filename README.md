@@ -11,6 +11,7 @@ iOS Photos app like grid view of thumbnail views.
 * You only need to specify number of thumbnails in row and spacing.
 * Reusable Thumbnails for lesser memory usage.
 * Insert and Remove thumbnails support with animation
+* Header and Footer View support
 
 ##ToDo
 * Add thumbnail size customization

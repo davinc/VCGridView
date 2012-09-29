@@ -77,6 +77,9 @@
 	
 	BOOL _isEditing;
 	NSMutableIndexSet *_selectedIndexes;
+	
+	UIView *_gridHeaderView;
+	UIView *_gridFooterView;
 }
 
 @property (nonatomic, assign) id<VCGridViewDelegate> delegate;
@@ -84,6 +87,8 @@
 @property (nonatomic, readonly) BOOL isEditing;
 @property (nonatomic, readonly) NSIndexSet *selectedIndexes;
 
+@property (nonatomic, retain) UIView *gridHeaderView;
+@property (nonatomic, retain) UIView *gridFooterView;
 
 - (void)reloadData;
 - (NSUInteger)numberOfCells;
