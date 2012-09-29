@@ -201,7 +201,8 @@
 - (NSRange)visibleCellsRange
 {
 	CGPoint offset = self.contentOffset;
-
+	offset.y -= _gridHeaderView.bounds.size.height;
+	
 	CGFloat topVisibleRow = floor(offset.y / _cellHeight);
 	NSInteger location = topVisibleRow * _numberOfCellsInRow;
 	if (location < 0) {
@@ -223,7 +224,7 @@
 {
 	CGFloat row = floor(index / _numberOfCellsInRow);
 	CGFloat x = (index % _numberOfCellsInRow) * _cellWidth;
-	CGFloat y = row * _cellHeight;
+	CGFloat y = row * _cellHeight + _gridHeaderView.bounds.size.height;
 	CGRect frame = CGRectMake(x,
 							  y,
 							  _cellWidth,
@@ -426,6 +427,7 @@
 									   0,
 									   self.bounds.size.width,
 									   _gridHeaderView.bounds.size.height);
+	[self addSubview:_gridHeaderView];
 }
 
 - (void)setGridFooterView:(UIView *)gridFooterView
@@ -438,10 +440,11 @@
 	[self updateContentSize];
 	
 	// add header
-	_gridHeaderView.frame = CGRectMake(0,
+	_gridFooterView.frame = CGRectMake(0,
 									   self.contentSize.height - _gridFooterView.bounds.size.height,
 									   self.bounds.size.width,
 									   _gridFooterView.bounds.size.height);
+	[self addSubview:_gridFooterView];
 }
 
 @end
