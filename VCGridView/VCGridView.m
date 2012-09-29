@@ -353,6 +353,8 @@
 	// set cell pool size for reusability, should be double of _numberOfCellsInRow
 	self.reusableCells = [NSMutableArray array];
 	
+	currentVisibleRange = NSMakeRange(0, 0);
+	
 	// call for layout
 	[self setNeedsLayout];
 }
