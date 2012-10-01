@@ -214,6 +214,7 @@
 {
 	cell.tag = index;
 	[cell setSelected:[self.selectedIndexes containsIndex:index]];
+	[cell setHighlighted:NO animated:NO];
 }
 
 #pragma mark - Layout
@@ -397,14 +398,14 @@
 
 	currentVisibleRange = NSMakeRange(0, 0);//force layout
 	
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationBeginsFromCurrentState:YES];
-	[UIView setAnimationDuration:0.3];
-	[UIView setAnimationsEnabled:animated];
-	
-	[self layoutCells];
-	
-	[UIView commitAnimations];
+	if (animated) {
+		[UIView animateWithDuration:0.3
+						 animations:^{
+							 [self layoutCells];
+						 }];
+	}else {
+		[self layoutCells];
+	}
 }
 
 - (void)deleteCellAtIndexSet:(NSIndexSet *)indexSet animated:(BOOL)animated
@@ -427,15 +428,15 @@
 	[self updateContentSize];
 
 	currentVisibleRange = NSMakeRange(0, 0); //force layout
-	
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationBeginsFromCurrentState:YES];
-	[UIView setAnimationDuration:0.3];
-	[UIView setAnimationsEnabled:animated];
-	
-	[self layoutCells];
-	
-	[UIView commitAnimations];
+
+	if (animated) {
+		[UIView animateWithDuration:0.3
+						 animations:^{
+							 [self layoutCells];
+						 }];
+	}else {
+		[self layoutCells];
+	}
 }
 
 - (void)setGridHeaderView:(UIView *)gridHeaderView

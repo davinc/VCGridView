@@ -139,6 +139,8 @@
 		imageView1.image = [UIImage imageNamed:@"check"];
 		cell.editingSelectionOverlayView = imageView1;
 		[imageView1 release], imageView1 = nil;
+
+		cell.highlightedBackgroundView.backgroundColor = [UIColor redColor];
 	}
 	return cell;
 }
