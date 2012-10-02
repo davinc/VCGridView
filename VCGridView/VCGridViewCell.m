@@ -30,7 +30,7 @@
 
 @synthesize contentView = _contentView;
 @synthesize backgroundView = _backgroundView;
-@synthesize selectedBackgroundView = _selectedBackgroundView;
+@synthesize highlightedBackgroundView = _highlightedBackgroundView;
 @synthesize editingSelectionOverlayView = _editingSelectionOverlayView;
 
 - (id)initWithFrame:(CGRect)frame {
@@ -44,13 +44,13 @@
 		_containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[self addSubview:_containerView];
 
-		_selectedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
-		_selectedBackgroundView.backgroundColor = [UIColor redColor];
-		_selectedBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		[_containerView addSubview:_selectedBackgroundView];
+		_highlightedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
+		_highlightedBackgroundView.backgroundColor = [UIColor clearColor];
+		_highlightedBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		[_containerView addSubview:_highlightedBackgroundView];
 
 		_backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-		_backgroundView.backgroundColor = [UIColor whiteColor];
+		_backgroundView.backgroundColor = [UIColor clearColor];
 		_backgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[_containerView addSubview:_backgroundView];
 
@@ -59,7 +59,7 @@
 		[_containerView addSubview:_contentView];
 
 		_editingSelectionOverlayView = [[UIView alloc] initWithFrame:self.bounds];
-		_editingSelectionOverlayView.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
+		_editingSelectionOverlayView.backgroundColor = [UIColor clearColor];
 		_editingSelectionOverlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[_containerView addSubview:_editingSelectionOverlayView];
 }
@@ -70,7 +70,7 @@
 	[_containerView release], _containerView = nil;
 	[_contentView release], _contentView = nil;
 	[_backgroundView release], _backgroundView = nil;
-	[_selectedBackgroundView release], _selectedBackgroundView = nil;
+	[_highlightedBackgroundView release], _highlightedBackgroundView = nil;
 	[_editingSelectionOverlayView release], _editingSelectionOverlayView = nil;
     [super dealloc];
 }
@@ -102,6 +102,18 @@
 	}
 }
 
+- (void)setHighlightedBackgroundView:(UIView *)highlightedBackgroundView
+{
+	if (_highlightedBackgroundView != highlightedBackgroundView) {
+		[_highlightedBackgroundView removeFromSuperview];
+		[_highlightedBackgroundView release], _highlightedBackgroundView = nil;
+
+		_highlightedBackgroundView = [highlightedBackgroundView retain];
+		
+		[_containerView insertSubview:_highlightedBackgroundView belowSubview:_backgroundView];
+	}
+}
+
 - (BOOL)isHighlighted
 {
 	return _cellFlags.highlighted;
@@ -109,25 +121,27 @@
 
 - (void)setHighlighted:(BOOL)highlighted
 {
-	if (_cellFlags.highlighted != highlighted) {
-		_cellFlags.highlighted = highlighted;
-		
-		if (_cellFlags.highlighted) {
-			_backgroundView.alpha = 0.0f;
-		}else {
-			_backgroundView.alpha = 1.0f;
-		}
+	_cellFlags.highlighted = highlighted;
+	
+	if (_cellFlags.highlighted) {
+		_backgroundView.alpha = 0.0f;
+		_highlightedBackgroundView.alpha = 1.0f;
+	}else {
+		_backgroundView.alpha = 1.0f;
+		_highlightedBackgroundView.alpha = 0.0f;
 	}
 }
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
 {
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationsEnabled:animated];
-	
-	[self setHighlighted:highlighted];
-	
-	[UIView commitAnimations];
+	if (animated) {
+		[UIView animateWithDuration:0.3
+						 animations:^{
+							 [self setHighlighted:highlighted];
+						 }];
+	}else {
+		[self setHighlighted:highlighted];
+	}
 }
 
 - (BOOL)isSelected
@@ -147,12 +161,14 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationsEnabled:animated];
-	
-	[self setSelected:selected];
-
-	[UIView commitAnimations];
+	if (animated) {
+		[UIView animateWithDuration:0.3
+						 animations:^{
+							 [self setSelected:selected];
+						 }];
+	}else {
+		[self setSelected:selected];
+	}
 }
 
 

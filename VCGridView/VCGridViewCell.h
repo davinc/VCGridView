@@ -32,7 +32,7 @@
 	UIView *_containerView;
 	UIView *_contentView;
 	UIView *_backgroundView;
-	UIView *_selectedBackgroundView;
+	UIView *_highlightedBackgroundView;
 	UIView *_editingSelectionOverlayView;
 
 	struct {
@@ -44,7 +44,7 @@
 
 @property (nonatomic, readonly, retain) UIView *contentView;
 @property (nonatomic, retain) UIView *backgroundView;
-@property (nonatomic, retain) UIView *selectedBackgroundView;
+@property (nonatomic, retain) UIView *highlightedBackgroundView;
 @property (nonatomic, retain) UIView *editingSelectionOverlayView;
 
 
