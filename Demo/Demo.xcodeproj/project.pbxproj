@@ -14,6 +14,7 @@
 		4523F22713B7181900C883E5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F22613B7181900C883E5 /* main.m */; };
 		4523F22A13B7181900C883E5 /* DemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F22913B7181900C883E5 /* DemoAppDelegate.m */; };
 		4523F23813B7190C00C883E5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4523F23713B7190C00C883E5 /* QuartzCore.framework */; };
+		453CF2351679E46900876F80 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 453CF2341679E46900876F80 /* Default-568h@2x.png */; };
 		4541749A1611E3900043C760 /* cell.png in Resources */ = {isa = PBXBuildFile; fileRef = 454174981611E3900043C760 /* cell.png */; };
 		4541749B1611E3900043C760 /* cell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 454174991611E3900043C760 /* cell@2x.png */; };
 		457DB74F160F8DF80009B5F4 /* VCGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 457DB74A160F8DF80009B5F4 /* VCGridView.m */; };
@@ -36,6 +37,7 @@
 		4523F22813B7181900C883E5 /* DemoAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoAppDelegate.h; sourceTree = "<group>"; };
 		4523F22913B7181900C883E5 /* DemoAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppDelegate.m; sourceTree = "<group>"; };
 		4523F23713B7190C00C883E5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		453CF2341679E46900876F80 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		454174981611E3900043C760 /* cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell.png; sourceTree = "<group>"; };
 		454174991611E3900043C760 /* cell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell@2x.png"; sourceTree = "<group>"; };
 		457DB749160F8DF80009B5F4 /* VCGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCGridView.h; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 		45B7622613B7280D005ACEA1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				453CF2341679E46900876F80 /* Default-568h@2x.png */,
 				454174981611E3900043C760 /* cell.png */,
 				454174991611E3900043C760 /* cell@2x.png */,
 				45EFADAE1402983300A0D5E8 /* check.png */,
@@ -199,6 +202,7 @@
 				4515DF421449EB19009CBCA4 /* README.md in Resources */,
 				4541749A1611E3900043C760 /* cell.png in Resources */,
 				4541749B1611E3900043C760 /* cell@2x.png in Resources */,
+				453CF2351679E46900876F80 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,8 +261,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Vinay Chavan (N7LGFY7U92)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vinay Chavan (N7LGFY7U92)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vinay Chavan (L8FYFGHS37)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vinay Chavan (L8FYFGHS37)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -267,8 +271,8 @@
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "25154470-8528-4122-A406-B8EF2C88D5BA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25154470-8528-4122-A406-B8EF2C88D5BA";
+				PROVISIONING_PROFILE = "C92C8E59-B0B3-4274-9517-D9100CDFDD80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C92C8E59-B0B3-4274-9517-D9100CDFDD80";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -278,8 +282,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Vinay Chavan (N7LGFY7U92)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vinay Chavan (N7LGFY7U92)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vinay Chavan (L8FYFGHS37)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Vinay Chavan (L8FYFGHS37)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
@@ -287,8 +291,8 @@
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "25154470-8528-4122-A406-B8EF2C88D5BA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "25154470-8528-4122-A406-B8EF2C88D5BA";
+				PROVISIONING_PROFILE = "C92C8E59-B0B3-4274-9517-D9100CDFDD80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C92C8E59-B0B3-4274-9517-D9100CDFDD80";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

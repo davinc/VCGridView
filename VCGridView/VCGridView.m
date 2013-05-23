@@ -175,7 +175,7 @@
 
 #pragma mark - Reuse Queue Logic
 
-- (void)queueReusableCellButton:(VCGridViewCell *)aCellButton
+- (void)queueReusableCell:(VCGridViewCell *)aCell
 {
 	NSUInteger reusableQueueLimit = _numberOfCellsInRow * 2;
 	
@@ -183,7 +183,7 @@
 		return;
 	}
 	
-	[self.reusableCells addObject:aCellButton];
+	[self.reusableCells addObject:aCell];
 }
 
 - (VCGridViewCell *)dequeueReusableCell
@@ -198,12 +198,12 @@
 	return [button autorelease];
 }
 
-- (BOOL)prepareReuseCellButtonAtIndex:(NSUInteger)index
+- (BOOL)prepareReuseCellAtIndex:(NSUInteger)index
 {
-	VCGridViewCell *cellButton = [self cellAtIndex:index];
-    if ((id)cellButton != [NSNull null]) {
-        [cellButton removeFromSuperview];
-        [self queueReusableCellButton:cellButton];
+	VCGridViewCell *cell = [self cellAtIndex:index];
+    if ((id)cell != [NSNull null]) {
+        [cell removeFromSuperview];
+        [self queueReusableCell:cell];
         [self.cells replaceObjectAtIndex:index withObject:[NSNull null]];
 		return YES;
     }
@@ -257,29 +257,29 @@
 {
 	// get cell at index
 	BOOL shouldLayout = NO;
-	VCGridViewCell *cellButton = [self cellAtIndex:index];
-	if ((id)cellButton == [NSNull null]) {
+	VCGridViewCell *cell = [self cellAtIndex:index];
+	if ((id)cell == [NSNull null]) {
 		// if it is null then get it from delegate
 		if ([self.dataSource respondsToSelector:@selector(gridView:cellAtIndex:)]) {
-			cellButton = [self.dataSource gridView:self cellAtIndex:index];
+			cell = [self.dataSource gridView:self cellAtIndex:index];
 		}
 		
-		[self configureCell:cellButton forIndex:index];
+		[self configureCell:cell forIndex:index];
 		
-		[self.cells replaceObjectAtIndex:index withObject:cellButton];
-		[_gridCellsContainerView insertSubview:cellButton atIndex:0];
+		[self.cells replaceObjectAtIndex:index withObject:cell];
+		[_gridCellsContainerView insertSubview:cell atIndex:0];
 		
 		shouldLayout = YES;
 	}else {
-		if (cellButton.tag != index) {
-			[self configureCell:cellButton forIndex:index];
+		if (cell.tag != index) {
+			[self configureCell:cell forIndex:index];
 
 			shouldLayout = YES;
 		}
 	}
 	
 	if (shouldLayout) {
-		cellButton.frame = [self frameForCellAtIndex:index];
+		cell.frame = [self frameForCellAtIndex:index];
 	}
 }
 
@@ -301,12 +301,12 @@
 	// prepare for reuse above and below items
 	for (NSInteger i = visibleCellsRange.location-1; i >= 0; i--) {
 		// break when first null object found
-		if (![self prepareReuseCellButtonAtIndex:i]) break;
+		if (![self prepareReuseCellAtIndex:i]) break;
 	}
 	
 	for (NSUInteger i = NSMaxRange(visibleCellsRange); i < _numberOfCells; i++) {
 		// break when first null object found
-		if (![self prepareReuseCellButtonAtIndex:i]) break;
+		if (![self prepareReuseCellAtIndex:i]) break;
 	}
 }
 
@@ -367,8 +367,8 @@
 
 - (VCGridViewCell *)cellAtIndex:(NSUInteger)index
 {
-	VCGridViewCell *cellButton = [self.cells objectAtIndex:index];
-	return cellButton;
+	VCGridViewCell *cell = [self.cells objectAtIndex:index];
+	return cell;
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
