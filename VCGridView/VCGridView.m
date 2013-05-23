@@ -442,6 +442,7 @@
 - (void)setGridHeaderView:(UIView *)gridHeaderView
 {
 	if (_gridHeaderView != gridHeaderView) {
+		[_gridHeaderView removeFromSuperview];
 		[_gridHeaderView release], _gridHeaderView = nil;
 		_gridHeaderView = [gridHeaderView retain];
 	}
@@ -455,6 +456,7 @@
 - (void)setGridFooterView:(UIView *)gridFooterView
 {
 	if (_gridFooterView != gridFooterView) {
+		[_gridFooterView removeFromSuperview];
 		[_gridFooterView release], _gridFooterView = nil;
 		_gridFooterView = [gridFooterView retain];
 	}
