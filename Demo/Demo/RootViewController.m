@@ -75,6 +75,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
+	return YES;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -117,7 +118,7 @@
 
 - (NSInteger)numberOfCellsInRowForGridView:(VCGridView *)gridView
 {
-	return 4;
+	return 2;
 }
 
 - (VCGridViewCell *)gridView:(VCGridView *)gridView cellAtIndex:(NSInteger)index
@@ -125,15 +126,17 @@
 	VCGridViewCell *cell = [gridView dequeueReusableCell];
 	if (!cell) {
 		cell = [[[VCGridViewCell alloc] initWithFrame:CGRectZero]autorelease];
+		
+		CGRect contentFrame = CGRectInset(cell.bounds, 0, 0);
 
-		UIImageView *imageView = [[UIImageView alloc] initWithFrame:cell.bounds];
+		UIImageView *imageView = [[UIImageView alloc] initWithFrame:contentFrame];
 		imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-		imageView.contentMode = UIViewContentModeCenter;
+		imageView.contentMode = UIViewContentModeScaleToFill;
 		imageView.image = [UIImage imageNamed:@"cell"];
 		[cell.contentView addSubview:imageView];
 		[imageView release], imageView = nil;
 
-		UIImageView *imageView1 = [[UIImageView alloc] initWithFrame:cell.bounds];
+		UIImageView *imageView1 = [[UIImageView alloc] initWithFrame:contentFrame];
 		imageView1.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		imageView1.contentMode = UIViewContentModeBottomRight;
 		imageView1.image = [UIImage imageNamed:@"check"];
@@ -159,5 +162,14 @@
 #endif	
 }
 
+- (CGSize)sizeForCellsInGridView:(VCGridView *)gridView
+{
+	return CGSizeMake(75.0f, 75.0f);
+}
+
+- (CGFloat)paddingForCellsInGridView:(VCGridView *)gridView
+{
+	return 4.0f;
+}
 
 @end

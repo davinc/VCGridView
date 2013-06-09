@@ -67,7 +67,13 @@
 
 - (void)layoutSubviews {
 	[super layoutSubviews];
-	[self layoutCells];
+	[self layoutCellsIfNeeded:NO];
+}
+
+- (void)setFrame:(CGRect)frame
+{
+	[super setFrame:frame];
+	[self layoutCellsIfNeeded:YES];
 }
 
 - (void)dealloc {
@@ -154,7 +160,7 @@
 	if (_numberOfCells % _numberOfCellsInRow != 0) {
 		_numberOfRows += 1;
 	}
-	CGFloat cellContainerHeight = _numberOfRows * _cellHeight;
+	CGFloat cellContainerHeight = (_numberOfRows * _cellSizeWithPadding.height) + _cellPadding;
 	self.contentSize = CGSizeMake(self.bounds.size.width,
 								  _gridHeaderView.bounds.size.height + cellContainerHeight + _gridFooterView.bounds.size.height);
 	
@@ -219,20 +225,26 @@
 
 #pragma mark - Layout
 
+- (NSInteger)numberOfCellsInRow
+{
+	CGFloat totalWidth = self.bounds.size.width;
+	return (NSInteger)((totalWidth-_cellPadding)/_cellSizeWithPadding.width);
+}
+
 - (NSRange)visibleCellsRange
 {
 	CGPoint offset = self.contentOffset;
 	offset.y -= _gridHeaderView.bounds.size.height;
 	
-	CGFloat topVisibleRow = floor(offset.y / _cellHeight);
+	CGFloat topVisibleRow = floor(offset.y / _cellSizeWithPadding.height);
 	NSInteger location = topVisibleRow * _numberOfCellsInRow;
 	if (location < 0) {
 		location = 0;
 	}
 
-	CGFloat topMargin = offset.y - (topVisibleRow * _cellHeight);
+	CGFloat topMargin = offset.y - (topVisibleRow * _cellSizeWithPadding.height);
 	CGFloat visibleHeight = self.bounds.size.height + topMargin;
-	CGFloat visibleRows = visibleHeight / _cellHeight;
+	CGFloat visibleRows = visibleHeight / _cellSizeWithPadding.height;
 	NSUInteger length = ceilf(visibleRows) * _numberOfCellsInRow;
 	if (location + length >= _numberOfCells) {
 		length = _numberOfCells - location;
@@ -244,19 +256,23 @@
 - (CGRect)frameForCellAtIndex:(NSUInteger)index
 {
 	CGFloat row = floor(index / _numberOfCellsInRow);
-	CGFloat x = (index % _numberOfCellsInRow) * _cellWidth;
-	CGFloat y = row * _cellHeight;
+	
+	CGFloat x = _cellPadding + _rowPadding;
+	CGFloat y = _cellPadding;
+	
+	x += (index % _numberOfCellsInRow) * _cellSizeWithPadding.width;
+	y += row * _cellSizeWithPadding.height;
 	CGRect frame = CGRectMake(x,
 							  y,
-							  _cellWidth,
-							  _cellHeight);
+							  _cellSize.width,
+							  _cellSize.height);
 	return frame;
 }
 
-- (void)layoutCellAtIndex:(NSUInteger)index
+- (void)layoutCellAtIndex:(NSUInteger)index ifNeeded:(BOOL)needed
 {
 	// get cell at index
-	BOOL shouldLayout = NO;
+	BOOL shouldLayout = needed;
 	VCGridViewCell *cell = [self cellAtIndex:index];
 	if ((id)cell == [NSNull null]) {
 		// if it is null then get it from delegate
@@ -283,11 +299,17 @@
 	}
 }
 
-- (void)layoutCells
+- (void)layoutCellsIfNeeded:(BOOL)needed
 {
+	if (needed) {
+		_numberOfCellsInRow = [self numberOfCellsInRow];
+		_rowPadding = (self.bounds.size.width - (_cellPadding + (_numberOfCellsInRow * (_cellSizeWithPadding.width)))) / 2.0f;
+		[self updateContentSize];
+	}
+		
 	NSRange visibleCellsRange = [self visibleCellsRange];
 	
-	if (NSEqualRanges(currentVisibleRange, visibleCellsRange)) {
+	if (!needed && NSEqualRanges(currentVisibleRange, visibleCellsRange)) {
 		return;
 	}
 	
@@ -295,7 +317,7 @@
 	
 	// layout visible items
 	for (NSUInteger i = 0; i < visibleCellsRange.length; i++) {
-		[self layoutCellAtIndex:i + visibleCellsRange.location];
+		[self layoutCellAtIndex:i + visibleCellsRange.location ifNeeded:needed];
 	}
 	
 	// prepare for reuse above and below items
@@ -327,35 +349,33 @@
 	}
 	_numberOfCells = MAX(_numberOfCells, 0);
 	
-	if ([self.dataSource respondsToSelector:@selector(numberOfCellsInRowForGridView:)]) {
-		_numberOfCellsInRow = [self.dataSource numberOfCellsInRowForGridView:self];
+	// get cell size
+	if ([self.delegate respondsToSelector:@selector(sizeForCellsInGridView:)]) {
+		_cellSize = [self.delegate sizeForCellsInGridView:self];
 	}
-	_numberOfCellsInRow = MAX(_numberOfCellsInRow, 1);
 	
-	// calc cell width
-	_cellWidth = (self.bounds.size.width / _numberOfCellsInRow);
-
-	// calc cell height
-	if ([self.delegate respondsToSelector:@selector(heightForCellsInGridView:)]) {
-		_cellHeight = [self.delegate heightForCellsInGridView:self];
-	}else {
-		_cellHeight = _cellWidth;
+	if ([self.delegate respondsToSelector:@selector(paddingForCellsInGridView:)]) {
+		_cellPadding = [self.delegate paddingForCellsInGridView:self];
 	}
-		
+	
+	_cellSizeWithPadding = CGSizeMake(_cellSize.width + _cellPadding,
+									  _cellSize.height + _cellPadding);
+	_numberOfCellsInRow = [self numberOfCellsInRow];
+	_rowPadding = (self.bounds.size.width - (_cellPadding + (_numberOfCellsInRow * (_cellSizeWithPadding.width)))) / 2.0f;
+	
 	// initialize Cells arry with null objects
 	self.cells = [NSMutableArray array]; // removes older items from array and its refreshed
 	for (NSUInteger i = 0; i < _numberOfCells; i++) {
 		[self.cells addObject:[NSNull null]];
 	}
-	
-	// update content size
-	[self updateContentSize];
-	
+		
 	// set cell pool size for reusability, should be double of _numberOfCellsInRow
 	self.reusableCells = [NSMutableArray array];
 	
 	currentVisibleRange = NSMakeRange(0, 0);
 	
+	// update content size
+	[self updateContentSize];
 	// call for layout
 	[self setNeedsLayout];
 }
@@ -401,10 +421,10 @@
 	if (animated) {
 		[UIView animateWithDuration:0.3
 						 animations:^{
-							 [self layoutCells];
+							 [self layoutCellsIfNeeded:NO];
 						 }];
 	}else {
-		[self layoutCells];
+		[self layoutCellsIfNeeded:NO];
 	}
 }
 
@@ -432,10 +452,10 @@
 	if (animated) {
 		[UIView animateWithDuration:0.3
 						 animations:^{
-							 [self layoutCells];
+							 [self layoutCellsIfNeeded:NO];
 						 }];
 	}else {
-		[self layoutCells];
+		[self layoutCellsIfNeeded:NO];
 	}
 }
 

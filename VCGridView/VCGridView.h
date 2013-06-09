@@ -36,7 +36,8 @@
 @protocol VCGridViewDelegate <UIScrollViewDelegate>
 
 @optional
-- (CGFloat)heightForCellsInGridView:(VCGridView *)gridView;
+- (CGSize)sizeForCellsInGridView:(VCGridView *)gridView;
+- (CGFloat)paddingForCellsInGridView:(VCGridView *)gridView;
 
 - (void)gridView:(VCGridView *)gridView didSelectCellAtIndex:(NSInteger)index;
 
@@ -51,7 +52,6 @@
 - (NSInteger)numberOfCellsInGridView:(VCGridView*)gridView;
 
 @optional
-- (NSInteger)numberOfCellsInRowForGridView:(VCGridView *)gridView;
 - (VCGridViewCell *)gridView:(VCGridView *)gridView cellAtIndex:(NSInteger)index;
 - (BOOL)gridView:(VCGridView *)gridView canEditCellAtIndex:(NSInteger)index;
 @end
@@ -74,8 +74,10 @@
 	
 	NSRange currentVisibleRange;
 	
-	CGFloat _cellWidth;
-	CGFloat _cellHeight;
+	CGSize _cellSize;
+	CGSize _cellSizeWithPadding;
+	CGFloat _cellPadding;
+	CGFloat _rowPadding;
 	
 	NSMutableArray *_reusableCells;
 	
