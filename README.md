@@ -8,13 +8,13 @@ iOS Photos app like grid view of thumbnail views.
 
 ##Features
 * VCGridViewDataSource and VCGridViewDelegate for custom thumbnail views.
-* You only need to specify number of thumbnails in row and spacing.
+* Can be customized for number of thumbnails, size and padding.
 * Reusable Thumbnails for lesser memory usage.
-* Insert and Remove thumbnails support with animation
-* Header and Footer View support
-* Added layout animation support
+* Insert and Remove thumbnails support with animation.
+* Header and Footer View support.
+* Added layout animation support.
+* Add thumbnail size customization.
 
 
 ##ToDo
-* Add thumbnail size customization
 * Add sections support
