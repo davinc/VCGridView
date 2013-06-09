@@ -116,11 +116,6 @@
 	return 100;
 }
 
-- (NSInteger)numberOfCellsInRowForGridView:(VCGridView *)gridView
-{
-	return 2;
-}
-
 - (VCGridViewCell *)gridView:(VCGridView *)gridView cellAtIndex:(NSInteger)index
 {
 	VCGridViewCell *cell = [gridView dequeueReusableCell];
